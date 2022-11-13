@@ -26,6 +26,12 @@ import { ReactComponent as DropdownIcon } from './dropdown.svg'
 import { ReactComponent as OutlinePersonIcon } from './outlinePerson.svg'
 import { ReactComponent as OutlineCogIcon } from './outlineCog.svg'
 import { ReactComponent as OutlineLogoutIcon } from './outlineLogout.svg'
+import { ReactComponent as LoanApplication } from './Tool.svg'
+import { ReactComponent as Settings } from './setting.svg'
+import { ReactComponent as Analysis } from './Analysis.svg'
+import { ReactComponent as Insurance } from './insurance.svg'
+
+
 
 export {
   ButtonsIcon,
@@ -56,4 +62,8 @@ export {
   OutlinePersonIcon,
   OutlineCogIcon,
   OutlineLogoutIcon,
+  LoanApplication,
+  Settings,
+  Analysis,
+  Insurance
 }

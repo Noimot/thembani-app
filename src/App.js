@@ -5,7 +5,11 @@ import AccessibleNavigationAnnouncer from './components/AccessibleNavigationAnno
 const Layout = lazy(() => import('./containers/Layout'))
 const Login = lazy(() => import('./pages/Login'))
 const CreateAccount = lazy(() => import('./pages/CreateAccount'))
+const ConfirmAccount = lazy(() => import('./pages/ConfirmAccount'))
 const ForgotPassword = lazy(() => import('./pages/ForgotPassword'))
+const Instructions = lazy(() => import('./pages/Instructions') )
+const SubmitNuib = lazy(() => import('./pages/SubmitNuib') )
+
 
 function App() {
   return (
@@ -15,7 +19,11 @@ function App() {
         <Switch>
           <Route path="/login" component={Login} />
           <Route path="/create-account" component={CreateAccount} />
+          <Route path="/confirm-account" component={ConfirmAccount} />
           <Route path="/forgot-password" component={ForgotPassword} />
+          <Route path="/instructions" component={Instructions} />
+          <Route path="/submit-nuib" component={SubmitNuib} />
+
 
           {/* Place new routes over this */}
           <Route path="/app" component={Layout} />
