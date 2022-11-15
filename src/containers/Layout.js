@@ -1,6 +1,7 @@
 import React, { useContext, Suspense, useEffect, lazy } from 'react'
-import { Switch, Route, Redirect, useLocation } from 'react-router-dom'
+import { Switch, Route, Redirect, useLocation, useHistory } from 'react-router-dom'
 import routes from '../routes'
+import GenerateNuib from '../pages/GenerateNuib'
 
 import Sidebar from '../components/Sidebar'
 import Header from '../components/Header'
@@ -12,9 +13,17 @@ const Page404 = lazy(() => import('../pages/404'))
 
 function Layout() {
   const { isSidebarOpen, closeSidebar } = useContext(SidebarContext)
+  const history = useHistory()
   let location = useLocation()
+  const [currentPath, setCurrentPath] = React.useState();
 
+  const profileCompleted = () => {
+    return true
+  }
+ 
+  console.log(currentPath)
   useEffect(() => {
+    setCurrentPath(location.pathname);
     closeSidebar()
   }, [location])
 
@@ -29,16 +38,29 @@ function Layout() {
         <Main>
           <Suspense fallback={<ThemedSuspense />}>
             <Switch>
+            <Route
+              exact={true}
+              path={`/app/dashboard/generate-nuib`}
+              render={(props) => <GenerateNuib {...props} />}
+            />
               {routes.map((route, i) => {
                 return route.component ? (
                   <Route
                     key={i}
                     exact={true}
                     path={`/app${route.path}`}
-                    render={(props) => <route.component {...props} />}
+                    render={(props) => { 
+                      if (profileCompleted() === true  ) {
+                        return <route.component {...props} /> 
+                      } else {
+                       
+                       return <Redirect to={{ pathname: '/app/dashboard/generate-nuib', state: { from: props.location } }} />
+                      }
+                    }}
                   />
                 ) : null
               })}
+
               <Redirect exact from="/app" to="/app/dashboard" />
               <Route component={Page404} />
             </Switch>

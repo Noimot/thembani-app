@@ -19,7 +19,7 @@ function CreateAccount() {
    <div>
      
     <div
-      class="w-full"
+      className="w-full"
       style={{
         backgroundImage: "url('/banner.svg')",
         backgroundPosition: "center",
@@ -29,15 +29,15 @@ function CreateAccount() {
       }}
     >
       <div
-        class="w-full h-[102px] px-6 flex shadow-md justify-between items-center bg-white"
+        className="w-full h-[102px] px-6 flex shadow-md justify-between items-center bg-white"
       >
         <img
           src="./logo.png"
           alt="logo"
-          class="block h-24 w-auto"
+          className="block h-24 w-auto"
         />
       </div>
-      <div class="w-full px-8 md:px-20 block items-center py-8">
+      <div className="w-full px-8 md:px-20 block items-center py-8">
         {confirmOtp ?  <ConfirmOtp /> : <RegisterAuth otp={handleOtp} />}
         
        

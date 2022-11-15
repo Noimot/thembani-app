@@ -39,8 +39,8 @@ function Header() {
           <MenuIcon className="w-6 h-6" aria-hidden="true" />
         </button>
         {/* <!-- Search input --> */}
-        <div className="flex justify-center flex-1 lg:mr-32">
-         
+        <div className="flex justify-center  bg-green-50  px-5 h-full flex-1 lg:mr-32">
+          
         </div>
         <ul className="flex items-center bg-green-50 px-5 h-full flex-shrink-0 space-x-6">
           {/* <!-- Theme toggler --> */} 

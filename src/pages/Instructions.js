@@ -57,7 +57,7 @@ function Instructions() {
         </ul>
       </div>
       <div>
-        <a href="./submitnuit.html" className="bg-orange-500 text-white px-12 py-4 rounded-lg">
+        <a href="./submit-nuib" className="bg-orange-500 text-white px-12 py-4 rounded-lg">
           Continue
         </a>
       </div>

@@ -18,7 +18,7 @@ function ConfirmAccount() {
   return (
     <div>
       <div
-        class="w-full"
+        className="w-full"
         style={{
           backgroundImage: "url('/banner.svg')",
           backgroundPosition: "center",
@@ -27,10 +27,10 @@ function ConfirmAccount() {
           height: "auto",
         }}
       >
-        <div class="w-full h-[102px] px-6 flex shadow-md justify-between items-center bg-white">
-          <img src="./logo.png" alt="logo" class="block h-24 w-auto" />
+        <div className="w-full h-[102px] px-6 flex shadow-md justify-between items-center bg-white">
+          <img src="./logo.png" alt="logo" className="block h-24 w-auto" />
         </div>
-        <div class="w-full px-8 md:px-20 block items-center py-8">
+        <div className="w-full px-8 md:px-20 block items-center py-8">
           <div
             className="md:ml-auto bg-white rounded-md shadow p-6 pt-20"
             style={{ width: 411, height: 603 }}

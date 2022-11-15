@@ -50,31 +50,31 @@ function Dashboard() {
 
   return (
     <>
-      <div class="container px-10 mx-auto grid">
-        <div class="w-full px-8 py-8 bg-green-50 rounded my-6 mx-auto">
-          <div class=" items-center gap-3 md:flex ">
-            <div class="w-2/5">
+      <div className="container px-10 mx-auto grid">
+        <div className="w-full px-8 py-8 bg-green-50 rounded my-6 mx-auto">
+          <div className=" items-center gap-3 md:flex ">
+            <div className="w-2/5">
               <img
-                class="object-cover  rounded-full"
+                className="object-cover  rounded-full"
                 src="https://images.unsplash.com/photo-1502378735452-bc7d86632805?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=aa3a807e1bbdfd4364d1f449eaa96d82"
                 alt=""
                 aria-hidden="true"
                 style={{ width: "200px ", height: "200px" }}
               />
             </div>
-            <div class="w-3/5">
+            <div className="w-3/5">
               <h4>Hello welcome</h4>
-              <h3 class="text-green-600 text-2xl font-bold ">John doe</h3>
-              <div class="flex items center">
-                <div class="mr-4 block">
-                  <small class="block">NUIT No.</small>
-                  <small class="block">Account No.</small>
+              <h3 className="text-green-600 text-2xl font-bold ">John doe</h3>
+              <div className="flex items center">
+                <div className="mr-4 block">
+                  <small className="block">NUIT No.</small>
+                  <small className="block">Account No.</small>
                 </div>
-                <div class="block">
-                  <small class="block">
+                <div className="block">
+                  <small className="block">
                     : <span x-text="profile?.client_nuib"></span>
                   </small>
-                  <small class="block">: 2546890716</small>
+                  <small className="block">: 2546890716</small>
                 </div>
               </div>
             </div>
@@ -85,31 +85,31 @@ function Dashboard() {
             <Doughnut {...doughnutOptions} />
             <ChartLegend legends={doughnutLegends} />
           </ChartCard>
-          <div class="min-w-0  bg-white dark:bg-gray-800">
-              <div class="w-full mb-4 p-4 py-6 bg-green-50 rounded-lg shadow-xs flex justify-between">
+          <div className="min-w-0  bg-white dark:bg-gray-800">
+              <div className="w-full mb-4 p-4 py-6 bg-green-50 rounded-lg shadow-xs flex justify-between">
                 <div>
-                  <h3 class="text-xl">Amount Due</h3>
-                  <h3 class="text-2xl text-grey-200" style={{color:"#8A8E8E"}}>MZN 5 493.7</h3>
+                  <h3 className="text-xl">Amount Due</h3>
+                  <h3 className="text-2xl text-grey-200" style={{color:"#8A8E8E"}}>MZN 5 493.7</h3>
                   <small>On May 26, 2022</small>
 
                 </div>
                 
 
               </div>
-              <div class="w-full mb-4 p-4 py-6 bg-green-50 rounded-lg shadow-xs flex justify-between">
+              <div className="w-full mb-4 p-4 py-6 bg-green-50 rounded-lg shadow-xs flex justify-between">
                 <div>
-                  <h3 class="text-xl">Interest</h3>
-                  <h3 class="text-2xl text-grey-200" style={{color:"#8A8E8E"}}>33.33%</h3>
+                  <h3 className="text-xl">Interest</h3>
+                  <h3 className="text-2xl text-grey-200" style={{color:"#8A8E8E"}}>33.33%</h3>
                   <small>Annual Interest rate</small>
 
                 </div>
               
 
               </div>
-              <div class="w-full mb-4 p-4 py-6 bg-green-50 rounded-lg shadow-xs flex justify-between">
+              <div className="w-full mb-4 p-4 py-6 bg-green-50 rounded-lg shadow-xs flex justify-between">
                 <div>
-                  <h3 class="text-xl">Period</h3>
-                  <h3 class="text-2xl text-grey-200" style={{color:"#8A8E8E"}}>24 Months</h3>
+                  <h3 className="text-xl">Period</h3>
+                  <h3 className="text-2xl text-grey-200" style={{color:"#8A8E8E"}}>24 Months</h3>
                   <small>19 Months left</small>
 
                 </div>

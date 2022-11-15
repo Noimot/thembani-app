@@ -17,7 +17,7 @@ function SidebarContent() {
       <img
           src="/logo.png"
           alt="logo"
-          class="block h-24 w-auto mx-auto"
+          className="block h-24 w-auto mx-auto"
         />
       </a>
       <ul className="mt-6">

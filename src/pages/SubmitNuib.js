@@ -25,7 +25,7 @@ function SubmitNuib() {
             Click the Button to generate your NUIB number to complete your
             profile registration.
           </h3>
-          <Link to={'/generatenuin'} >
+          <Link to={'/app/dashboard/generate-nuib'} >
           <a
            
             className="bg-orange-500 text-white flex mx-auto mt-10 text-lg items-center justify-center rounded-full"
