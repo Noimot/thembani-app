@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import OTPInput, { ResendOTP } from "otp-input-react";
 
 function ConfirmOtp() {
+    const history = useHistory()
     const [OTP, setOTP] = useState("");
     const [confirmOtp, setConfirmOtp] = useState(false)
     return (
@@ -49,6 +51,7 @@ function ConfirmOtp() {
             </div>
             <div className="flex items-center justify-center mt-8 px-3">
                 <button
+                    onClick={() => history.push("/app/dashboard")}
                     className="px-6 py-2 bg-green-500 text-white rounded"
                   
 
