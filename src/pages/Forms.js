@@ -14,7 +14,7 @@ function Forms() {
       <CTA />
       <SectionTitle>Elements</SectionTitle>
 
-      <div className="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+      <div className="px-4 py-3 mb-8 bg-white rounded-lg shadow-md  ">
         <Label>
           <span>Name</span>
           <Input className="mt-1" placeholder="Jane Doe" />
@@ -81,7 +81,7 @@ function Forms() {
 
       <SectionTitle>Validation</SectionTitle>
 
-      <div className="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+      <div className="px-4 py-3 mb-8 bg-white rounded-lg shadow-md  ">
         <Label>
           <span>Invalid input</span>
           <Input className="mt-1" valid={false} placeholder="Jane Doe" />
@@ -104,7 +104,7 @@ function Forms() {
       {/* <!-- Inputs with icons --> */}
       <SectionTitle>Icons</SectionTitle>
 
-      <div className="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+      <div className="px-4 py-3 mb-8 bg-white rounded-lg shadow-md  ">
         <Label>
           <span>Icon left</span>
           {/* <!-- focus-within sets the color for the icon when input is focused --> */}
@@ -137,7 +137,7 @@ function Forms() {
       {/* <!-- Inputs with buttons --> */}
       <SectionTitle>Buttons</SectionTitle>
 
-      <div className="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+      <div className="px-4 py-3 mb-8 bg-white rounded-lg shadow-md  ">
         <Label>
           <span>Button left</span>
           <div className="relative">
