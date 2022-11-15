@@ -12,9 +12,9 @@ function Icon({ icon, ...props }) {
 
 function SidebarContent() {
   return (
-    <div className="py-4 text-gray-500 dark:text-gray-400">
+    <div className="py-4 text-gray-500 =">
       <a
-        className="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200"
+        className="ml-6 text-lg font-bold text-gray-800 "
         href="#"
       >
         <img src="/logo.png" alt="logo" className="block h-24 w-auto mx-auto" />
@@ -59,7 +59,7 @@ function SidebarContent() {
       </ul>
       <div className="px-6 my-6">
         <a
-          class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
+          class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 "
           href="/"
         >
           <svg

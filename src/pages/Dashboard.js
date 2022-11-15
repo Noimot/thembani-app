@@ -85,7 +85,7 @@ function Dashboard() {
             <Doughnut {...doughnutOptions} />
             <ChartLegend legends={doughnutLegends} />
           </ChartCard>
-          <div className="min-w-0  bg-white dark:bg-gray-800">
+          <div className="min-w-0  bg-white ">
               <div className="w-full mb-4 p-4 py-6 bg-green-50 rounded-lg shadow-xs flex justify-between">
                 <div>
                   <h3 className="text-xl">Amount Due</h3>
