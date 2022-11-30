@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { DropdownIcon } from '../../icons'
 import * as Icons from '../../icons'
 import { Transition } from '@windmill/react-ui'
@@ -11,6 +11,9 @@ function Icon({ icon, ...props }) {
 
 function SidebarSubmenu({ route }) {
   const [isDropdownMenuOpen, setIsDropdownMenuOpen] = useState(false)
+  const{ pathname} = useLocation()
+  console.log(pathname);
+
 
   function handleDropdownMenuClick() {
     setIsDropdownMenuOpen(!isDropdownMenuOpen)
@@ -19,7 +22,7 @@ function SidebarSubmenu({ route }) {
   return (
     <li className="relative px-6 py-3" key={route.name}>
       <button
-        className="inline-flex items-center px-2 justify-between w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+        className={`inline-flex  px-2 justify-between ${pathname.includes(route.path) ? ' bg-green-500 text-white ' :'bg-green-100'}  py-4 rounded-lg items-center w-full text-sm font-semibold transition-colors duration-150`}
         onClick={handleDropdownMenuClick}
         aria-haspopup="true"
       >
@@ -39,7 +42,7 @@ function SidebarSubmenu({ route }) {
         leaveTo="opacity-0 max-h-0"
       >
         <ul
-          className="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 rounded-md shadow-inner bg-gray-50 dark:text-gray-400  "
+          className="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 rounded-md  bg-gray-50 dark:text-gray-400  "
           aria-label="submenu"
         >
           {route.routes.map((r) => (

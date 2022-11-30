@@ -5,6 +5,8 @@ const Dashboard = lazy(() => import('../pages/Dashboard'))
 const Settings = lazy(() => import('../pages/Settings'))
 const Insurance = lazy(() => import("../pages/Insurance"))
 const loanDetails = lazy(() => import("../pages/loanDetails"))
+const Eligibility = lazy(() => import('../pages/Eligibility'))
+const Schedule = lazy(() => import("../pages/PaymentSchedule"))
 const Forms = lazy(() => import('../pages/Forms'))
 const Cards = lazy(() => import('../pages/Cards'))
 const Charts = lazy(() => import('../pages/Charts'))
@@ -36,6 +38,14 @@ const routes = [
   {
     path: '/loanDetails', // the url
     component: loanDetails, // view rendered
+  },
+  {
+    path: '/loanApplication/payment-schedule', // the url
+    component: Schedule, // view rendered
+  },
+  {
+    path: '/loanApplication/eligibility', // the url
+    component: Eligibility, // view rendered
   },
   {
     path: '/insurance', // the url

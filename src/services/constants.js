@@ -1,0 +1,1 @@
+export const TokenName = "Thembani-TKN-auth"

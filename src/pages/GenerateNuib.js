@@ -2,7 +2,7 @@ import React from 'react'
 
 function GenerateNuib() {
   return (
-    <main className="h-full overflow-y-auto px-5 mt-3">
+    <main className="h-full overflow-y-auto px-2 w-full mt-3">
       <div className="w-full mx-auto grid bg-green-50 rounded-md py-4 px-5">
         <h3 className="text-gray-700">Personal information</h3>
         <div className="flex flex-wrap gap-3 mt-6 mb-3">

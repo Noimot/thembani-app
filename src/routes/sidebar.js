@@ -12,9 +12,19 @@ const routes = [
     name: 'Dashboard', // name that appear in Sidebar
   },
   {
-    path: '/app/loanApplication',
     icon: 'LoanApplication',
     name: 'Loan Application',
+    path:'/app/loanApplication',
+    routes: [
+      {
+        path: '/app/loanApplication/eligibility',
+        name: 'Loan Eligibility',
+      },
+      {
+        path: '/app/loanApplication/payment-schedule',
+        name: 'Payment Schedule',
+      },
+    ]
   },
   {
     path: '/app/loanDetails',

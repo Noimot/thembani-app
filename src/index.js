@@ -6,6 +6,7 @@ import App from './App'
 import { SidebarProvider } from './context/SidebarContext'
 import ThemedSuspense from './components/ThemedSuspense'
 import { Windmill } from '@windmill/react-ui'
+import { Toaster } from 'react-hot-toast'
 import * as serviceWorker from './serviceWorker'
 
 // if (process.env.NODE_ENV !== 'production') {
@@ -17,6 +18,7 @@ ReactDOM.render(
   <SidebarProvider>
     <Suspense fallback={<ThemedSuspense />}>
       <Windmill usePreferences>
+        <Toaster position='top-right' />
         <App />
       </Windmill>
     </Suspense>
