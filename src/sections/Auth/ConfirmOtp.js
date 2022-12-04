@@ -1,11 +1,35 @@
-import React, { useState } from "react";
+import React, { useState , useContext} from "react";
 import { useHistory } from "react-router-dom";
 import OTPInput, { ResendOTP } from "otp-input-react";
+import { confirmOtpsign } from "../../services/requests/auth";
+import toast from "react-hot-toast";
+import { AppContext } from "../../context/AppContext";
 
 function ConfirmOtp() {
+  const {profileCompleted,setProfileCompleted} = useContext(AppContext)
     const history = useHistory()
     const [OTP, setOTP] = useState("");
     const [confirmOtp, setConfirmOtp] = useState(false)
+
+    const handleconfirmOtp = () => {
+      const email =  localStorage.getItem("userEmail")
+      const data = {
+        email:email,
+        otp:OTP
+      }
+       confirmOtpsign(data).then((res) => {
+            console.log(res.data);
+
+            localStorage.setItem("userProfile", JSON.stringify(res.data.data.data))
+            toast.success("Otp confirmed")
+            if(res.data.data.data.profile !== null){
+                setProfileCompleted(true)
+            }
+            history.push("/app/dashboard")
+       }).catch((err) => {
+            toast.error("something went wrong! please try again")
+       })
+    }
     return (
         <div
             className="md:ml-auto bg-white rounded-md shadow p-6"
@@ -51,7 +75,7 @@ function ConfirmOtp() {
             </div>
             <div className="flex items-center justify-center mt-8 px-3">
                 <button
-                    onClick={() => history.push("/app/dashboard")}
+                    onClick={() => handleconfirmOtp()}
                     className="px-6 py-2 bg-green-500 text-white rounded"
                   
 

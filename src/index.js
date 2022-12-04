@@ -8,6 +8,7 @@ import ThemedSuspense from './components/ThemedSuspense'
 import { Windmill } from '@windmill/react-ui'
 import { Toaster } from 'react-hot-toast'
 import * as serviceWorker from './serviceWorker'
+import { AppProvider } from './context/AppContext'
 
 // if (process.env.NODE_ENV !== 'production') {
 //   const axe = require('react-axe')
@@ -15,14 +16,17 @@ import * as serviceWorker from './serviceWorker'
 // }
 
 ReactDOM.render(
-  <SidebarProvider>
-    <Suspense fallback={<ThemedSuspense />}>
-      <Windmill usePreferences>
-        <Toaster position='top-right' />
-        <App />
-      </Windmill>
-    </Suspense>
-  </SidebarProvider>,
+  <AppProvider>
+    <SidebarProvider>
+      <Suspense fallback={<ThemedSuspense />}>
+        <Windmill usePreferences>
+          <Toaster position='top-right' />
+          <App />
+        </Windmill>
+      </Suspense>
+    </SidebarProvider>
+  </AppProvider>,
+ 
   document.getElementById('root')
 )
 

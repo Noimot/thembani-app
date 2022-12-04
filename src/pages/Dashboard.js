@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import CTA from "../components/CTA";
 import InfoCard from "../components/Cards/InfoCard";
@@ -28,10 +28,12 @@ import {
   doughnutLegends,
   lineLegends,
 } from "../utils/demo/chartsData";
+import { AppContext } from "../context/AppContext";
 
 function Dashboard() {
+  const {profileCompleted,setProfileCompleted} = useContext(AppContext)
   const [page, setPage] = useState(1);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({});
 
   // pagination setup
   const resultsPerPage = 10;
@@ -47,6 +49,25 @@ function Dashboard() {
   useEffect(() => {
     setData(response.slice((page - 1) * resultsPerPage, page * resultsPerPage));
   }, [page]);
+
+  useEffect(() => {
+    let calue = false
+
+    const profile =  JSON.parse(localStorage.getItem("userProfile"));
+
+    if (profile.profile !== null) {
+      setProfileCompleted(true)
+      setData(profile)
+    }else{
+      setProfileCompleted(false)
+    }
+   // console.log(profile)
+  
+    return () => {
+      calue = true
+    }
+  }, [])
+  
 
   return (
     <>

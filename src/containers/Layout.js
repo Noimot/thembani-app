@@ -8,20 +8,23 @@ import Header from '../components/Header'
 import Main from '../containers/Main'
 import ThemedSuspense from '../components/ThemedSuspense'
 import { SidebarContext } from '../context/SidebarContext'
+import { AppContext } from '../context/AppContext'
 
 const Page404 = lazy(() => import('../pages/404'))
 
 function Layout() {
   const { isSidebarOpen, closeSidebar } = useContext(SidebarContext)
+  const {profileCompleted,setProfileCompleted} = useContext(AppContext)
   const history = useHistory()
   let location = useLocation()
   const [currentPath, setCurrentPath] = React.useState();
 
-  const profileCompleted = () => {
-    return true
+  const _profileCompleted = () => {
+    console.log(profileCompleted);
+    return profileCompleted
   }
  
-  console.log(currentPath)
+  console.log(_profileCompleted())
   useEffect(() => {
     setCurrentPath(location.pathname);
     closeSidebar()
@@ -50,7 +53,7 @@ function Layout() {
                     exact={true}
                     path={`/app${route.path}`}
                     render={(props) => { 
-                      if (profileCompleted() === true  ) {
+                      if (_profileCompleted() === true  ) {
                         return <route.component {...props} /> 
                       } else {
                        
