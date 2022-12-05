@@ -54,6 +54,7 @@ function Dashboard() {
     let calue = false
 
     const profile =  JSON.parse(localStorage.getItem("userProfile"));
+    console.log(profile);
 
     if (profile.profile !== null) {
       setProfileCompleted(true)
@@ -85,7 +86,7 @@ function Dashboard() {
             </div>
             <div className="w-3/5">
               <h4>Hello welcome</h4>
-              <h3 className="text-green-600 text-2xl font-bold ">John doe</h3>
+              <h3 className="text-green-600 text-2xl font-bold ">{data.username}</h3>
               <div className="flex items center">
                 <div className="mr-4 block">
                   <small className="block">NUIT No.</small>
@@ -93,7 +94,7 @@ function Dashboard() {
                 </div>
                 <div className="block">
                   <small className="block">
-                    : <span x-text="profile?.client_nuib"></span>
+                 : {data.profile?.client_nuib}
                   </small>
                   <small className="block">: 2546890716</small>
                 </div>
