@@ -46,7 +46,8 @@ function LoginAuth({otp}) {
     />
     <div className="relative" style={{position:"relative"}}>
       <input
-      placeholder="Password"
+      placeholder="Password" type="password"
+
       onChange={(e) => setPassword(e.target.value)}
       className="w-full rounded px-3 mt-8 password"
       style={{backgroundColor: "#e6e6e6", height: "51px"}}

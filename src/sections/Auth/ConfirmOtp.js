@@ -19,13 +19,13 @@ function ConfirmOtp() {
       }
        confirmOtpsign(data).then((res) => {
             console.log(res.data);
-
+            localStorage.setItem("Thembani-TKN-auth", res.data.data.token)
             localStorage.setItem("userProfile", JSON.stringify(res.data.data.data))
             toast.success("Otp confirmed")
             if(res.data.data.data.profile !== null){
                 setProfileCompleted(true)
             }
-            history.push("/app/dashboard")
+            window.location.replace("/app/dashboard")
        }).catch((err) => {
             toast.error("something went wrong! please try again")
        })

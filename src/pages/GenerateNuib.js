@@ -1,6 +1,116 @@
-import React from 'react'
+import React ,{ useState, useEffect, } from 'react'
+import { getNuibToken, submitGenerateNuit, getResponse } from '../services/requests/loan'
+import { updateProfile } from '../services/requests/dashboard'
+import Upload from "../assets/img/upload.svg"
+import { toast } from 'react-hot-toast'
 
 function GenerateNuib() {
+  const [loading, setLoading] = useState(false)
+  const [nuibToken, setNuibToken] = useState("")
+  const [firstName, setFirstName] = useState("")
+  const [lastName, setLastName] = useState("")
+  const [email, setEmail] = useState("")
+  const [number, setNumber] = useState("")
+  const [local, setLocal] = useState("")
+  const [nuit, setNuit] = useState("")
+  const [resi, setResi] = useState("")
+  const [imgF, setImgF] = useState({})
+  const [imgB, setImgB] = useState({})
+  const [selfie, setSelfie] = useState({})
+
+
+
+const _getToken =  async () => {
+  try {
+    const response = await getNuibToken()
+    setNuibToken(response.data.data.value);
+  } catch (error) {
+    
+  }
+}
+  useEffect(() => {
+    let value = false
+
+   
+   _getToken()
+  
+    return () => {
+      value = true
+    }
+  }, [])
+  
+
+  const submitDetails = async() => {
+    setLoading(true)
+   const userId = JSON.parse(localStorage.getItem("userProfile"))
+     console.log(imgF, imgB, selfie);
+     const data = new FormData()
+    const  onboardingData = {
+      client_name: `${firstName} ${lastName}`,
+      email: email,
+      client_numb:`258${number}`,
+      client_nuit:nuit,
+      client_resi:resi,
+      client_local:local,
+      client_imgf:imgF,
+      client_imgb:imgB,
+      selfie:selfie,
+      token:nuibToken,
+      messageID:"0000000000011092093",
+      user_id:userId?.id,
+      
+    }
+
+   
+       
+       
+      // Append the form object data by mapping through them
+      Object.keys(onboardingData).map((key, index) => {
+        console.log(onboardingData[key]);
+          data.append(key, onboardingData[key])
+      });
+
+     // console.log(data);
+      // const form = new FormData
+      // form.append("body", JSON.stringify(onboardingData))
+
+      const config = {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
+
+      submitGenerateNuit(data, config).then((res) => {
+        console.log(res)
+        getResponse("0000000000011092093").then((res) => {
+          const data = JSON.parse(res.data.data)
+          console.log(data)
+          const profile = {
+            "client_nuib": data.clie_nuib,
+            "client_nome": data.clie_nome,
+            "client_nuit":data.clie_nuit,
+            "client_tipd":data.clie_tipd,
+            "client_nide":data.clie_nide,
+            "client_numr":data.clie_numr,
+            "user_id":userId?.id
+        }
+          updateProfile(profile).then((res) => {
+
+           console.log(res.data);
+            toast.success("successful")
+             window.location.replace("./loanOnboarding.html")
+          }).catch((err) => {console.log(err); setLoading(false) })
+
+        }).catch((err) => {
+          console.log(err)
+        })
+    }).catch((err) => {
+
+      const message = err.response.data.message == "Validation Error." ? `${err.response.data.message} Please Complete form`: err;
+      toast.error(message)
+      setLoading(false)
+      // console.log("================= suppose work ===============");
+    })
+
+  }
   return (
     <main className="h-full overflow-y-auto px-2 w-full mt-3">
       <div className="w-full mx-auto grid bg-green-50 rounded-md py-4 px-5">
@@ -11,6 +121,7 @@ function GenerateNuib() {
             className="bg-gray-100 placeholder-gray-800 text-gray-800 px-6 focus:outline-none rounded-md"
             type="text"
             style={{ width: 320, height: 51 }}
+            onChange={(e) => setFirstName(e.target.value)}
           />
           <input
             placeholder="Middle Name"
@@ -23,12 +134,14 @@ function GenerateNuib() {
             className="bg-gray-100 placeholder-gray-800  text-gray-800 px-6 focus:outline-none rounded-md"
             type="text"
             style={{ width: 320, height: 51 }}
+            onChange={(e) => setLastName(e.target.value)}
           />
           <input
             placeholder="NUIT Number "
             className="bg-gray-100 placeholder-gray-800 text-gray-800 px-6 focus:outline-none rounded-md"
             type="text"
             style={{ width: 320, height: 51 }}
+            onChange={(e) => setNuit(e.target.value)}
           />
           <select
             className="bg-gray-100 placeholder-gray-800 text-gray-800 px-6 focus:outline-none rounded-md pr-4"
@@ -95,17 +208,17 @@ function GenerateNuib() {
               placeholder="Cellphone Number"
               className="bg-gray-100 placeholder-gray-800  text-gray-800 px-6 focus:outline-none rounded-md lg:w-400 w-280 "
               style={{ height: 51 }}
+              onChange={(e) => setNumber(e.target.value) }
             />
           </div>
           <input
             placeholder="Email Address"
             className="bg-gray-100 placeholder-gray-800  text-gray-800 px-6 focus:outline-none rounded-md lg:w-525 w-320 "
             style={{ height: 51 }}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <input
             placeholder="residential area"
-            name
-            id
             className="bg-gray-100 placeholder-gray-800  text-gray-800 px-6 py-2 pb-4 focus:outline-none rounded-md w-320 md:w-900"
             style={{ height: 71 }}
           />
@@ -113,6 +226,7 @@ function GenerateNuib() {
             className="bg-gray-100 placeholder-gray-800 text-gray-800 px-6 focus:outline-none rounded-md pr-4"
             type="text"
             style={{ width: 320, height: 51 }}
+            onChange={(e) => setResi(e.target.value)}
           >
             <option value>Residential Status</option>
             <option value={1}>Resident</option>
@@ -122,6 +236,7 @@ function GenerateNuib() {
             placeholder="Locality Code"
             className="bg-gray-100 placeholder-gray-800  text-gray-800 px-6 focus:outline-none rounded-md w-320 "
             style={{ height: 51 }}
+            onChange={(e) => setLocal(e.target.value)}
           />
         </div>
         <h3 className="text-gray-700 my-6 ">Next of Kin (Mother)</h3>
@@ -133,8 +248,6 @@ function GenerateNuib() {
           />
           <input
             placeholder="residential area"
-            name
-            id
             className="bg-gray-100 placeholder-gray-800  text-gray-800 px-6 py-2 pb-4 focus:outline-none rounded-md w-320 md:w-900"
             style={{ height: 71 }}
           />
@@ -148,8 +261,6 @@ function GenerateNuib() {
           />
           <input
             placeholder="residential area"
-            name
-            id
             className="bg-gray-100 placeholder-gray-800  text-gray-800 px-6 py-2 pb-4 focus:outline-none rounded-md w-320 md:w-900"
             style={{ height: 71 }}
           />
@@ -246,7 +357,7 @@ function GenerateNuib() {
               <span x-text="ID" />: (<span x-text="ID" />: Front)
             </h4>
             <label htmlFor="Upload">
-              <img src="./assets/img/upload.svg" className="mx-auto mt-2" />
+              <img src={Upload} className="mx-auto mt-2" />
             </label>
             <input
               hidden
@@ -255,15 +366,16 @@ function GenerateNuib() {
               id="Upload"
               capture="user"
               accept="image/*"
+              onChange={(e) => setImgF(e.target.files[0])}
             />
-            <span x-text="$refs?.imgF.files[0]?.name" />
+            <span >{imgF?.name}</span>
           </div>
           <div className=" md:w-525 bg-gray-100 text-center py-6">
             <h4>
               <span x-text="ID" />: (<span x-text="ID" />: Back)
             </h4>
             <label htmlFor="Upload2">
-              <img src="./assets/img/upload.svg" className="mx-auto mt-2" />
+              <img src={Upload} className="mx-auto mt-2" />
             </label>
             <input
               hidden
@@ -272,13 +384,14 @@ function GenerateNuib() {
               id="Upload2"
               capture="user"
               accept="image/*"
+              onChange={(e) => setImgB(e.target.files[0])}
             />
-            <span x-text="$refs?.imgB.files[0]?.name" />
+            <span>{imgB?.name}</span>
           </div>
           <div className="m-2 md:w-525 bg-gray-100 text-center py-6">
             <h4>Take a selfie</h4>
             <label htmlFor="avatarUpload">
-              <img src="./assets/img/camera.svg" className="mx-auto mt-2" />
+              <img src={Upload} className="mx-auto mt-2" />
             </label>
             <input
               hidden
@@ -287,6 +400,7 @@ function GenerateNuib() {
               id="avatarUpload"
               capture="user"
               accept="image/*"
+              onChange={(e) => setSelfie(e.target.files[0])}
             />
             <span x-text="$refs?.selfie.files[0]?.name" />
           </div>
@@ -294,8 +408,8 @@ function GenerateNuib() {
       </div>
       <div className="flex justify-between items-center my-6">
         <div className="flex gap-3">
-          <button className="h-12 px-10 py-3 bg-green-600 text-white rounded shadow ">
-            Submit
+          <button disabled={loading} onClick={() => submitDetails()} className="h-12 px-10 py-3 bg-green-600 text-white rounded shadow ">
+            {loading? "loading...":"Submit"}
           </button>
           <button className="h-12 px-10 py-3 bg-red-600 text-white rounded shadow ">
             Cancel
