@@ -1,9 +1,41 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { toast } from 'react-hot-toast';
+import { register } from '../../services/requests/auth';
 
 function RegisterAuth({otp}) {
+  const [username, setUserName] = useState("");
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [confirmpassword, setConfirmPassword] = useState("")
+  const [number, setNumber] = useState("")
+  const [loading, setLoading] = useState(false)
+
 
   const handleSubmit = () => {
-    otp()
+    setLoading(true)
+    const body = {
+      username: username,
+      email: email,
+      phone_number: number,
+      password: password,
+      password_confirmation: confirmpassword
+    } 
+
+    if (email === '' || password === '' || number === "" || username === "") {
+     toast.error("please complete form to proceed")
+     setLoading(false)
+    } else {
+       register(body).then((res) => {
+       toast.success("login successful")
+       window.localStorage.setItem("userEmail", email)
+       setLoading(false)
+       console.log(res.data)
+       otp()
+      }).catch((err) => {
+        toast.error("something went wrong please try again")
+      })
+    } 
+
   }
 
   return (
@@ -27,11 +59,11 @@ function RegisterAuth({otp}) {
       Confirm OTP
     </div>
   </div>
-  <input type="text" placeholder="Username" className="w-full username rounded px-3 mt-8" style={{backgroundColor: '#e6e6e6', height: 51}} />
-  <input type="text" placeholder="Email Address" className="w-full email rounded px-3 mt-8" style={{backgroundColor: '#e6e6e6', height: 51}} />
-  <input type="text" placeholder="Phone Number" className="w-full phonenumber rounded px-3 mt-8" style={{backgroundColor: '#e6e6e6', height: 51}} />
-  <input type="text" placeholder="Password" className="w-full password rounded px-3 mt-8" style={{backgroundColor: '#e6e6e6', height: 51}} />
-  <input placeholder="Confirm Password" className="w-full confirmpassword rounded px-3 mt-8" style={{backgroundColor: '#e6e6e6', height: 51}} />
+  <input type="text" onChange={(e) => setUserName(e.target.value)} placeholder="Username" className="w-full username rounded px-3 mt-8" style={{backgroundColor: '#e6e6e6', height: 51}} />
+  <input type="text" onChange={(e) => setEmail(e.target.value)} placeholder="Email Address" className="w-full email rounded px-3 mt-8" style={{backgroundColor: '#e6e6e6', height: 51}} />
+  <input type="text" onChange={(e) => setNumber(e.target.value)} placeholder="Phone Number" className="w-full phonenumber rounded px-3 mt-8" style={{backgroundColor: '#e6e6e6', height: 51}} />
+  <input type="password" onChange={(e) => setPassword(e.target.value)} placeholder="Password" className="w-full password rounded px-3 mt-8" style={{backgroundColor: '#e6e6e6', height: 51}} />
+  <input type="password" onChange={(e) => setConfirmPassword(e.target.value)} placeholder="Confirm Password" className="w-full confirmpassword rounded px-3 mt-8" style={{backgroundColor: '#e6e6e6', height: 51}} />
   <div className="flex items-center mt-6">
     <h3 className="text-md mr-1">Already have an account?</h3>
     <a href="./" className="text-green-500 mr-2">Sign in</a>

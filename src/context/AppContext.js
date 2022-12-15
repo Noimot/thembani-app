@@ -10,7 +10,7 @@ export const AppProvider = ({children}) => {
       let Value = false
 
      const profile = JSON.parse(localStorage.getItem("userProfile"))
-     if (profile.profile !== null ) {
+     if (profile?.profile !== null ) {
         setProfileCompleted(true)
      } else {
         setProfileCompleted(false)

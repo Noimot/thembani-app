@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import OTPInput, { ResendOTP } from "otp-input-react";
+import { confirmOtpsign } from "../../services/requests/auth";
+import { toast } from "react-hot-toast";
 
 function ConfirmOtp() {
   const history = useHistory()
@@ -8,7 +10,21 @@ function ConfirmOtp() {
  // const [confirmOtp, setConfirmOtp] = useState(false);
 
  const handleconfirmOtp = () => {
-      history.replace("/confirm-account")
+  const email =  localStorage.getItem("userEmail")
+      const data = {
+        email:email,
+        otp:OTP
+      }
+       confirmOtpsign(data).then((res) => {
+            console.log(res.data);
+            localStorage.setItem("Thembani-TKN-auth", res.data.data.token)
+            localStorage.setItem("userProfile", JSON.stringify(res.data.data.data))
+            toast.success("Otp confirmed")
+            history.replace("/confirm-account")
+       }).catch((err) => {
+            toast.error("something went wrong! please try again")
+       })
+     // history.replace("/confirm-account")
  }
   return (
     <div

@@ -96,7 +96,7 @@ const _getToken =  async () => {
 
            console.log(res.data);
             toast.success("successful")
-             window.location.replace("./loanOnboarding.html")
+             window.location.replace("./loan-onboarding")
           }).catch((err) => {console.log(err); setLoading(false) })
 
         }).catch((err) => {
