@@ -2,6 +2,7 @@ import React, { useContext, Suspense, useEffect, lazy } from 'react'
 import { Switch, Route, Redirect, useLocation, useHistory } from 'react-router-dom'
 import routes from '../routes'
 import GenerateNuib from '../pages/GenerateNuib'
+import LoanOnboarding from '../pages/LoanOnboarding'
 
 import Sidebar from '../components/Sidebar'
 import Header from '../components/Header'
@@ -20,8 +21,8 @@ function Layout() {
   const [currentPath, setCurrentPath] = React.useState();
 
   const _profileCompleted = () => {
-    console.log(profileCompleted);
-    return profileCompleted
+    // console.log(profileCompleted);
+    return true
   }
  
   console.log(_profileCompleted())
@@ -45,6 +46,11 @@ function Layout() {
               exact={true}
               path={`/app/dashboard/generate-nuib`}
               render={(props) => <GenerateNuib {...props} />}
+            />
+             <Route
+              exact={true}
+              path={`/app/dashboard/loan-onboarding`}
+              render={(props) => <LoanOnboarding {...props} />}
             />
               {routes.map((route, i) => {
                 return route.component ? (

@@ -1,18 +1,23 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
+import Dollar from "../assets/img/dollar.svg"
+import Ticket from "../assets/img/ticket.svg"
 
 function Eligibility() {
-
+    const history = useHistory()
     const [maxthumb, setMaxthumb] = useState(0)
+    const [period, setPeriod] = useState(0)
+    const [maxP, setMaxP] = useState("")
+    const [maxpricee, setMaxpricee] = useState(0)
+    const [montR, setMonthR] = useState(0)
    let initialdata = {};
    let netIncome =  90000.0;
    let DTI = netIncome * 0.3333;
    let LoanAmount= 50000.0;
    let oneMonth = true
-   let period = 0
-   let MonthlyRepayment =  0;
+   var MonthlyRepayment =  0;
    let  minprice = 6500;
-   let maxprice = 60000;
-   let maxP = ''
+   var maxprice = 60000;
    let min = 6500;
    let max= 60000;
    let isnotMin = false;
@@ -27,32 +32,48 @@ function Eligibility() {
         minthumb = ((minprice - min) / (max - min)) * 100
       }
   const  maxtrigger = (e) => {
-        maxprice = parseInt(e.target.value)
+        maxprice = parseInt(e)
+        console.log(maxprice,maxpricee);
         validation()
         MonthlyRepayment = parseInt(maxprice) + parseInt(maxprice) * 0.1
+        setMonthR(MonthlyRepayment)
         DTI = netIncome * 0.3333
         console.log(DTI, MonthlyRepayment);
         // maxprice = Math.max(maxprice, minprice + 200);
         setMaxthumb (  100 - ((maxprice - min) / (max - min)) * 100)
         console.log(100 - ((maxprice - min) / (max - min)) * 100)
-        maxP = `MZN ${maxprice}`
+        setMaxP( `MZN ${maxprice}`)
         if (MonthlyRepayment>DTI) {
            MonthlyRepayment=(parseInt(maxprice) + parseInt(maxprice*0.15))/2;
           if(MonthlyRepayment>DTI){
                MonthlyRepayment=(parseInt(maxprice) + parseInt(maxprice*0.15))/3;
               if (MonthlyRepayment>DTI){
-                period = 0
+                setPeriod(0)
               }else{
-                period = 3
+                setPeriod(3)
               }
           }else{
-              period = 2
+              setPeriod(2)
           }
       }else{
-        period = 1
+        setPeriod(1)
       }
         console.log(period)
       }
+
+    useEffect(() => {
+      
+      let value = false
+
+      maxtrigger()
+    
+
+      return (() => {
+        value = true
+      })
+     
+    }, [])
+    
 
      const validation = () => {
         if (/^\d*$/.test(minprice)) {
@@ -75,6 +96,24 @@ function Eligibility() {
         } else {
           maxprice = 10000
         }
+      }
+
+      const SetLoan = () => {
+        const details = {
+          MonthlyRepayment: montR,
+          period:period,
+          loanAmount:maxpricee
+   
+         }
+         console.log(details);
+           window.localStorage.setItem("loanDetails", JSON.stringify(details))
+           const veri = JSON.parse(window.localStorage.getItem("userProfile"))
+           if (veri?.isVerified === 1) {
+               history.push("./loan-acceptance")
+           } else {
+            history.push("./kycupload")
+            
+           }
       }
 
      
@@ -107,7 +146,7 @@ function Eligibility() {
         <div className="w-full flex items-center justify-between ">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded bg-orange-500 text-white flex items-center justify-center">
-              <img src="../assets/img/dollar.svg" />
+              <img src={Dollar} />
             </div>
             <h3>Eligible Amount</h3>
           </div>
@@ -117,7 +156,7 @@ function Eligibility() {
         <div className="w-full flex items-center justify-between ">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded bg-yellow-400 text-white flex items-center justify-center">
-              <img src="../assets/img/ticket.svg" />
+              <img src={Ticket} />
             </div>
             <h3>D T I</h3>
           </div>
@@ -133,11 +172,11 @@ function Eligibility() {
         </div>
         <div className="relative  w-full">
             <div>
-                <input type="range"  step={500} min={min} max={max} onChange={maxtrigger} className="absolute opacity-0   z-20 h-2 w-full  cursor-pointer" />
+                <input type="range"  step={500} min={min} max={max} onChange={(e) => {maxtrigger(e.target.value);  setMaxpricee(e.currentTarget.value)}} className="absolute opacity-0   z-20 h-2 w-full  cursor-pointer" />
                 <div className="relative z-10 h-2">
                 <div className="absolute z-10 left-0 right-0 bottom-0 top-0 rounded-md bg-gray-200" />
                 <div className="absolute z-20 top-0 bottom-0 rounded-md bg-green-500" style={{right: `${maxthumb}%`, left:`${minthumb}%`}} />
-                <div x-text="maxP" className="absolute -mx-16 step-name flex flex-row z-30 w-24 h-6 top-0 right-0 -mt-8 text-sm text-right" style={{right: `${maxthumb}%`}} />
+                <div className="absolute -mx-16 step-name flex flex-row z-30 w-24 h-6 top-0 right-0 -mt-8 text-sm text-right" style={{right: `${maxthumb}%`}} >{maxP}</div>
                 <div className="absolute z-30 w-6 h-6 top-0 right-0 bg-green-500 rounded-full -mt-2" style={{right: `${maxthumb}%`,}}/>
                 </div>
             </div>
@@ -167,28 +206,28 @@ function Eligibility() {
       <h3 className="font-semibold ">Period</h3>
       <div className="w-full px-4 py-8 bg-green-50 rounded my-4 mx-auto">
         <div className="stepper-wrapper">
-          <div  className="stepper-item  ">
+          <div  className={`${period > 0 ? 'completed' : ''} stepper-item`}>
             <div className="step-name">0 Months</div>
-            <div className="step-counter" />
+            <div className={`${period == 0 ? 'complete' : ''} step-counter`} />
           </div>
-          <div className="stepper-item  ">
+          <div className={`${period > 1 ? 'completed' : ''} stepper-item`}>
             <div className="step-name">1 Months</div>
-            <div className="step-counter" />
+            <div className={`${period == 1 ? 'complete' : ''} step-counter`} />
           </div>
-          <div  className="stepper-item ">
+          <div  className={`${period > 2 ? 'completed' : ''} stepper-item`}>
             <div className="step-name">2 Months</div>
-            <div className="step-counter" />
+            <div className={`${period == 2 ? 'complete' : ''} step-counter`} />
           </div>
-          <div className="stepper-item">
+          <div className={`${period > 3 ? 'completed' : ''} stepper-item`}>
             <div className="step-name">3 Months</div>
-            <div className="step-counter" />
+            <div className={`${period == 3 ? 'complete' : ''} step-counter`} />
           </div>
         </div>
       </div>
     </div>
     <div className="flex justify-between items-center mb-6">
       <div className="flex gap-3">
-        <button className="h-12 px-10 py-3 bg-green-600 text-white rounded shadow ">Get loan</button>
+        <button onClick={() => SetLoan()} className="h-12 px-10 py-3 bg-green-600 text-white rounded shadow ">Get loan</button>
         <button className="h-12 px-10 py-3 bg-gray-600 text-white rounded shadow ">Back</button>
       </div>
       <button className="h-12 px-10 py-3 bg-red-600 text-white rounded shadow ">Cancel</button>

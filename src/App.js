@@ -30,7 +30,7 @@ function App() {
     } else {
       // localStorage.removeItem(tokenExpiryDuration);
       localStorage.removeItem('TKN-auth');
-      return false;
+      return true;
     }
   }
 

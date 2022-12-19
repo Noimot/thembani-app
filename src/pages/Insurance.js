@@ -1,4 +1,6 @@
 import React from 'react'
+import Upload from "../assets/img/upload.svg"
+import Check from "../assets/img/check 2.svg"
 
 function Insurance() {
    
@@ -7,7 +9,7 @@ function Insurance() {
       <div className="container px-8 mx-auto grid">
         <div className="w-full  px-5 py-16 bg-green-50 rounded my-4 mx-auto">
           <div className="mx-auto flex items-center justify-center gap-3">
-            <img src="./assets/img/check 2.svg" />
+            <img src={Check}/>
             <h3 className="text-green-500 text-2xl md:text-4xl font-semibold">
               Your insurance is active
             </h3>
@@ -28,7 +30,7 @@ function Insurance() {
             <div className=" md:w-525 bg-white text-center py-6">
               <h4>Copy of ID</h4>
               <label htmlFor="Upload">
-                <img src="./assets/img/upload.svg" className="mx-auto mt-2" />
+                <img src={Upload} className="mx-auto mt-2" />
               </label>
               <input
                 hidden
@@ -42,7 +44,7 @@ function Insurance() {
             <div className=" md:w-525 bg-white text-center py-6">
               <h4>Copy of Death Certificate</h4>
               <label htmlFor="Upload">
-                <img src="./assets/img/upload.svg" className="mx-auto mt-2" />
+                <img src={Upload} className="mx-auto mt-2" />
               </label>
               <input
                 hidden

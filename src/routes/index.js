@@ -15,6 +15,8 @@ const Modals = lazy(() => import('../pages/Modals'))
 const Tables = lazy(() => import('../pages/Tables'))
 const Page404 = lazy(() => import('../pages/404'))
 const Blank = lazy(() => import('../pages/Blank'))
+const Kycupload = lazy(() => import('../pages/Kycupload'))
+const LoanAcceptance = lazy(() => import('../pages/LoanAcceptance'))
 
 /**
  * ⚠ These are internal routes!
@@ -46,6 +48,14 @@ const routes = [
   {
     path: '/loanApplication/eligibility', // the url
     component: Eligibility, // view rendered
+  },
+  {
+    path: '/loanApplication/kycupload', // the url
+    component: Kycupload, // view rendered
+  },
+  {
+    path: '/loanApplication/loan-acceptance', // the url
+    component: LoanAcceptance, // view rendered
   },
   {
     path: '/insurance', // the url
