@@ -1,32 +1,34 @@
-const defaultTheme = require('tailwindcss/defaultTheme')
-const windmill = require('@windmill/react-ui/config')
-
-module.exports = windmill({
-  purge: ['src/**/*.js'],
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
   theme: {
-    colors: {
-      green: {
-        '50': '#EAF3F4',
-      }
-
-    },
     extend: {
       fontFamily: {
-        sans: ['Inter', ...defaultTheme.fontFamily.sans],
+        "poppins": ["Poppins", "sans-serif"],
       },
-      boxShadow: {
-        bottom: '0 5px 6px -7px rgba(0, 0, 0, 0.6), 0 2px 4px -5px rgba(0, 0, 0, 0.06)',
+      colors: {
+        "dark-1": "#4C4C4C",
+        'grey-1': '#E6E6E6',
+        'grey-2': '#646363',
+        'grey-3': '#fcfcfc',
+        'green-1': '#009B72',
+        'red-1': '#DC3027',
+      },
+      backgroundImage: {
+        'banner': "url('./assets/images/banner.svg')",
       },
       width: {
-        '900': '985px',
-        '65': '272px',
-        '320': '320px',
-        '400': '400px',
-        '525': '485px',
-        '76': '76px',
-        '40': '40px'
+        '411': '411px',
+        '367': '367px',
+      },
+      height: {
+        '605': '605px',
+        '51': '51px'
+      },
+      boxShadow: {
+        '3xl': '-5px 6px 24px rgba(0, 0, 0, 0.18)',
       }
     },
-
   },
-})
+  plugins: [],
+}
