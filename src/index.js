@@ -1,36 +1,31 @@
-import React, { Suspense } from 'react'
-import ReactDOM from 'react-dom'
-import './assets/css/tailwind.output.css'
-import './assets/css/style.css'
-import App from './App'
-import { SidebarProvider } from './context/SidebarContext'
-import ThemedSuspense from './components/ThemedSuspense'
-import { Windmill } from '@windmill/react-ui'
-import { Toaster } from 'react-hot-toast'
-import * as serviceWorker from './serviceWorker'
-import { AppProvider } from './context/AppContext'
 
-// if (process.env.NODE_ENV !== 'production') {
-//   const axe = require('react-axe')
-//   axe(React, ReactDOM, 1000)
-// }
+import React, { Suspense } from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import spinner from "./assets/images/spinner.png";
+import { Toaster } from "react-hot-toast";
 
-ReactDOM.render(
-  <AppProvider>
-    <SidebarProvider>
-      <Suspense fallback={<ThemedSuspense />}>
-        <Windmill usePreferences>
-          <Toaster position='top-right' />
-          <App />
-        </Windmill>
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <React.StrictMode>
+    {/* <Provider store={store}> */}
+      <Suspense
+        fallback={
+          <span>
+            <img src={spinner} />
+          </span>
+        }
+      >
+        <Toaster position={"top-center"} />
+        <App />
       </Suspense>
-    </SidebarProvider>
-  </AppProvider>,
- 
-  document.getElementById('root')
-)
+    {/* </Provider> */}
+  </React.StrictMode>
+);
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.register()
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();

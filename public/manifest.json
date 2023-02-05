@@ -1,6 +1,6 @@
 {
-  "short_name": "Windmill",
-  "name": "Windmill Dashboard React",
+  "short_name": "React App",
+  "name": "Create React App Sample",
   "icons": [
     {
       "src": "favicon.ico",

@@ -1,18 +1,7 @@
-// import { useState } from 'react';
 import axios from 'axios';
 import { TokenName } from './constants';
 
-const baseUrl = "https://135.148.118.100/thembaniServer/public/api/";
-// console.log(localStorage.getItem('TKN-auth'));
-// if (localStorage.getItem('TKN-auth')) {
-//   const au = JSON.parse(localStorage.getItem('TKN-auth'));
-//   auth = {
-//     username: au.email,
-//     password: au.password,
-
-//   };
-// }
-
+const baseUrl = process.env.REACT_APP_BASE_URL;
 const http = axios.create({
   baseURL: baseUrl,
   headers: {
@@ -27,7 +16,6 @@ http.interceptors.request.use(
       const token = localStorage.getItem(TokenName);
       config.headers.Authorization = `Bearer ${token}`;
     }
-    // console.log(config);
     return config;
   },
   (error) => {

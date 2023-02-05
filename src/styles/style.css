@@ -1,0 +1,34 @@
+.bg-banner {
+  background-image: url("../assets/images/banner.svg");
+}
+
+.bg-instructionBg {
+  background-image: url("../assets/images/instruction-bg.svg");
+}
+
+.bg-submitNuibBg {
+  background-image: url("../assets/images/submit-nuib-icon.svg");
+}
+
+.link {
+  background: linear-gradient(95.73deg, rgba(0, 118, 135, 0.08) 0.9%, rgba(0, 118, 135, 0.06) 52.54%, rgba(0, 118, 135, 0.02) 99.06%), rgba(235, 240, 241, 0.3);
+  color: #009b72;
+}
+
+
+.linkActive {
+  background-color: #009b72;
+  color: white
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 195px;
+  height: 68px;
+  border-radius: 12px;
+  padding: 0 17px;
+  font-size: 14px;
+  line-height: 21px;
+}
