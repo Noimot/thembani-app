@@ -1,3 +1,4 @@
+
 import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
@@ -5,13 +6,11 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import spinner from "./assets/images/spinner.png";
 import { Toaster } from "react-hot-toast";
-import { Provider } from "react-redux";
-import store from "./app/store";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
+    {/* <Provider store={store}> */}
       <Suspense
         fallback={
           <span>
@@ -22,7 +21,7 @@ root.render(
         <Toaster position={"top-center"} />
         <App />
       </Suspense>
-    </Provider>
+    {/* </Provider> */}
   </React.StrictMode>
 );
 
