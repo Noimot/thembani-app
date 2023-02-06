@@ -32,8 +32,8 @@ const Dashboard = () => {
     <div className="font-poppins w-full">
       <div className="w-full flex ">
         <Sidebar />
-        <div className="w-full h-screen overflow-y-auto px-38">
-          <div className="overflow-y-auto mt-31">
+        <div className="w-full h-screen overflow-y-auto px-38 py-31">
+          <div>
             <Outlet />
           </div>
         </div>
