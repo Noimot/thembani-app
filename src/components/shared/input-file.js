@@ -1,8 +1,5 @@
 import React from "react";
-import Dropzone from "react-dropzone";
 import uploadIcon from "../../assets/images/upload-icon.svg";
-import { toast } from "react-hot-toast";
-import { useFormikContext } from "formik";
 
 const ImageUpload = ({ label, name, onChange }) => {
 //   const { values, isValid, setFieldValue } = useFormikContext();
@@ -61,7 +58,7 @@ const ImageUpload = ({ label, name, onChange }) => {
         name={name}
         id={`${name}-file`}
         // capture="user"
-        accept="image/*"
+        accept="**"
         onChange={onChange}
       />
     </div>

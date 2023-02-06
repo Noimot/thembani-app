@@ -9,13 +9,13 @@ import { useSelector } from "react-redux";
 import { getToken } from "../../../app/features/slice/tokenSlice";
 import { postGenerateNuit } from "../../../app/features/slice/generateNuitSlice";
 import Selfie from "./selfie";
-import Yup from "yup";
+// import Yup from "yup";
 import DashboardNav from "../../../components/shared/dashboard-nav";
 import ImageUpload from "../../../components/shared/input-file";
 import Button from "../../../components/shared/button";
 
 const CustomerOnboarding = () => {
-  const { tokenData, isLoading, isSuccess, isError } = useSelector(
+  const { tokenData,  } = useSelector(
     (state) => state.token
   );
   const dispatch = useDispatch();
@@ -25,9 +25,9 @@ const CustomerOnboarding = () => {
     password: "Fintech123*",
     APIKEY: "OTNUSEVNQkFOSSBBRlJJQ0EyOS8wNy8yMDIyIDE4OjA1OjEy",
   };
-  // useEffect(() => {
-  //   dispatch(getToken(payload));
-  // }, []);
+  useEffect(() => {
+    dispatch(getToken(payload));
+  }, []);
   const initialValues = {
     first_name: "",
     middle_name: "",
@@ -50,16 +50,16 @@ const CustomerOnboarding = () => {
     client_no_code: "",
     client_no: "",
   };
-  const [imgb, setImgb] = useState();
+  const [imgb, setImgb] = useState(null);
   const handleFileChangeb = (event) => {
-    console.log(event.target.files[0], "imgb");
     setImgb(event.target.files[0]);
+    console.log(event.target.files[0], "imgb");
   };
-  const [imgf, setImgf] = useState();
+  const [imgf, setImgf] = useState(null);
 
   const handleFileChangef = (event) => {
-    console.log(event.target.files[0], "imgf");
     setImgf(event.target.files[0]);
+    console.log(event.target.files[0], "imgf");
   };
   return (
     <div className="w-full flex flex-col bg-white gap-y-8">
@@ -68,7 +68,8 @@ const CustomerOnboarding = () => {
         <Formik
           initialValues={initialValues}
           onSubmit={(values) => {
-            let formData = new FormData();
+            console.log(imgb, "img");
+            
             // formData.append("client_imgf", values.client_images.client_imgf);
             // formData.append("client-imgb", values.client_images.client_imgf);
             // const data = {

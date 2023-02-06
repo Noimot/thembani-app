@@ -1,6 +1,6 @@
 import React from "react";
-import Header from "../components/header";
-import Instruction from "../components/instructions";
+import Header from "../components/Header";
+// import Instruction from "../components/instructions";
 import { Link } from "react-router-dom";
 
 const GenerateNuib = () => {

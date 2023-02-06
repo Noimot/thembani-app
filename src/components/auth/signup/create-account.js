@@ -1,18 +1,14 @@
 import React, { useState } from "react";
-import Header from "../../header";
-import { LoginLogo } from "../../icons/login-logo";
+
 // import { Link } from "react-router-dom";
-import { PasswordIcon } from "../../icons/password-icon";
-import { Formik, Form } from "formik";
-import * as Yup from "yup";
-import FormInput from "../../shared/form-input";
+
 import SignupForm from "./signup-form";
 import ConfirmOtp from "./confirm-otp";
 import { useSelector } from "react-redux";
 import "../../../styles/style.css"
 
 export default function CreateAccount() {
-  const { data, isSuccess, isLoading, isError } = useSelector(
+  const { data} = useSelector(
     (state) => state.auth
   );
   const [userDetails, getUserDetails] = useState();
