@@ -9,12 +9,12 @@ import { useSelector } from "react-redux";
 import { getToken } from "../../../app/features/slice/tokenSlice";
 import { postGenerateNuit } from "../../../app/features/slice/generateNuitSlice";
 import Selfie from "./selfie";
-import Yup from "yup";
+// import Yup from "yup";
 import DashboardNav from "../../../components/shared/dashboard-nav";
 import ImageUpload from "../../../components/shared/input-file";
 
 const CustomerOnboarding = () => {
-  const { tokenData, isLoading, isSuccess, isError } = useSelector(
+  const { tokenData,  } = useSelector(
     (state) => state.token
   );
   const dispatch = useDispatch();
@@ -24,9 +24,9 @@ const CustomerOnboarding = () => {
     password: "Fintech123*",
     APIKEY: "OTNUSEVNQkFOSSBBRlJJQ0EyOS8wNy8yMDIyIDE4OjA1OjEy",
   };
-  // useEffect(() => {
-  //   dispatch(getToken(payload));
-  // }, []);
+  useEffect(() => {
+    dispatch(getToken(payload));
+  }, []);
   const initialValues = {
     first_name: "",
     middle_name: "",
@@ -41,22 +41,20 @@ const CustomerOnboarding = () => {
     address: "",
     client_nuit: "",
     client_local: "",
-    // client_imgf: "",
-    // client_imgb: "",
     selfie: "",
     user_id: 2,
     client_number: "",
   };
-  const [imgb, setImgb] = useState();
+  const [imgb, setImgb] = useState(null);
   const handleFileChangeb = (event) => {
-    console.log(event.target.files[0], "imgb");
     setImgb(event.target.files[0]);
+    console.log(event.target.files[0], "imgb");
   };
-  const [imgf, setImgf] = useState();
+  const [imgf, setImgf] = useState(null);
 
   const handleFileChangef = (event) => {
-    console.log(event.target.files[0], "imgf");
     setImgf(event.target.files[0]);
+    console.log(event.target.files[0], "imgf");
   };
   return (
     <div className="w-full flex flex-col bg-white gap-y-8">
@@ -65,12 +63,13 @@ const CustomerOnboarding = () => {
         <Formik
           initialValues={initialValues}
           onSubmit={(values) => {
-            let formData = new FormData();
+            console.log(imgb, "img");
+            
             // formData.append("client_imgf", values.client_images.client_imgf);
             // formData.append("client-imgb", values.client_images.client_imgf);
             const data = {
               messageID: "0000000000011092093",
-              token: tokenData.data.value,
+              token: tokenData,
               client_name: `${values.first_name} ${values.middle_name} ${values.last_name}`,
               date_of_birth: values.date_of_birth,
               gender: values.gender,
@@ -82,39 +81,40 @@ const CustomerOnboarding = () => {
               address: values.address,
               client_nuit: values.client_nuit,
               client_local: values.client_local,
-              client_imgf: imgf,
+              client_imgf:imgf,
               client_imgb: imgb,
               selfie: values.selfie,
               user_id: 2,
               client_number: values.client_number,
               // formData
             };
-            formData.append("client_imgf", imgf);
-            formData.append("client-imgb", imgb);
-            formData.append("messageID", "0000000000011092093");
-            formData.append("token", tokenData.data.value);
-            formData.append(
-              "client_name",
-              `${values.first_name} ${values.middle_name} ${values.last_name}`
-            );
-            formData.append("date_of_birth", values.date_of_birth);
-            formData.append("gender", values.gender);
-            formData.append("fathers_name", values.fathers_name);
-            formData.append("mothers_name", values.mothers_name);
-            formData.append("identity_type", values.identity_type);
-            formData.append("identity_number", values.identity_number);
-            formData.append("email", values.email);
-            formData.append("address", values.address);
-            formData.append("client_nuit", values.client_nuit);
-            formData.append("client_local", values.client_local);
-            formData.append("client_imgf", values.client_imgf);
-            formData.append("client_imgb", values.client_imgb);
-            formData.append("selfie", values.selfie);
-            formData.append("user_id", 2);
-            formData.append("client_number", values.client_number);
+            // formData.append("client_imgf", imgf);
+            // formData.append("client-imgb", imgb);
+            // formData.append("messageID", "0000000000011092093");
+            // formData.append("token", tokenData);
+            // formData.append(
+            //   "client_name",
+            //   `${values.first_name} ${values.middle_name} ${values.last_name}`
+            // );
+            // formData.append("date_of_birth", values.date_of_birth);
+            // // formData.append("gender", values.gender);
+            // formData.append("fathers_name", values.fathers_name);
+            // formData.append("mothers_name", values.mothers_name);
+            // formData.append("identity_type", values.identity_type);
+            // formData.append("identity_number", values.identity_number);
+            // formData.append("email", values.email);
+            // formData.append("address", values.address);
+            // formData.append("client_nuit", values.client_nuit);
+            // formData.append("client_local", values.client_local);
+            // // formData.append("client_imgf", values.client_imgf);
+            // // formData.append("client_imgb", values.client_imgb);
+            // formData.append("selfie", values.selfie);
+            // formData.append("user_id", 2);
+            // formData.append("client_number", values.client_number);
+            
+            console.log(data);
+            dispatch(postGenerateNuit(data));
 
-            dispatch(postGenerateNuit(formData));
-            console.log(values);
           }}
         >
           {({ setFieldValue, handleChange }) => (
@@ -315,14 +315,14 @@ const CustomerOnboarding = () => {
                       label="(BI Front)"
                       name="client_imgf"
                       onChange={(event) => {
-                        handleFileChangef(event);
+                        handleFileChangef(event)
                       }}
                     />
                     <ImageUpload
                       label="(BI Back)"
                       name="client_imgb"
                       onChange={(event) => {
-                        handleFileChangeb(event);
+                        handleFileChangeb(event)
                       }}
                     />
                   </div>

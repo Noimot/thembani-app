@@ -18,6 +18,7 @@ module.exports = {
         "grey-1": "#E6E6E6",
         "grey-2": "#646363",
         "grey-3": "#fcfcfc",
+        "grey-4": "#D9D9D9",
         green: "#EAF3F4",
         "green-1": "#009B72",
         "green-2": "rgba(217, 217, 217, 0.15)",
@@ -26,8 +27,10 @@ module.exports = {
         "green-5": "#1EBF95",
         "red-1": "#DC3027",
         "red-2": "#F14950",       
-        "orange-1": "#FF4F07",       
+        "orange-1": "#FF4F07",
+        "yellow-1": "#FFAF2A",      
         "blue-1": "rgba(81, 153, 219, 0.69)",
+        "blue-2": "#0890FE"
       },
       width: {
         679: "679px",
