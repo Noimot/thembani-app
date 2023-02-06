@@ -49,22 +49,14 @@ const ImageUpload = ({ label, name, onChange }) => {
       <h4>
        {label}
       </h4>
-<<<<<<< HEAD
-      <label htmlFor={`Upload-${name}`}>
-=======
       <label htmlFor={`${name}-file`}>
->>>>>>> aeb75bcbb9ed78cde2f39f0416d6dbab3d721c98
         <img src={uploadIcon} className="mx-auto mt-2" />
       </label>
       <input
         hidden
         type="file"
         name={name}
-<<<<<<< HEAD
-        id={`Upload-${name}`}
-=======
         id={`${name}-file`}
->>>>>>> aeb75bcbb9ed78cde2f39f0416d6dbab3d721c98
         // capture="user"
         accept="**"
         onChange={onChange}
