@@ -10,6 +10,7 @@ import GenerateNuib from "./pages/generate-nuib";
 import CustomerOnboarding from "./pages/dashboard/customer-onboading/customer-onboarding";
 import Dashboard from "./pages/dashboard";
 import Home from "./pages/dashboard/home";
+import LoanOnboarding from "./pages/dashboard/loan/onboarding";
 
 function App() {
   return (
@@ -21,6 +22,10 @@ function App() {
             <Route
               path="customer-onboarding"
               element={<CustomerOnboarding />}
+            />
+            <Route
+              path="loan-application/customer-onboarding"
+              element={<LoanOnboarding />}
             />
           </Route>
           <Route path="/login" element={<Login />} />

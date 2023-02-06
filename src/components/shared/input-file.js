@@ -50,16 +50,16 @@ const ImageUpload = ({ label, name, onChange }) => {
 
     <div className="w-full bg-grey-1 text-center py-6">
       <h4>
-       national id {label}
+       {label}
       </h4>
-      <label htmlFor="Upload">
+      <label htmlFor={`${name}-file`}>
         <img src={uploadIcon} className="mx-auto mt-2" />
       </label>
       <input
         hidden
         type="file"
         name={name}
-        id="Upload"
+        id={`${name}-file`}
         // capture="user"
         accept="image/*"
         onChange={onChange}

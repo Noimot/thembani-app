@@ -1,18 +1,18 @@
 import React from "react";
 import { useField } from "formik";
 
-const TextArea = ({ name, required, palceholder, ...rest }) => {
+const TextArea = ({ name, required, palceholder, employer, ...rest }) => {
   const [field, { error, touched }] = useField({
     name: name,
     type: name,
   });
   return (
-    <div >
+    <div>
       <div
-        className="h-86 border border-solid border-klooft-grey rounded-lg px-4 pt-4 bg-grey-1"
+        className={`${employer && 'border-2 border-solid border-red-4'} h-86 rounded-lg px-4 pt-4 bg-grey-1`}
       >
         <textarea
-          className="w-full h-full bg-grey-1 capitalize border-0 outline-0 resize-none text-xs text-klooft-grey font-Gilroy-regular"
+          className="w-full h-full bg-grey-1 capitalize border-0 outline-0 resize-none text-xs"
           {...field}
           {...rest}
         />
