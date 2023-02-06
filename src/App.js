@@ -11,6 +11,7 @@ import CustomerOnboarding from "./pages/dashboard/customer-onboading/customer-on
 import Dashboard from "./pages/dashboard";
 import Home from "./pages/dashboard/home";
 import Status from "./pages/dashboard/loan-details/Status";
+import LoanOnboarding from "./pages/dashboard/loan/onboarding";
 
 function App() {
   return (
@@ -26,6 +27,10 @@ function App() {
             <Route
               path="loan-details"
               element={<Status/>}
+            />
+            <Route
+              path="loan-application/customer-onboarding"
+              element={<LoanOnboarding />}
             />
           </Route>
           <Route path="/login" element={<Login />} />

@@ -30,7 +30,10 @@ module.exports = {
         "orange-1": "#FF4F07",
         "yellow-1": "#FFAF2A",      
         "blue-1": "rgba(81, 153, 219, 0.69)",
-        "blue-2": "#0890FE"
+        "blue-2": "#0890FE",
+        "red-3": "#F4473E",  
+        "red-4": "rgba(250, 12, 0, 0.32)",  
+        "red-5": "#FF7C75",          
       },
       width: {
         679: "679px",
@@ -41,6 +44,7 @@ module.exports = {
         196: "196px",
         149: "149px",
         109: "109px",
+        13: "13px",
       },
       height: {
         605: "605px",
@@ -52,6 +56,7 @@ module.exports = {
         65: "65px",
         62: "62px",
         51: "51px",
+        13: "13px",
       },
       boxShadow: {
         "3xl": "-5px 6px 24px rgba(0, 0, 0, 0.18)",
