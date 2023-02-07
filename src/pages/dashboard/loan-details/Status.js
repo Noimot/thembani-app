@@ -76,11 +76,11 @@ const loanDetailsSummary = [
     value: "5 M" //To be replaced with real data
   },
   {
-    id: 8,
+    id: 9,
     icon: insuranceIcon,
     iconBg: "bg-yellow-1",
     IconRadius: "rounded-5",
-    label: "Period Lapsed",
+    label: "Insuarance",
     value: "Active" //To be replaced with real data
   },
 ]
