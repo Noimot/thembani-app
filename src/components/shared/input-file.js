@@ -1,7 +1,7 @@
 import React from "react";
 import uploadIcon from "../../assets/images/upload-icon.svg";
 
-const ImageUpload = ({ label, name, onChange }) => {
+const ImageUpload = ({ label, name, onChange, bg }) => {
 //   const { values, isValid, setFieldValue } = useFormikContext();
 //   const handleDrop = (acceptedFiles) => {
 //     setFieldValue("client_images", [...values.client_images, acceptedFiles[0]]);
@@ -45,7 +45,7 @@ const ImageUpload = ({ label, name, onChange }) => {
     //   </Dropzone>
     // </div>
 
-    <div className="w-full bg-grey-1 text-center py-6">
+    <div className={`w-full ${bg ? bg: "bg-grey-1"} text-center py-6 rounded-5 border border-[2px] border-bg-grey-1`}>
       <h4>
        {label}
       </h4>

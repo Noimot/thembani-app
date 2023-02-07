@@ -12,6 +12,8 @@ import Dashboard from "./pages/dashboard";
 import Home from "./pages/dashboard/home";
 import Status from "./pages/dashboard/loan-details/Status";
 import LoanOnboarding from "./pages/dashboard/loan/onboarding";
+import InsuranceStatus from "./pages/dashboard/insurance/InsuranceStatus";
+import PasswordChange from "./pages/dashboard/settings/PasswordChange";
 
 function App() {
   return (
@@ -27,6 +29,14 @@ function App() {
             <Route
               path="loan-details"
               element={<Status/>}
+            />
+            <Route
+              path="insurance"
+              element={<InsuranceStatus/>}
+            />
+            <Route
+              path="settings"
+              element={<PasswordChange/>}
             />
             <Route
               path="loan-application/customer-onboarding"
