@@ -25,9 +25,9 @@ const CustomerOnboarding = () => {
     password: "Fintech123*",
     APIKEY: "OTNUSEVNQkFOSSBBRlJJQ0EyOS8wNy8yMDIyIDE4OjA1OjEy",
   };
-  useEffect(() => {
-    dispatch(getToken(payload));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getToken(payload));
+  // }, []);
   const initialValues = {
     first_name: "",
     middle_name: "",

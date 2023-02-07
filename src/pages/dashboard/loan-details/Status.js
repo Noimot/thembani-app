@@ -10,7 +10,7 @@ import insuranceIcon from '../../../assets/images/insuranceIcon.svg'
 import LoanData from "../../../components/Loan/LoanData";
 
 
-const loanDetailsSummary =[
+const loanDetailsSummary = [
   {
     id: 1,
     icon: dollarIcon,

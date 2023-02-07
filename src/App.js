@@ -12,6 +12,7 @@ import Dashboard from "./pages/dashboard";
 import Home from "./pages/dashboard/home";
 import Status from "./pages/dashboard/loan-details/Status";
 import LoanOnboarding from "./pages/dashboard/loan/onboarding";
+import ClientEligibility from "./pages/dashboard/loan/client-eligibility";
 
 function App() {
   return (
@@ -31,6 +32,10 @@ function App() {
             <Route
               path="loan-application/customer-onboarding"
               element={<LoanOnboarding />}
+            />
+            <Route
+              path="loan-application/client-eligibility"
+              element={<ClientEligibility />}
             />
           </Route>
           <Route path="/login" element={<Login />} />
