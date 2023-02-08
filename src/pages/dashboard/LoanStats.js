@@ -3,6 +3,7 @@ import DashboardProfile from "../../components/shared/DashboardProfile";
 import bookIcon from '../../assets/images/bookIcon.svg'
 import interestArrowIcon from '../../assets/images/interestArrowIcon.svg'
 import clockIcon from '../../assets/images/clockIcon.svg'
+import DoughnutChart from "../../components/charts/DoughnutChart";
 
 
 export default function LoanStats() {
@@ -12,7 +13,9 @@ export default function LoanStats() {
       <div className="flex flex-col gap-[18px]">
         <DashboardProfile/>
         <div className="flex gap-[2%]">
-          <div className="w-[45%]"></div>
+          <div className="w-[45%] bg-green rounded-5 flex flex-col gap-[18px] items-center justify-center">
+            <DoughnutChart/>
+          </div>
           <div className="w-[53%] flex flex-col gap-[13px]">
             <div className="flex justify-between w-full px-[27px] py-[20px] rounded-5 bg-green items-center">
               <div className="flex flex-col gap-[13px]">
