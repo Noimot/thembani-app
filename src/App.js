@@ -16,6 +16,8 @@ import InsuranceStatus from "./pages/dashboard/insurance/InsuranceStatus";
 import PasswordChange from "./pages/dashboard/settings/PasswordChange";
 import ProfileInfo from "./pages/dashboard/profile/ProfileInfo";
 import Notification from "./pages/dashboard/notification/Notification";
+import LoanStats from "./pages/dashboard/LoanStats";
+import ResetPassword from "./pages/auth/ResetPassword";
 
 function App() {
   return (
@@ -27,6 +29,10 @@ function App() {
             <Route
               path="customer-onboarding"
               element={<CustomerOnboarding />}
+            />
+            <Route
+              path="loan-stats"
+              element={<LoanStats/>}
             />
             <Route
               path="loan-details"
@@ -54,6 +60,7 @@ function App() {
             />
           </Route>
           <Route path="/login" element={<Login />} />
+          <Route path="/forgot-password" element={<ResetPassword />} />
           <Route path="/create-account" element={<Signup />} />
           <Route path="/confirm-account" element={<AccountComfirmation />} />
           <Route path="/instruction" element={<Instructions />} />

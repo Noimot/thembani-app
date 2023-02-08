@@ -1,13 +1,20 @@
 import DashboardNav from "../../../components/shared/dashboard-nav";
-import activeIcon from '../../../assets/images/activeIcon.svg'
 import { useState } from "react";
 import '../../../styles/style.css'
 import ImageUpload from "../../../components/shared/input-file";
 import Button from "../../../components/shared/button";
+import ComfirmationPopup from "../../../components/shared/popup/ComfirmationPopup";
+
+// Icons
+import activeIcon from '../../../assets/images/activeIcon.svg'
+import ExIcon from '../../../assets/images/exclamation-mark.svg'
+
+
 export default function InsuranceStatus() {
   const [radioOption, setRadioOption] = useState('Job loss')
   const [imageID, setImageID] = useState(null)
   const [imageCert, setImageCert] = useState(null)
+  const [showModal, setShowModal] = useState(false)
   const onOptionChange = e => {
     setRadioOption(e.target.value)
   }
@@ -21,10 +28,31 @@ export default function InsuranceStatus() {
   }
   const handleSubmit = e => {
     e.preventDefault()
-    console.log(radioOption, imageID, imageCert);
+    // triggers the confirmation pop up
+    setShowModal(true)
   }
+  const handleConfirmation = () =>{
+    // This is where the submission happens
+    console.log(radioOption, imageID, imageCert);
+    setShowModal(false)
+  }
+  const handleCancel = () =>{
+    setShowModal(false)
+  }
+
   return (
     <div className="w-full flex flex-col bg-white gap-y-8">
+      {showModal && 
+      <ComfirmationPopup
+      icon={ExIcon}
+      label='Insurance Claim!'
+      message='Are you sure you want to claim your insurance?'
+      handleConfirmation={handleConfirmation}
+      handleCancel={handleCancel}
+      confirmationBtnText='Yes, Claim'
+      cancelBtnText='Cancel'
+      />
+      }
       <DashboardNav heading="Insuarnce" subHeading="Status"/>
       <div className="flex flex-col gap-[13px]">
         <div className="bg-green w-full flex gap-[18px] justify-center items-center py-[80px] rounded-5">
