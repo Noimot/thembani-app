@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useFormikContext } from "formik";
-import cameraIcon from "../../../assets/images/camera-icon.svg";
+import cameraIcon from "../../assets/images/camera-icon.svg";
 
 const Selfie = () => {
     const {values, setFieldValue} = useFormikContext();

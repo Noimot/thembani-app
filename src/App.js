@@ -17,6 +17,9 @@ import InsuranceStatus from "./pages/dashboard/insurance/InsuranceStatus";
 import PasswordChange from "./pages/dashboard/settings/PasswordChange";
 import ProfileInfo from "./pages/dashboard/profile/ProfileInfo";
 import Notification from "./pages/dashboard/notification/Notification";
+import PaymentReschedule from "./pages/dashboard/loan/payment-reschedule";
+import KycUpload from "./pages/dashboard/loan/kyc-upload";
+import LoanAcceptancce from "./pages/dashboard/loan/loan-acceptancce";
 
 function App() {
   return (
@@ -56,6 +59,18 @@ function App() {
             <Route
               path="loan-application/client-eligibility"
               element={<ClientEligibility />}
+            />
+            <Route
+              path="loan-application/payment-reschedule"
+              element={<PaymentReschedule />}
+            />
+            <Route
+              path="loan-application/kyc-upload"
+              element={<KycUpload />}
+            />
+            <Route
+              path="loan-application/loan-acceptance"
+              element={<LoanAcceptancce />}
             />
           </Route>
           <Route path="/login" element={<Login />} />

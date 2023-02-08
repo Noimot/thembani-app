@@ -8,16 +8,14 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { getToken } from "../../../app/features/slice/tokenSlice";
 import { postGenerateNuit } from "../../../app/features/slice/generateNuitSlice";
-import Selfie from "./selfie";
+import Selfie from "../../../components/shared/selfie";
 // import Yup from "yup";
 import DashboardNav from "../../../components/shared/dashboard-nav";
 import ImageUpload from "../../../components/shared/input-file";
 import Button from "../../../components/shared/button";
 
 const CustomerOnboarding = () => {
-  const { tokenData,  } = useSelector(
-    (state) => state.token
-  );
+  const { tokenData } = useSelector((state) => state.token);
   const dispatch = useDispatch();
   const payload = {
     name: "Thembani",
@@ -69,7 +67,7 @@ const CustomerOnboarding = () => {
           initialValues={initialValues}
           onSubmit={(values) => {
             console.log(imgb, "img");
-            
+
             // formData.append("client_imgf", values.client_images.client_imgf);
             // formData.append("client-imgb", values.client_images.client_imgf);
             // const data = {
@@ -338,8 +336,16 @@ const CustomerOnboarding = () => {
                 </section>
               </div>
               <div className="flex items-center gap-x-4 pt-5">
-                <div className="w-200 h-62"><Button btnText="Submit" btnType="submit"/></div>
-                <div className="w-200 h-62"><Button btnText="Cancel" btnType="button"  className="bg-red-3"/></div>
+                <div className="w-200 h-62">
+                  <Button btnText="Submit" btnType="submit" />
+                </div>
+                <div className="w-200 h-62">
+                  <Button
+                    btnText="Cancel"
+                    btnType="button"
+                    className="bg-red-3"
+                  />
+                </div>
               </div>
             </Form>
           )}
