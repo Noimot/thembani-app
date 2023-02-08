@@ -6,6 +6,7 @@ module.exports = {
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
       },
+      
       backgroundImage: {
         banner: "url('./assets/images/banner.svg')",
         instructionBg: "url('./assets/images/instruction-bg.svg')",
