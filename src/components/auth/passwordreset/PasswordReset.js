@@ -19,7 +19,7 @@ export default function PasswordReset() {
     setOtp("confirmed-otp");
   };
   return (
-    <div className="bg-banner w-full h-full font-poppins bg-cover bg-no-repeat bg-center flex flex-col items-end justify-center py-10 px-[100px]">
+    <div className="bg-banner w-full h-[calc(100vh-100px)] font-poppins bg-cover bg-no-repeat bg-center flex flex-col items-end justify-center py-10 px-[100px]">
     <div className="w-411 h-auto rounded-[14px] shadow-3xl flex flex-col justify-center items-center bg-white gap-y-8 py-9 px-[22px]">
       {!success && <div className="flex items-center relative gap-x-16">
         <div className="flex flex-col w-[57px] text-center">

@@ -1,13 +1,13 @@
-import axios from 'axios';
-import { TokenName } from './constants';
+import axios from "axios";
+import { TokenName } from "./constants";
 
 const baseUrl = process.env.REACT_APP_BASE_URL;
 const http = axios.create({
   baseURL: baseUrl,
   headers: {
-    'Content-Type': 'application/json', "Accept": '*/*', 'Api-key': 'ml7h7L8nN8Q2yA',
-
-  }
+    Accept: "*/*",
+    "Api-key": "ml7h7L8nN8Q2yA",
+  },
 });
 
 http.interceptors.request.use(
