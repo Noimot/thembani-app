@@ -32,3 +32,40 @@
   font-size: 14px;
   line-height: 21px;
 }
+
+.radio-container {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  position: relative;
+  margin-bottom: 12px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.radio-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Create a custom radio button */
+.radio-container .checkmark {
+  /* position: absolute;
+  top: 0;
+  left: 0; */
+  height: 33px;
+  width: 33px;
+  background-color: #D9D9D9;
+  border-radius: 50%;
+}
+
+/* When the radio button is checked, add a blue background */
+.radio-container input:checked ~ .checkmark {
+  background-color: #009B72;
+  ;
+}

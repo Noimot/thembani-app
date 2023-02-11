@@ -1,6 +1,5 @@
 import React from "react";
-import Header from "../../header";
-import { LoginLogo } from "../../icons/login-logo";
+
 import { Link } from "react-router-dom";
 import { PasswordIcon } from "../../icons/password-icon";
 import FormInput from "../../shared/form-input";
@@ -13,7 +12,7 @@ import { useSelector } from "react-redux";
 
 export default function LoginForm({ handleConfirmOtp, getUserDetails }) {
   const dispatch = useDispatch();
-  const { loginData, isSuccess, isLoading, isError } = useSelector(
+  const { loginData, isLoading } = useSelector(
     (state) => state.auth
   );
   return (

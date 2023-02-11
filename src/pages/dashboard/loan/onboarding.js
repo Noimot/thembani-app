@@ -62,7 +62,7 @@ const LoanOnboarding = () => {
     <div className="w-full flex flex-col bg-white gap-y-8">
       <DashboardNav
         heading="Loan Application"
-        subHeading="Client eligibility"
+        subHeading="Customer Onboarding"
       />
       <main className="py-2 px-8 bg-green">
         <Formik
