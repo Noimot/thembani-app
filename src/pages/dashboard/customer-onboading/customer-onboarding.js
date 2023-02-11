@@ -67,35 +67,6 @@ const CustomerOnboarding = () => {
         <Formik
           initialValues={initialValues}
           onSubmit={(values) => {
-            console.log(imgb, "img");
-
-            // formData.append("client_imgf", values.client_images.client_imgf);
-            // formData.append("client-imgb", values.client_images.client_imgf);
-            // const data = {
-            //   messageID: "0000000000011092093",
-            //   token: tokenData.data.value,
-            //   client_name: `${values.first_name} ${values.middle_name} ${values.last_name}`,
-            //   date_of_birth: values.date_of_birth,
-            //   gender: values.gender,
-            //   fathers_name: values.fathers_name,
-            //   mothers_name: values.mothers_name,
-            //   identity_type: values.identity_type,
-            //   identity_number: values.identity_number,
-            //   email: values.email,
-            //   address: values.address,
-            //   client_nuit: values.client_nuit,
-            //   client_local: values.client_local,
-            //   client_imgf: values.client_imgf,
-            //   client_imgb: values.client_imgb,
-              // client_imgf: "https://res.cloudinary.com/noimot/image/upload/v1666344666/Screenshot_77_y4anmg.png",
-              // client_imgb: "https://res.cloudinary.com/noimot/image/upload/v1629989303/2021-08-26_epta6e.png",
-              // selfie: values.selfie,
-              // user_id: 2,
-              // client_number: `${values.client_no_code}${values.client_no}`,
-            //   // formData
-            // };
-            // formData.append("client_imgf", imgf);
-            // formData.append("client-imgb", imgb);
             let formData = new FormData();
             formData.append("messageID", "0000000000011092093");
             formData.append("token", tokenData.data.value);
@@ -118,7 +89,6 @@ const CustomerOnboarding = () => {
             formData.append("selfie", values.selfie);
             formData.append("user_id", 2);
             formData.append("client_number", `${values.client_no_code}${values.client_no}`);
-
             dispatch(postGenerateNuit(formData));
             console.log(values);
           }}

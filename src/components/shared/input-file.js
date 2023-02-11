@@ -8,8 +8,6 @@ const ImageUpload = ({ label, name, bg }) => {
   const { values, isValid, setFieldValue } = useFormikContext();
   const handleDrop = (acceptedFiles) => {
     setFieldValue(name, acceptedFiles[0]);
-    // setFieldValue('client_images', {...values.client_images, ['client_imgb'] : acceptedFiles[0]});
-    // setFieldValue("client_imgb", acceptedFiles[0]);
     console.log(acceptedFiles[0], 'images')
   };
   const handleDropRejected = () => {

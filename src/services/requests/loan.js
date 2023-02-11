@@ -12,3 +12,15 @@ export const generateNuit = async (data) =>
 
 export const getResponse = async (id) =>
   http.get(`get-response?messageID=${id}`);
+
+export const kycApi = async (data) => http.post("kyc", data, {
+  Headers: {
+    "'Content-Type'": "multipart/form-data",
+  },
+});
+
+export const loanOnboardingApi = async (data) => http.post("loan", data, {
+  Headers: {
+    "'Content-Type'": "multipart/form-data",
+  },
+});
