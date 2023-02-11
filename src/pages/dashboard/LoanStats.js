@@ -1,9 +1,9 @@
 import DashboardNav from "../../components/shared/dashboard-nav";
-import DashboardProfile from "../../components/shared/DashboardProfile";
 import bookIcon from '../../assets/images/bookIcon.svg'
 import interestArrowIcon from '../../assets/images/interestArrowIcon.svg'
 import clockIcon from '../../assets/images/clockIcon.svg'
 import DoughnutChart from "../../components/charts/DoughnutChart";
+import CustomerBasicDetails from "../../components/shared/customer-basic-details";
 
 
 export default function LoanStats() {
@@ -11,7 +11,7 @@ export default function LoanStats() {
     <div className="w-full flex flex-col bg-white gap-y-8">
       <DashboardNav heading="Dashboard" subHeading="Loan Stats"/>
       <div className="flex flex-col gap-[18px]">
-        <DashboardProfile/>
+        <CustomerBasicDetails />
         <div className="flex gap-[2%]">
           <div className="w-[45%] bg-green rounded-5 flex flex-col gap-[18px] items-center justify-center">
             <DoughnutChart/>
