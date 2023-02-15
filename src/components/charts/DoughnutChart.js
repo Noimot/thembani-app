@@ -13,14 +13,26 @@ export default function DoughnutChart() {
         data: [88888, 10000], //Real data to be used
         backgroundColor: ["rgba(54, 162, 235)", "rgba(255, 255, 255)"],
         borderColor: ["rgba(54, 162, 235, 1)", "rgba(255, 255, 255, 1)"],
-        borderWidth: 1
+        borderWidth: 1,
+        rotation: -180,
       }
     ],
     labels: ["Balance", "Paid"],
   };
 
   const options = {
-
+    responsive: true,
+    cutout: '80%',
+    plugins:{
+      legend:{
+        position: 'bottom',
+        labels: {
+          usePointStyle: true,
+          pointStyle: 'circle',
+          padding: 20
+        }
+      }
+    }
   }
   const textCenter = {
     id: "total",
