@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, isAnyOf } from "@reduxjs/toolkit";
 import { register } from "../../../services/requests/auth";
-import { postConfirmOtp, postRegister, postLogin, getUserDetails } from "../thunk/authThunk";
+import { postConfirmOtp, postRegister, postLogin, postResetPassword, postChangePassword, getUserDetails } from "../thunk/authThunk";
 
 const authSlice = createSlice({
   name: "auth",
@@ -9,6 +9,8 @@ const authSlice = createSlice({
     loginData: [],
     otpData:[],
     userDetailsData: [],
+    resetPasswordData: [],
+    changePasswordData: [],
     isLoading: false,
     isSuccess: false,
     message: "",
@@ -26,7 +28,12 @@ const authSlice = createSlice({
         state.loginData = payload;
       })
       .addCase(postConfirmOtp.fulfilled, (state, {payload}) => {
-        state.otpData = payload;
+        state.otpData = payload;})
+      .addCase(postResetPassword.fulfilled, (state, { payload }) => {
+        state.resetPasswordData = payload;
+      })
+      .addCase(postChangePassword.fulfilled, (state, { payload }) => {
+        state.changePasswordData = payload;
       })
       .addCase(getUserDetails.fulfilled, (state, {payload}) => {
         state.userDetailsData = payload;
@@ -44,18 +51,18 @@ const authSlice = createSlice({
         }
       )
       .addMatcher(
-        isAnyOf(postRegister.fulfilled, postRegister.rejected, postLogin.fulfilled, postLogin.rejected, getUserDetails.fulfilled, getUserDetails.rejected),
+        isAnyOf(postRegister.fulfilled, postRegister.rejected, postLogin.fulfilled, postLogin.rejected, postResetPassword.fulfilled, postResetPassword.rejected, postChangePassword.fulfilled, postChangePassword.rejected, getUserDetails.fulfilled, getUserDetails.rejected),
         (state) => {
           state.isLoading = false;
         }
       )
       .addMatcher(
-        isAnyOf(postRegister.pending, postLogin.pending, getUserDetails.pending),
+        isAnyOf(postRegister.pending, postConfirmOtp.pending, postLogin.pending, postResetPassword.pending, postChangePassword.pending, getUserDetails.pending),
         (state) => {
           state.isLoading = true;
         }
       )
-      .addMatcher(isAnyOf(postRegister.fulfilled, postLogin.fulfilled, getUserDetails.fulfilled), (state) => {
+      .addMatcher(isAnyOf(postRegister.fulfilled, postLogin.fulfilled, postResetPassword.fulfilled, postChangePassword.fulfilled, getUserDetails.fulfilled), (state) => {
         state.isSuccess = true;
       })
       .addMatcher(isAnyOf(postRegister.fulfilled, postLogin.fulfilled, postRegister.pending, postLogin.pending, getUserDetails.fulfilled, getUserDetails.pending), (state) => {
@@ -65,10 +72,10 @@ const authSlice = createSlice({
         state.isLoadingOtp = false;
         state.otpSuccess = true;
       })
-      .addMatcher(isAnyOf(postRegister.rejected, postLogin.rejected, getUserDetails.rejected), (state) => {
+      .addMatcher(isAnyOf(postRegister.rejected, postResetPassword.rejected, postChangePassword.rejected, postLogin.rejected, getUserDetails.rejected), (state) => {
         state.isError = true;
       })
-      .addMatcher(isAnyOf(postRegister.rejected, postLogin.rejected, getUserDetails.rejected), (state) => {
+      .addMatcher(isAnyOf(postRegister.rejected, postResetPassword.rejected, postChangePassword.rejected, postLogin.rejected, getUserDetails.rejected), (state) => {
         state.isSuccess = false;
       });
   },

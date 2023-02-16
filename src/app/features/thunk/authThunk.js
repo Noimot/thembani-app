@@ -1,5 +1,12 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { confirmOtp, register, login, userDetailsApi } from "../../../services/requests/auth";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import {
+  confirmOtp,
+  register,
+  login,
+  resetPassword,
+  changePassword,
+  userDetailsApi,
+} from "../../../services/requests/auth";
 import toast from "react-hot-toast";
 
 const pathname = window.location.pathname;
@@ -37,7 +44,7 @@ export const postConfirmOtp = createAsyncThunk(
       localStorage.setItem("Thembani-TKN-auth", res.data.data.token);
       localStorage.setItem("userProfile", JSON.stringify(res.data.data.data));
       if (pathname === "/create-account") {
-        window.location.replace("/confirm-account")
+        window.location.replace("/confirm-account");
       }
       // else {
       //   window.location.replace("/dashboard")
@@ -54,7 +61,7 @@ export const postLogin = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const res = await login(data);
-      window.localStorage.setItem("userEmail", res.data.data.email)
+      window.localStorage.setItem("userEmail", res.data.data.email);
       toast.success("Login Successful");
       return res.data;
     } catch (error) {
@@ -64,7 +71,6 @@ export const postLogin = createAsyncThunk(
   }
 );
 
-
 export const getUserDetails = createAsyncThunk(
   "auth/userDetailsApi",
   async (data, { rejectWithValue }) => {
@@ -73,10 +79,37 @@ export const getUserDetails = createAsyncThunk(
       toast.success(res.message);
       return res.data;
     } catch (error) {
-      console.log(error)
+      console.log(error);
       toast.error(error.response.data.message);
       rejectWithValue(error.response.data);
     }
   }
 );
 
+export const postResetPassword = createAsyncThunk(
+  "auth/reset_password",
+  async (data, { rejectWithValue }) => {
+    try {
+      const res = await resetPassword(data);
+      toast.success("Password reset link has been sent to your email address");
+      return res.data;
+    } catch (error) {
+      toast.error(error.response.data.data.error);
+      rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const postChangePassword = createAsyncThunk(
+  "auth/change_password",
+  async (data, { rejectWithValue }) => {
+    try {
+      const res = await changePassword(data);
+      toast.success("Password has been successfully updated");
+      return res.data;
+    } catch (error) {
+      toast.error(error.response.data.data.error);
+      rejectWithValue(error.response.data);
+    }
+  }
+);
