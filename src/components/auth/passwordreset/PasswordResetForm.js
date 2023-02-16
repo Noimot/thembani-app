@@ -27,7 +27,7 @@ export default function PasswordResetForm() {
       <form onSubmit={handleSubmit} className="w-full flex flex-col gap-8">
         <label>
           <input className={`${error ? " border border-red-4" : ''} w-full bg-grey-1 outline-0 text-sm placeholder:text-dark-3 text-dark-3 px-[20px] py-[12px] rounded-5`} type="email" placeholder="Email Address"  onChange={(e) =>setEmail(e.target.value)} value={email}/>
-          <p className="text-red-4">{error}</p>
+          <p className="text-sm font-medium text-dark-1">{error}</p>
         </label>
         <Button className='py-[10px]' btnText="Submit" btnType="submit" loading={isLoading}/>
       </form>
