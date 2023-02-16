@@ -10,7 +10,10 @@ export default function Success() {
       </div>
       <div className='flex flex-col gap-[8px] text-center'>
         <span className='font-[700] text-[27px]'>Congratulations</span>
-        <span className='font-[400] text-[14px]'>Password has been successfully changed</span>
+        <div className='flex flex-col'>
+          <span className='font-[400] text-[14px]'>A default password has been sent to your email</span>
+          <span className='font-[400] text-[14px]'>Proceed to login and change the default password on the setting</span>
+        </div>
         <Link to="/create-account" className='mt-[40px]'>
           <Button className='py-[10px]' btnText='Sign In'/>
         </Link>
