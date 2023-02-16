@@ -53,7 +53,7 @@ export default function InsuranceStatus() {
       cancelBtnText='Cancel'
       />
       }
-      <DashboardNav heading="Insuarnce" subHeading="Status"/>
+      <DashboardNav heading="Insurance" subHeading="Status"/>
       <div className="flex flex-col gap-[13px]">
         <div className="bg-green w-full flex gap-[18px] justify-center items-center py-[80px] rounded-5">
           <img src={activeIcon} alt="" />

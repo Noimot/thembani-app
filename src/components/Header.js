@@ -1,5 +1,6 @@
 import React from 'react'
-import { Logo } from './icons/logo'
+import { Logo } from './icons/logo';
+import { Link } from 'react-router-dom';
 
 export default function Header() {
   return (
@@ -11,7 +12,7 @@ export default function Header() {
                 <option value="english">english</option>
                 <option value="portuguese">portuguese</option>
             </select>
-            <button className='capitalize'>sign up</button>
+            <Link className='capitalize' to="/create-account">sign up</Link>
         </div>
     </div>
   )

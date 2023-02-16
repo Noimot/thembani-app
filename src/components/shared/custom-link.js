@@ -4,7 +4,7 @@ import "../../styles/style.css";
 const evaluateActivelink = (to, pathname) => {
   return to === "/" ? pathname === to : pathname.startsWith(to);
 };
-
+const userProfile = JSON.parse(localStorage.getItem("userProfile"));
 const CustomLink = ({
   children,
   extraMatch,
@@ -24,11 +24,11 @@ const CustomLink = ({
       //     ? `${styles.sidebar_links_link} ${styles.active}`
       //     : extraMatch && extraMatch.includes(resolved.pathname) ? `${styles.sidebar_links_link} ${styles.active}` : `${styles.sidebar_links_link}`
       // }
-      className={
-        evaluateActivelink(to, pathname)
+      className={`
+        ${evaluateActivelink(to, pathname)
           ? "linkActive links"
-          : "link links"
-      }
+          : "link links"} ${userProfile.profile !== null && "disabled:opacity-75 disabled:cursor-not-allowed"}
+      `}
     >
       {children}
     </Link>

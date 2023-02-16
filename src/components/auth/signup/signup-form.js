@@ -8,7 +8,7 @@ import { postRegister } from "../../../app/features/thunk/authThunk";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import Button from "../../shared/button";
-import banner from "../../../assets/images/banner.svg"
+import banner from "../../../assets/images/banner.svg";
 
 export default function SignupForm({ handleConfirmOtp, getUserDetails }) {
   const dispatch = useDispatch();
@@ -41,7 +41,7 @@ export default function SignupForm({ handleConfirmOtp, getUserDetails }) {
           .required("Confirm password is required"),
       })}
       onSubmit={async (values) => {
-       await dispatch(postRegister(values));
+        await dispatch(postRegister(values));
         if (data) {
           handleConfirmOtp();
         }
@@ -70,7 +70,9 @@ export default function SignupForm({ handleConfirmOtp, getUserDetails }) {
             icon={<PasswordIcon />}
           />
           <div className="flex justify-end capitalize text-sm">
-            <Link className="text-grey-2" to="/forgot-password">forgot password?</Link>
+            <Link className="text-grey-2" to="/forgot-password">
+              forgot password?
+            </Link>
           </div>
           <div className="flex items-center justify-between gap-x-2">
             <div className="flex items-center gap-x-3 text-sm">

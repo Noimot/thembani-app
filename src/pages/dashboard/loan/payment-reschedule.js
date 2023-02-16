@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import DashboardNav from "../../../components/shared/dashboard-nav";
 import LoanStatistics from "../../../components/shared/loan-statistics";
 import dollarIcon from "../../../assets/images/dollarIcon.svg";
@@ -6,8 +6,29 @@ import rateIcon from "../../../assets/images/rateIcon.svg";
 import calenderIcon from "../../../assets/images/calenderIcon.svg";
 import LoanData from "../../../components/Loan/LoanData";
 import Button from "../../../components/shared/button";
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { getPaymentSchedule } from "../../../app/features/thunk/loanThunk";
 
 const PaymentReschedule = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { updatedLoanDetailsData, paymentScheduleData } = useSelector(
+    (state) => state.loan
+  );
+  const handleBackButton = () => {
+    navigate(-1);
+  };
+
+  useEffect(() => {
+    dispatch(getPaymentSchedule());
+  }, []);
+  console.log(paymentScheduleData, "payment data");
+  console.log(updatedLoanDetailsData, "updated loan details");
+  const schedule =
+    paymentScheduleData.data &&
+    JSON.parse(paymentScheduleData.data.data.schedule);
+  console.log(schedule.Stat, "schedule");
   return (
     <div className="w-full flex flex-col bg-white gap-y-8">
       <DashboardNav
@@ -19,17 +40,28 @@ const PaymentReschedule = () => {
           <LoanStatistics
             icon={dollarIcon}
             text="Borrowed Principal"
-            amount="MZN 98 888"
+            amount={`MZN ${
+              paymentScheduleData.data &&
+              paymentScheduleData.data.data.principal
+            }`}
             icon2={rateIcon}
             text2="Annual Rate"
             amount2="33.3%"
             icon3={calenderIcon}
             text3="Period"
-            amount3="24M"
+            amount3={`${
+              paymentScheduleData.data && paymentScheduleData.data.data.tenor
+            }M`}
           />
         </div>
         <div>
-        <LoanData/>
+          <LoanData
+            LoanDetailsData={schedule.Stat}
+            principal={
+              paymentScheduleData.data &&
+              paymentScheduleData.data.data.principal
+            }
+          />
         </div>
         <div className="w-full flex items-center justify-between pt-4">
           <div className="flex items-center gap-x-4">
@@ -38,7 +70,12 @@ const PaymentReschedule = () => {
               <Button btnText="Proceed" btnType="submit" />
             </div>
             <div className="w-200 h-62">
-              <Button btnText="Back" btnType="button" className="bg-grey-7" />
+              <Button
+                btnText="Back"
+                btnType="button"
+                className="bg-grey-7"
+                handleClick={handleBackButton}
+              />
             </div>
           </div>
           <div className="w-200 h-62">

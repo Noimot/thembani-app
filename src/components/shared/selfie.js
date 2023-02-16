@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useFormikContext } from "formik";
 import cameraIcon from "../../assets/images/camera-icon.svg";
+import { toast } from "react-hot-toast";
 
 const Selfie = () => {
   const { values, setFieldValue } = useFormikContext();
@@ -14,7 +15,6 @@ const Selfie = () => {
     startCamera();
     setCamera(true);
   };
-
   const startCamera = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
@@ -22,7 +22,7 @@ const Selfie = () => {
       });
       videoEle.current.srcObject = stream;
     } catch (err) {
-      console.log(err);
+      toast.error(err);
     }
   };
 

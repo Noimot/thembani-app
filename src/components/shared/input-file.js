@@ -4,18 +4,18 @@ import { useFormikContext } from "formik";
 import Dropzone from "react-dropzone";
 import { toast } from "react-hot-toast";
 
-const ImageUpload = ({ label, name, bg }) => {
+const ImageUpload = ({ label, name, bg}) => {
   const { values, isValid, setFieldValue } = useFormikContext();
   const handleDrop = (acceptedFiles) => {
     setFieldValue(name, acceptedFiles[0]);
-    console.log(acceptedFiles[0], 'images')
+    console.log(acceptedFiles[0], "images");
   };
   const handleDropRejected = () => {
     return toast.error("Maximum file upload size is 5MB");
   };
   const handleFileChange = (e) => {
     setFieldValue(name, e.target.files[0]);
-  }
+  };
   return (
     <div className="w-full flex flex-col gap-y-35">
       <Dropzone
@@ -27,7 +27,11 @@ const ImageUpload = ({ label, name, bg }) => {
         maxSize={50e5}
       >
         {({ getRootProps, getInputProps }) => (
-          <section className={`${bg ? bg: "bg-grey-1"} mt-8 relative mx-auto w-full h-[105px] rounded-lg flex justify-center items-center cursor-pointer`}>
+          <section
+            className={`${
+              bg ? bg : "bg-grey-1"
+            } mt-8 py-4 relative mx-auto w-full h-auto rounded-lg flex justify-center items-center cursor-pointer`}
+          >
             <div
               {...getRootProps()}
               className="flex flex-col items-center gap-y-27"
@@ -38,7 +42,7 @@ const ImageUpload = ({ label, name, bg }) => {
               />
               <p className="text-dark-1 text-sm pb-4">{label}</p>
               <img src={uploadIcon} alt="" />
-
+             <p className="text-sm pt-2 capitalize">{values[name].name}</p> 
             </div>
           </section>
         )}

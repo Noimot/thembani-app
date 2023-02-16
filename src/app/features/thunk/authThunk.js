@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { confirmOtp, register, login } from "../../../services/requests/auth";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { confirmOtp, register, login, userDetailsApi } from "../../../services/requests/auth";
 import toast from "react-hot-toast";
 
 const pathname = window.location.pathname;
@@ -39,9 +39,9 @@ export const postConfirmOtp = createAsyncThunk(
       if (pathname === "/create-account") {
         window.location.replace("/confirm-account")
       }
-      else {
-        window.location.replace("/dashboard")
-      }
+      // else {
+      //   window.location.replace("/dashboard")
+      // }
       return res.data;
     } catch (error) {
       rejectWithValue(error.response.data);
@@ -63,3 +63,20 @@ export const postLogin = createAsyncThunk(
     }
   }
 );
+
+
+export const getUserDetails = createAsyncThunk(
+  "auth/userDetailsApi",
+  async (data, { rejectWithValue }) => {
+    try {
+      const res = await userDetailsApi(data);
+      toast.success(res.message);
+      return res.data;
+    } catch (error) {
+      console.log(error)
+      toast.error(error.response.data.message);
+      rejectWithValue(error.response.data);
+    }
+  }
+);
+

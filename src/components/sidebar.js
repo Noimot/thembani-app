@@ -10,24 +10,42 @@ import setting from "../assets/images/setting.svg";
 import logout from "../assets/images/logout-icon.svg";
 import insuranceIcon from "../assets/images/insurance.svg";
 import LoanPopup from "./loan-popup";
+import { useSelector } from "react-redux";
 
 export const Sidebar = () => {
+  const {otpData} = useSelector((state) => state.auth);
   const [visible, setVisibility] = useState(false);
+  const { pathname } = useLocation();
   const handleNavigateToTop = () => {
     window.scrollTo(0, 0);
   };
   const toggleVisibility = () => {
     setVisibility((state) => !state);
   };
-  return (
+  const handleLogout = () => {
+    localStorage.removeItem("Thembani-TKN-auth");
+    localStorage.removeItem("userProfile");
+    localStorage.removeItem("userEmail");
+    window.location.replace("/login");
+  };
+  const path =
+    pathname === "/loan-application/client-eligibility" ||
+    pathname === "/loan-application/payment-reschedule" ||
+    pathname === "/loan-application/kyc-upload" ||
+    pathname === "/loan-application/loan-acceptance";
+
+    const userProfile = JSON.parse(localStorage.getItem("userProfile"));
+    return (
     <aside className="h-screen w-272 shadow-4xl bg-green-2 pt-6 px-8 overflow-y-auto scroll-0">
       <div className="flex flex-col items-center justify-center">
         <Link to="/">
           <Logo />
         </Link>
         <ul className="flex flex-col items-center justify-center gap-y-3 pt-5">
-          <li className="">
-            <CustomLink onClick={handleNavigateToTop} to="/dashboard">
+          {/* <li className={`${userProfile.profile === null ? "disable": null}`}> */}
+          <li>
+
+            <CustomLink onClick={handleNavigateToTop} to="/">
               <span className="flex items-center gap-x-3">
                 <span>
                   <svg
@@ -52,27 +70,40 @@ export const Sidebar = () => {
               </span>
             </CustomLink>
           </li>
-          <li className="link links" onClick={toggleVisibility} >
-            <span className="flex items-center gap-x-3">
-              <span>
-                <img src={loanIcon} alt="" />
+          <li className="flex flex-col ">
+          <CustomLink onClick={handleNavigateToTop} to="/loan-application/customer-onboarding">
+              <span className="flex items-center gap-x-3">
+                <span>
+                  <img src={loanDetails} alt="" />
+                </span>
+                <span className="capitalize">loan application</span>
               </span>
-              <span className="capitalize">loan application</span>
-            </span>
-            <span>
-              <img src={arrowIcon} alt="" />
-            </span>
-          </li>
-          {visible && (
-            <div className="transition ease-in-out delay-150">
-              <LoanPopup />
-            </div>
-          )}
-          <li className="">
-            <CustomLink
-              onClick={handleNavigateToTop}
-              to="/dashboard/loan-details"
+              <span>
+                <img src={arrowIcon} alt="" />
+              </span>
+            </CustomLink>
+            {/* <div
+              onClick={toggleVisibility}
+              className={pathname === "path" ? "linkActive links" : "link links"}
             >
+              <span className="flex items-center gap-x-3">
+                <span>
+                  <img src={loanIcon} alt="" />
+                </span>
+                <span className="capitalize">loan application</span>
+              </span>
+              <span>
+                <img src={arrowIcon} alt="" />
+              </span>
+            </div>
+            {visible && (
+              <div className="transition ease-in-out delay-150">
+                <LoanPopup setVisibility={setVisibility} />
+              </div>
+            )} */}
+          </li>
+          <li className="">
+            <CustomLink onClick={handleNavigateToTop} to="/loan-details">
               <span className="flex items-center gap-x-3">
                 <span>
                   <img src={loanDetails} alt="" />
@@ -85,7 +116,7 @@ export const Sidebar = () => {
             </CustomLink>
           </li>
           <li className="">
-            <CustomLink onClick={handleNavigateToTop} to="/dashboard/insurance">
+            <CustomLink onClick={handleNavigateToTop} to="/insurance">
               <span className="flex items-center gap-x-3">
                 <span>
                   <img src={insuranceIcon} alt="" />
@@ -99,7 +130,7 @@ export const Sidebar = () => {
           </li>
           <li className="w-full border-b-[3px] border-solid border-grey-1" />
           <li className="">
-            <CustomLink onClick={handleNavigateToTop} to="/dashboard/settings">
+            <CustomLink onClick={handleNavigateToTop} to="/settings">
               <span className="flex items-center gap-x-3">
                 <span>
                   <img src={setting} alt="" />
@@ -113,7 +144,10 @@ export const Sidebar = () => {
           </li>
         </ul>
       </div>
-      <div className="flex items-center text-base text-dark-1 px-4 gap-x-3 pt-6">
+      <div
+        className="flex items-center text-base text-dark-1 gap-x-3 pt-6"
+        onClick={handleLogout}
+      >
         <span>
           <img src={logout} alt="" />
         </span>

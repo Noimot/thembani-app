@@ -5,8 +5,13 @@ import DashboardNav from "../../../components/shared/dashboard-nav";
 import FormSelect from "../../../components/shared/form-select";
 import ImageUpload from "../../../components/shared/input-file";
 import Selfie from "../../../components/shared/selfie";
+import { useNavigate } from "react-router-dom";
 
 const KycUpload = () => {
+  const navigate = useNavigate();
+  const handleBackButton = () => {
+    navigate(-1);
+  };
   return (
     <div className="w-full flex flex-col bg-white gap-y-8">
       <DashboardNav heading="Loan Application" subHeading="KYC Upload" />
@@ -31,7 +36,7 @@ const KycUpload = () => {
                 {/* <Selfie /> */}
                 <ImageUpload
                   label="(BI Front)"
-                  name="client_imgf"
+                  name=""
                   //   onChange={(event) => {
                   //     handleFileChangef(event);
                   //   }}
@@ -40,14 +45,14 @@ const KycUpload = () => {
               <div className="w-full flex items-center gap-x-3.5">
                 <ImageUpload
                   label="(BI Front)"
-                  name="client_imgf"
+                  name=""
                   //   onChange={(event) => {
                   //     handleFileChangef(event);
                   //   }}
                 />
                 <ImageUpload
                   label="(BI Back)"
-                  name="client_imgb"
+                  name=""
                   //   onChange={(event) => {
                   //     handleFileChangeb(event);
                   //   }}
@@ -55,12 +60,12 @@ const KycUpload = () => {
               </div>
               <ImageUpload
                 label="(BI Front)"
-                name="client_imgf"
+                name=""
                 //   onChange={(event) => {
                 //     handleFileChangef(event);
                 //   }}
               />
-              <FormSelect name="ministry">
+              <FormSelect name="">
                 <option value="" className="text-sm text-dark-3">
                   Ministry
                 </option>
@@ -68,14 +73,14 @@ const KycUpload = () => {
               <div className="w-full flex items-center gap-x-3.5">
                 <ImageUpload
                   label="(BI Front)"
-                  name="client_imgf"
+                  name=""
                   //   onChange={(event) => {
                   //     handleFileChangef(event);
                   //   }}
                 />
                 <ImageUpload
                   label="(BI Back)"
-                  name="client_imgb"
+                  name=""
                   //   onChange={(event) => {
                   //     handleFileChangeb(event);
                   //   }}
@@ -92,7 +97,12 @@ const KycUpload = () => {
             <Button btnText="Proceed" btnType="submit" />
           </div>
           <div className="w-200 h-62">
-            <Button btnText="Back" btnType="button" className="bg-grey-7" />
+            <Button
+              btnText="Back"
+              btnType="button"
+              className="bg-grey-7"
+              handleClick={handleBackButton}
+            />
           </div>
         </div>
         <div className="w-200 h-62">

@@ -1,13 +1,25 @@
 import { createSlice, createAsyncThunk, isAnyOf } from "@reduxjs/toolkit";
 import { getNuibToken } from "../../../services/requests/loan";
-import { postKyc } from "../thunk/loanThunk";
+import {
+  postKyc,
+  postLoanOnboarding,
+  getEligibilitySalary,
+  updateLoanDetails,
+  getPaymentSchedule
+} from "../thunk/loanThunk";
 import toast from "react-hot-toast";
-
 
 const loanSlice = createSlice({
   name: "loan",
   initialState: {
     kycData: [],
+    loanOnboardingData: [],
+    eligibilitySalaryData: [],
+    updatedLoanDetailsData: [],
+    paymentScheduleData: [],
+    isUpdateLoanLoading: false,
+    isUpdateLoanError: false,
+    isUpdateLoanSuccess: false,
     isLoading: false,
     isSuccess: false,
     isError: false,
@@ -18,21 +30,81 @@ const loanSlice = createSlice({
       .addCase(postKyc.fulfilled, (state, { payload }) => {
         state.kycData = payload;
       })
-      .addMatcher(isAnyOf(postKyc.fulfilled, postKyc.rejected), (state) => {
-        state.isLoading = false;
+      .addCase(postLoanOnboarding.fulfilled, (state, { payload }) => {
+        state.loanOnboardingData = payload;
       })
-      .addMatcher(isAnyOf(postKyc.pending), (state) => {
-        state.isLoading = true;
+      .addCase(getEligibilitySalary.fulfilled, (state, { payload }) => {
+        state.eligibilitySalaryData = payload;
       })
-      .addMatcher(isAnyOf(postKyc.fulfilled), (state) => {
-        state.isSuccess = true;
+      .addCase(updateLoanDetails.fulfilled, (state, { payload }) => {
+        state.updatedLoanDetailsData = payload;
       })
-      .addMatcher(isAnyOf(postKyc.rejected), (state) => {
-        state.isError = true;
+      .addCase(getPaymentSchedule.fulfilled, (state, { payload }) => {
+        state.paymentScheduleData = payload;
       })
-      .addMatcher(isAnyOf(postKyc.rejected), (state) => {
-        state.isSuccess = false;
-      });
+      .addMatcher(
+        isAnyOf(
+          postKyc.fulfilled,
+          postKyc.rejected,
+          postLoanOnboarding.fulfilled,
+          postLoanOnboarding.rejected,
+          getEligibilitySalary.fulfilled,
+          getEligibilitySalary.rejected
+        ),
+        (state) => {
+          state.isLoading = false;
+        }
+      )
+      .addMatcher(
+        isAnyOf(updateLoanDetails.fulfilled, updateLoanDetails.rejected),
+        (state) => {
+          state.isUpdateLoanLoading = false;
+        }
+      )
+      .addMatcher(
+        isAnyOf(
+          postKyc.pending,
+          postLoanOnboarding.pending,
+          getEligibilitySalary.pending
+        ),
+        (state) => {
+          state.isLoading = true;
+        }
+      )
+      .addMatcher(isAnyOf(updateLoanDetails.pending), (state) => {
+        state.isUpdateLoanLoading = true;
+      })
+      .addMatcher(
+        isAnyOf(
+          postKyc.fulfilled,
+          postLoanOnboarding.fulfilled,
+          getEligibilitySalary.fulfilled
+        ),
+        (state) => {
+          state.isSuccess = true;
+        }
+      )
+      .addMatcher(isAnyOf(updateLoanDetails.fulfilled), (state) => {
+        state.isUpdateLoanSuccess = true;
+      })
+      .addMatcher(
+        isAnyOf(
+          postKyc.rejected,
+          postLoanOnboarding.rejected,
+          getEligibilitySalary.rejected
+        ),
+        (state) => {
+          state.isError = true;
+          state.isSuccess = false;
+        }
+      )
+      .addMatcher(
+        isAnyOf(updateLoanDetails.rejected),
+        (state) => {
+          state.isUpdateLoanError = true;
+          state.isUpdateLoanSuccess = false;
+        }
+      );
   },
 });
 

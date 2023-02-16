@@ -1,7 +1,7 @@
 import React from "react";
 import { useField } from "formik";
 
-const FormInput = ({ type, name, icon, onChange, placeholder, onClick, employer }) => {
+const FormInput = ({ type, name, icon, onChange, placeholder, onClick, ref, onFocus, onBlur,  employer }) => {
   const [field, { error, touched }] = useField({ type: type, name: name });
   
   return (
@@ -9,13 +9,16 @@ const FormInput = ({ type, name, icon, onChange, placeholder, onClick, employer 
       <div
         className={`${
           icon ? "flex items-center px-4" : null
-        } ${employer && 'border-2 border-solid border-red-4'} w-full h-51 bg-grey-1 rounded-[5px]`}
+        } ${employer && !error && !touched ? 'border-2 border-solid border-red-4': null} w-full h-51 bg-grey-1 rounded-[5px]`}
       >
         <input
           type={type}
           name={name}
           placeholder={placeholder}
           onChange={onChange}
+          ref={ref}
+          onFocus={onFocus}
+          onBlur={onBlur}
           {...field}
           className={`${
             icon ? 'pl-0' : 'pl-4'

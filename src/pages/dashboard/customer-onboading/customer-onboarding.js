@@ -8,14 +8,27 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { getToken } from "../../../app/features/slice/tokenSlice";
 import { postGenerateNuit } from "../../../app/features/slice/generateNuitSlice";
+import { getMessageId } from "../../../app/features/slice/messageIdSlice";
 import Selfie from "../../../components/shared/selfie";
-// import Yup from "yup";
+import * as Yup from "yup";
 import DashboardNav from "../../../components/shared/dashboard-nav";
 import ImageUpload from "../../../components/shared/input-file";
 import Button from "../../../components/shared/button";
+import { getMessageIdApi } from "../../../services/requests/loan";
+import { postUserProfile } from "../../../app/features/slice/userProfileSlice";
+import { useOutletContext } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 const CustomerOnboarding = () => {
+  const navigate = useNavigate();
   const { tokenData } = useSelector((state) => state.token);
+  const { nuitData, nuitLoading } = useSelector((state) => state.generateNuit);
+  const { messageIdData } = useSelector((state) => state.messageId);
+  const { profileData } = useSelector((state) => state.userProfile);
+  const { otpData } = useSelector((state) => state.auth);
+  const [onboardingData, setOnboardingData] = useOutletContext();
+
+  console.log(profileData);
   const dispatch = useDispatch();
   const payload = {
     // name: "Thembani",
@@ -23,10 +36,39 @@ const CustomerOnboarding = () => {
     // password: "Fintech123*",
     // APIKEY: "OTNUSEVNQkFOSSBBRlJJQ0EyOS8wNy8yMDIyIDE4OjA1OjEy",
   };
-  console.log(tokenData, 'token data')
+  const userProfile = JSON.parse(localStorage.getItem("userProfile"));
   useEffect(() => {
     dispatch(getToken(payload));
   }, []);
+
+  useEffect(() => {
+    if (nuitData && nuitData.length !== 0) {
+      dispatch(getMessageId());
+    }
+  }, [nuitData]);
+
+  useEffect(() => {
+    if (messageIdData.success) {
+      const userProfileData = JSON.parse(messageIdData.data);
+      const profilePayload = {
+        user_id: userProfile.id,
+        client_nide: userProfileData.clie_nide,
+        client_nome: userProfileData.clie_nome,
+        client_nuib: userProfileData.clie_nuib,
+        client_nuit: userProfileData.clie_nuit,
+        client_numr: userProfileData.clie_numr,
+        client_tipd: userProfileData.clie_tipd,
+      };
+      dispatch(postUserProfile(profilePayload));
+    }
+  }, [messageIdData]);
+
+  useEffect(() => {
+    if (profileData.success) {
+      navigate(`/loan-application/customer-onboarding`);
+    }
+  }, [profileData.success]);
+
   const initialValues = {
     first_name: "",
     middle_name: "",
@@ -44,21 +86,10 @@ const CustomerOnboarding = () => {
     client_imgf: "",
     client_imgb: "",
     selfie: "",
-    user_id: 2,
+    user_id: "",
     // client_number: "",
     client_no_code: "",
     client_no: "",
-  };
-  const [imgb, setImgb] = useState(null);
-  const handleFileChangeb = (event) => {
-    setImgb(event.target.files[0]);
-    console.log(event.target.files[0], "imgb");
-  };
-  const [imgf, setImgf] = useState(null);
-
-  const handleFileChangef = (event) => {
-    setImgf(event.target.files[0]);
-    console.log(event.target.files[0], "imgf");
   };
   return (
     <div className="w-full flex flex-col bg-white gap-y-8">
@@ -66,6 +97,31 @@ const CustomerOnboarding = () => {
       <main className="">
         <Formik
           initialValues={initialValues}
+          validationSchema={Yup.object({
+            first_name: Yup.string().required("First name is required"),
+            middle_name: Yup.string().required("Middle name is required"),
+            last_name: Yup.string().required("Last name is required"),
+            date_of_birth: Yup.string().required("Date of birth is required"),
+            gender: Yup.string().required("Gender is required"),
+            fathers_name: Yup.string().required("Fathers name is required"),
+            mothers_name: Yup.string().required("Mothers name is required"),
+            identity_type: Yup.string().required("Identity type is required"),
+            identity_number: Yup.string().required(
+              "Identity number is required"
+            ),
+            email: Yup.string()
+              .email("Invalid email address")
+              .required("Email is required"),
+            address: Yup.string().required("Address is required"),
+            client_nuit: Yup.string()
+              .required("Nuit is required")
+              .min(9, "Nuit must be at least 9 characters"),
+            client_local: Yup.string().required("Client local is required"),
+            client_imgb: Yup.string().required("Image is required"),
+            client_imgf: Yup.string().required("Image is required"),
+            selfie: Yup.string().required("Selfie is required"),
+            client_no: Yup.string().required("phone number is required"),
+          })}
           onSubmit={(values) => {
             let formData = new FormData();
             formData.append("messageID", "0000000000011092093");
@@ -86,14 +142,19 @@ const CustomerOnboarding = () => {
             formData.append("client_local", values.client_local);
             formData.append("client_imgf", values.client_imgf);
             formData.append("client_imgb", values.client_imgb);
-            formData.append("selfie", values.selfie);
-            formData.append("user_id", 2);
-            formData.append("client_number", `${values.client_no_code}${values.client_no}`);
+            formData.append("selfie", "values.selfie");
+            formData.append("user_id", userProfile.id);
+            formData.append(
+              "client_number",
+              `${values.client_no_code}${values.client_no}`
+            );
             dispatch(postGenerateNuit(formData));
-            console.log(values);
+            // dispatch(postGenerateNuit(data));
+            setOnboardingData(values);
+            localStorage.setItem("onboardingData", JSON.stringify(values));
           }}
         >
-          {({ setFieldValue, handleChange }) => (
+          {({ setFieldValue, handleChange, values, isValid, dirty }) => (
             <Form onChange={handleChange}>
               <div className="bg-green py-2 px-8">
                 <section>
@@ -296,16 +357,10 @@ const CustomerOnboarding = () => {
                       <ImageUpload
                         label="National ID (BI Front)"
                         name="client_imgf"
-                        // onChange={(event) => {
-                        //   setFieldValue("client_imgf", event.target.files[0]);
-                        // }}
                       />
                       <ImageUpload
                         label="National ID (BI Back)"
                         name="client_imgb"
-                        // onChange={(event) => {
-                        //   setFieldValue("client_imgf", event.target.files[0]);
-                        // }}
                       />
                     </div>
                     <div>
@@ -316,7 +371,12 @@ const CustomerOnboarding = () => {
               </div>
               <div className="flex items-center gap-x-4 pt-5">
                 <div className="w-200 h-62">
-                  <Button btnText="Submit" btnType="submit" />
+                  <Button
+                    btnText="Submit"
+                    btnType="submit"
+                    loading={nuitLoading}
+                    disabled={!isValid && dirty}
+                  />
                 </div>
                 <div className="w-200 h-62">
                   <Button

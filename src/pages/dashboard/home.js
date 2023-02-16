@@ -3,6 +3,7 @@ import cancelIcon from "../../assets/images/cancel-icon.svg";
 import CustomerBasicDetails from "../../components/shared/customer-basic-details";
 import DashboardNav from "../../components/shared/dashboard-nav";
 import StatusUpdate from "../../components/shared/status-update";
+import { useSelector } from "react-redux";
 
 const Home = () => {
   return (
