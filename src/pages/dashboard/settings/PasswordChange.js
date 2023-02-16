@@ -103,18 +103,18 @@ export default function PasswordChange() {
           <div className="flex flex-col gap-[9px]">
           <label>
               <input className={`${errorOldP ? " border border-red-4" : ''} w-1/2 h-full bg-grey-1 outline-0 text-sm placeholder:text-dark-3 text-dark-3 px-[20px] py-[12px] rounded-5`} type="text" name="password0" id="password0" placeholder="Old Password" onChange={handleChangeOld} value={oldPassword}/>
-              <p className="text-red-4">{errorOldP}</p>
+              <p className="text-sm font-medium text-dark-1">{errorOldP}</p>
             </label>
             <label>
               <input className={`${errorPassword ? " border border-red-4" : ''} w-1/2 h-full bg-grey-1 outline-0 text-sm placeholder:text-dark-3 text-dark-3 px-[20px] py-[12px] rounded-5`} type="password" name="password1" id="password1" placeholder="New Password" onBlur={handleBlurP} onChange={handleChangeP} value={password}/>
-              <p className="text-red-4">{errorPassword}</p>
+              <p className="text-sm font-medium text-dark-1">{errorPassword}</p>
             </label>
             <label>
               <input className={`${errorConfirmP ? " border border-red-4" : ''} w-1/2 h-full bg-grey-1 outline-0 text-sm placeholder:text-dark-3 text-dark-3 px-[20px] py-[12px] rounded-5`} type="password" name="password2" id="password2" placeholder="Confirm Password" onChange={handleChangeConfirmP} value={confirmP}/>
-              <p className="text-red-4">{errorConfirmP}</p>
+              <p className="text-sm font-medium text-dark-1">{errorConfirmP}</p>
             </label>
           </div>
-          <div className="w-200 h-62 mt-[28px]"><Button btnText="Submit" btnType="submit"/></div>
+          <div className="w-200 h-62 mt-[28px]"><Button btnText="Submit" btnType="submit" loading={isLoading}/></div>
         </form>
       </div>
     </div>
