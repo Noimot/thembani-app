@@ -8,14 +8,25 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { getToken } from "../../../app/features/slice/tokenSlice";
 import { postGenerateNuit } from "../../../app/features/slice/generateNuitSlice";
+import { getMessageId } from "../../../app/features/slice/messageIdSlice";
 import Selfie from "../../../components/shared/selfie";
-// import Yup from "yup";
+import * as Yup from "yup";
 import DashboardNav from "../../../components/shared/dashboard-nav";
 import ImageUpload from "../../../components/shared/input-file";
 import Button from "../../../components/shared/button";
+import { getMessageIdApi } from "../../../services/requests/loan";
+import { postUserProfile } from "../../../app/features/slice/userProfileSlice";
+import { useOutletContext } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 const CustomerOnboarding = () => {
+  const navigate = useNavigate();
   const { tokenData } = useSelector((state) => state.token);
+  const { nuitData, nuitLoading } = useSelector((state) => state.generateNuit);
+  const { messageIdData } = useSelector((state) => state.messageId);
+  const { profileData } = useSelector((state) => state.userProfile);
+  const { otpData } = useSelector((state) => state.auth);
+  const [setOnboardingData] = useOutletContext();
   const dispatch = useDispatch();
   const payload = {
     // name: "Thembani",
@@ -23,10 +34,39 @@ const CustomerOnboarding = () => {
     // password: "Fintech123*",
     // APIKEY: "OTNUSEVNQkFOSSBBRlJJQ0EyOS8wNy8yMDIyIDE4OjA1OjEy",
   };
-  console.log(tokenData, 'token data')
+  const userProfile = JSON.parse(localStorage.getItem("userProfile"));
   useEffect(() => {
     dispatch(getToken(payload));
   }, []);
+
+  useEffect(() => {
+    if (nuitData && nuitData.length !== 0) {
+      dispatch(getMessageId());
+    }
+  }, [nuitData]);
+
+  useEffect(() => {
+    if (messageIdData?.success) {
+      const userProfileData = JSON.parse(messageIdData?.data);
+      const profilePayload = {
+        user_id: userProfile.id,
+        client_nide: userProfileData?.clie_nide,
+        client_nome: userProfileData?.clie_nome,
+        client_nuib: userProfileData?.clie_nuib,
+        client_nuit: userProfileData?.clie_nuit,
+        client_numr: userProfileData?.clie_numr,
+        client_tipd: userProfileData?.clie_tipd,
+      };
+      dispatch(postUserProfile(profilePayload));
+    }
+  }, [messageIdData]);
+
+  useEffect(() => {
+    if (profileData?.success) {
+      navigate(`/loan-application/customer-onboarding`);
+    }
+  }, [profileData?.success]);
+
   const initialValues = {
     first_name: "",
     middle_name: "",
@@ -44,21 +84,9 @@ const CustomerOnboarding = () => {
     client_imgf: "",
     client_imgb: "",
     selfie: "",
-    user_id: 2,
-    // client_number: "",
+    user_id: "",
     client_no_code: "",
     client_no: "",
-  };
-  const [imgb, setImgb] = useState(null);
-  const handleFileChangeb = (event) => {
-    setImgb(event.target.files[0]);
-    console.log(event.target.files[0], "imgb");
-  };
-  const [imgf, setImgf] = useState(null);
-
-  const handleFileChangef = (event) => {
-    setImgf(event.target.files[0]);
-    console.log(event.target.files[0], "imgf");
   };
   return (
     <div className="w-full flex flex-col bg-white gap-y-8">
@@ -66,9 +94,33 @@ const CustomerOnboarding = () => {
       <main className="">
         <Formik
           initialValues={initialValues}
+          validationSchema={Yup.object({
+            first_name: Yup.string().required("First name is required"),
+            middle_name: Yup.string().required("Middle name is required"),
+            last_name: Yup.string().required("Last name is required"),
+            date_of_birth: Yup.string().required("Date of birth is required"),
+            gender: Yup.string().required("Gender is required"),
+            fathers_name: Yup.string().required("Fathers name is required"),
+            mothers_name: Yup.string().required("Mothers name is required"),
+            identity_type: Yup.string().required("Identity type is required"),
+            identity_number: Yup.string().required(
+              "Identity number is required"
+            ),
+            email: Yup.string()
+              .email("Invalid email address")
+              .required("Email is required"),
+            address: Yup.string().required("Address is required"),
+            client_nuit: Yup.string()
+              .required("Nuit is required")
+              .min(9, "Nuit must be at least 9 characters"),
+            client_local: Yup.string().required("Client local is required"),
+            client_imgb: Yup.string().required("Image is required"),
+            client_imgf: Yup.string().required("Image is required"),
+            selfie: Yup.string().required("Selfie is required"),
+            client_no: Yup.string().required("phone number is required"),
+          })}
           onSubmit={(values) => {
             let formData = new FormData();
-            formData.append("messageID", "0000000000011092093");
             formData.append("token", tokenData.data.value);
             formData.append(
               "client_name",
@@ -86,14 +138,17 @@ const CustomerOnboarding = () => {
             formData.append("client_local", values.client_local);
             formData.append("client_imgf", values.client_imgf);
             formData.append("client_imgb", values.client_imgb);
-            formData.append("selfie", values.selfie);
-            formData.append("user_id", 2);
-            formData.append("client_number", `${values.client_no_code}${values.client_no}`);
+            formData.append("selfie", "selfie");
+            formData.append("user_id", userProfile.id);
+            formData.append(
+              "client_number",
+              `${values.client_no_code}${values.client_no}`
+            );
             dispatch(postGenerateNuit(formData));
-            console.log(values);
+            localStorage.setItem("onboardingData", JSON.stringify(values));
           }}
         >
-          {({ setFieldValue, handleChange }) => (
+          {({ setFieldValue, handleChange, values, isValid, dirty }) => (
             <Form onChange={handleChange}>
               <div className="bg-green py-2 px-8">
                 <section>
@@ -119,23 +174,32 @@ const CustomerOnboarding = () => {
                       />
                     </div>
                     <div className="flex items-center gap-x-3.5">
-                      <FormInput
-                        type="text"
-                        name="client_nuit"
-                        placeholder="NUIT Number"
-                      />
-                      <FormSelect name="gender" required>
-                        <option value="" className="text-sm text-dark-3">
-                          Gender
-                        </option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                      </FormSelect>
-                      <FormInput
-                        type="date"
-                        name="date_of_birth"
-                        placeholder="Date of Birth"
-                      />
+                      <div className="w-1/3">
+                        <FormInput
+                          type="text"
+                          name="client_nuit"
+                          placeholder="NUIT Number"
+                        />
+                      </div>
+                      <div className="w-1/3">
+                        <FormSelect name="gender" required>
+                          <option value="" className="text-sm text-dark-3">
+                            Gender
+                          </option>
+                          <option value="M">Male</option>
+                          <option value="F">Female</option>
+                        </FormSelect>
+                      </div>
+                      <div className="w-1/3 relative flex flex-col">
+                        <span className="absolute pl-4 text-xs text-dark-1">
+                          Date of Birth
+                        </span>
+                        <FormInput
+                          type="date"
+                          name="date_of_birth"
+                          placeholder="Date of Birth"
+                        />
+                      </div>
                     </div>
                     {/* <div>
                       <FormInput
@@ -152,8 +216,8 @@ const CustomerOnboarding = () => {
                       /> */}
                       <FormSelect name="identity_type" required>
                         <option value="">Select Identification</option>
-                        <option value="bi">BI</option>
-                        <option value="passaporte">Passaporte</option>
+                        <option value="BI">BI</option>
+                        <option value="PAS">Passaporte</option>
                       </FormSelect>
                       <FormInput
                         type="text"
@@ -200,7 +264,7 @@ const CustomerOnboarding = () => {
                     <div className="flex items-center gap-x-3.5">
                       <div className="w-1/3">
                         <FormSelect name="status" required>
-                          <option value="resident">Residential Status</option>
+                          <option value="1">Residential Status</option>
                         </FormSelect>
                       </div>
                       <div className="w-1/3">
@@ -244,40 +308,6 @@ const CustomerOnboarding = () => {
                     />
                   </div>
                 </section>
-                {/* <section>
-                  <h3 className="py-3 capitalize text-dark-3 text-base">
-                    Account Information
-                  </h3>
-                  <div className="flex flex-col gap-y-2.5">
-                    <div className="flex items-center gap-x-3.5">
-                      <FormSelect name="bank" required>
-                        <option value="">Bank</option>
-                        <option value="access">Access bank</option>
-                        <option value="stanbic">Stanbic Ibtc Bank</option>
-                      </FormSelect>
-                      <FormInput
-                        type="text"
-                        name="account_holder"
-                        placeholder="Account Holder"
-                      />
-                      <FormInput
-                        type="text"
-                        name="account_number"
-                        placeholder="Account Number"
-                      />
-                    </div>
-                    <div className="flex">
-                      <div className="w-1/2">
-                        <FormSelect name="identity_type" required>
-                          <option value="">Select Identification</option>
-                          <option value="passport">Passport</option>
-                          <option value="voters_card">Voters Card </option>
-                        </FormSelect>
-                      </div>
-                      <div className="w-1/2" />
-                    </div>
-                  </div>
-                </section> */}
                 <section>
                   <h3 className="py-3 capitalize text-dark-3 text-base">
                     Identification Document
@@ -294,18 +324,20 @@ const CustomerOnboarding = () => {
                   <div className="pt-4">
                     <div className="w-full flex items-center gap-x-3.5">
                       <ImageUpload
-                        label="National ID (BI Front)"
+                        label={`${
+                          values.identity_type
+                            ? values.identity_type
+                            : "National ID"
+                        } (Front)`}
                         name="client_imgf"
-                        // onChange={(event) => {
-                        //   setFieldValue("client_imgf", event.target.files[0]);
-                        // }}
                       />
                       <ImageUpload
-                        label="National ID (BI Back)"
+                        label={`${
+                          values.identity_type
+                            ? values.identity_type
+                            : "National ID"
+                        } (Back)`}
                         name="client_imgb"
-                        // onChange={(event) => {
-                        //   setFieldValue("client_imgf", event.target.files[0]);
-                        // }}
                       />
                     </div>
                     <div>
@@ -316,7 +348,12 @@ const CustomerOnboarding = () => {
               </div>
               <div className="flex items-center gap-x-4 pt-5">
                 <div className="w-200 h-62">
-                  <Button btnText="Submit" btnType="submit" />
+                  <Button
+                    btnText="Submit"
+                    btnType="submit"
+                    loading={nuitLoading}
+                    disabled={!isValid && dirty}
+                  />
                 </div>
                 <div className="w-200 h-62">
                   <Button

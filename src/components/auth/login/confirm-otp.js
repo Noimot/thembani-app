@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from "react";
-// import { useHistory } from "react-router-dom";
-import OTPInput, { ResendOTP } from "otp-input-react";
-import { confirmOtpsign } from "../../../services/requests/auth";
-import { toast } from "react-hot-toast";
-// import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import OTPInput from "otp-input-react";
 import {
   postConfirmOtp,
   postLogin,

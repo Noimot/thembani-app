@@ -1,16 +1,20 @@
-
 import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
+import store from "./app/store";
+import { Provider } from "react-redux";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import spinner from "./assets/images/spinner.png";
 import { Toaster } from "react-hot-toast";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistStore } from "redux-persist";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+// let persistor = persistStore(store);
 root.render(
   <React.StrictMode>
-    {/* <Provider store={store}> */}
+    <Provider store={store}>
       <Suspense
         fallback={
           <span>
@@ -19,9 +23,11 @@ root.render(
         }
       >
         <Toaster position={"top-center"} />
-        <App />
+        {/* <PersistGate persistor={persistor}> */}
+          <App />
+        {/* </PersistGate> */}
       </Suspense>
-    {/* </Provider> */}
+    </Provider>
   </React.StrictMode>
 );
 

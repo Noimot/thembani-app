@@ -3,6 +3,7 @@ import bellIcon from "../../assets/images/bell-icon.svg";
 
 
 const DashboardNav = ({heading, subHeading}) => {
+  const userProfile = JSON.parse(localStorage.getItem("userProfile"));
   return (
     <header className="w-full flex items-center gap-x-5 h-65">
       <div className="w-66 h-full bg-green py-5 text-2xl pl-6">
@@ -16,7 +17,7 @@ const DashboardNav = ({heading, subHeading}) => {
         <div className="border-b-2 border-solid border-grey-1 rotate-90 w-8"></div>
         <div className="flex items-center text-right gap-x-2">
           <div className="flex flex-col">
-            <h1 className="text-sm font-semibold text-dark-1 whitespace-nowrap">Bongane Dube</h1>
+            <h1 className="text-sm font-semibold text-dark-1 whitespace-nowrap capitalize">{userProfile.username}</h1>
             <span className="text-sm font-medium text-grey-5">Admin</span>
           </div>
           <div className="w-11 h-11 rounded-full bg-grey-1">

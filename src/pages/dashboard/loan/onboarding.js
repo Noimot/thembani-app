@@ -1,63 +1,63 @@
 import { Form, Formik } from "formik";
-import React, { useEffect, useState } from "react";
+import React, { useRef, useEffect } from "react";
 import FormInput from "../../../components/shared/form-input";
 import FormSelect from "../../../components/shared/form-select";
 import TextArea from "../../../components/shared/text-area";
 import backArrow from "../../../assets/images/arrow-black.svg";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getToken } from "../../../app/features/slice/tokenSlice";
 import { postGenerateNuit } from "../../../app/features/slice/generateNuitSlice";
-import Yup from "yup";
+import * as Yup from "yup";
 import DashboardNav from "../../../components/shared/dashboard-nav";
 import ImageUpload from "../../../components/shared/input-file";
 import Button from "../../../components/shared/button";
+import { postLoanOnboarding } from "../../../app/features/thunk/loanThunk";
+import { useNavigate } from "react-router-dom";
 
 const LoanOnboarding = () => {
-  const { tokenData, isLoading, isSuccess, isError } = useSelector(
-    (state) => state.token
-  );
+  let ref = useRef();
   const dispatch = useDispatch();
-  const payload = {
-    name: "Thembani",
-    email: "esmilda.dombo@thembaniafrica.com",
-    password: "Fintech123*",
-    APIKEY: "OTNUSEVNQkFOSSBBRlJJQ0EyOS8wNy8yMDIyIDE4OjA1OjEy",
-  };
-  // useEffect(() => {
-  //   dispatch(getToken(payload));
-  // }, []);
-  const initialValues = {
-    first_name: "",
-    middle_name: "",
-    last_name: "",
-    date_of_birth: "",
-    gender: "",
-    fathers_name: "",
-    mothers_name: "",
-    identity_type: "",
-    identity_number: "",
-    email: "",
-    address: "",
-    client_nuit: "",
-    client_local: "",
-    // client_imgf: "",
-    // client_imgb: "",
-    selfie: "",
-    user_id: 2,
-    client_number: "",
-  };
-  const [imgb, setImgb] = useState();
-  const handleFileChangeb = (event) => {
-    console.log(event.target.files[0], "imgb");
-    setImgb(event.target.files[0]);
-  };
-  const [imgf, setImgf] = useState();
+  const navigate = useNavigate();
+  const { loanOnboardingData, isLoading } = useSelector((state) => state.loan);
+  const customerData = JSON.parse(localStorage.getItem("onboardingData"));
+  const userProfile = JSON.parse(localStorage.getItem("userProfile"));
+console.log(customerData)
+  useEffect(() => {
+    if (loanOnboardingData?.data) {
+      navigate(`/loan-application/client-eligibility`);
+    }
+  }, [loanOnboardingData?.data]);
 
-  const handleFileChangef = (event) => {
-    console.log(event.target.files[0], "imgf");
-    setImgf(event.target.files[0]);
+  const initialValues = {
+    first_name: customerData?.first_name || "",
+    middle_name: customerData?.middle_name || "",
+    last_name: customerData?.last_name || "",
+    dob: customerData?.date_of_birth || "",
+    gender: customerData?.gender || "",
+    father_name: customerData?.mothers_name || "",
+    mother_name: customerData?.fathers_name || "",
+    fathers_address: customerData?.mothers_address || "",
+    mothers_address: customerData?.fathers_address || "",
+    identity_type: customerData?.identity_type || "",
+    identity_number: customerData?.identity_number || "",
+    email: customerData?.email || "",
+    address: customerData?.address || "",
+    client_local: customerData?.client_local || "",
+    phone_number: customerData?.client_no || "",
+    user_id: userProfile?.id,
+    company_name: "",
+    company_address: "",
+    company_phone: "",
+    ministry: "",
+    employee_number: "",
+    monthly_income: "",
+    bank_name: "",
+    account_holder: "",
+    account_number: "",
+    pay_date: "",
+    nib_number: "",
   };
+
   return (
     <div className="w-full flex flex-col bg-white gap-y-8">
       <DashboardNav
@@ -67,60 +67,52 @@ const LoanOnboarding = () => {
       <main className="py-2 px-8 bg-green">
         <Formik
           initialValues={initialValues}
+          validationSchema={Yup.object({
+            first_name: Yup.string().required("First name is required"),
+            middle_name: Yup.string().required("Middle name is required"),
+            last_name: Yup.string().required("Last name is required"),
+            dob: Yup.string().required("Date of birth is required"),
+            gender: Yup.string().required("Gender is required"),
+            father_name: Yup.string().required("Fathers name is required"),
+            mother_name: Yup.string().required("Mothers name is required"),
+            identity_type: Yup.string().required("Identity type is required"),
+            identity_number: Yup.string().required(
+              "Identity number is required"
+            ),
+            email: Yup.string()
+              .email("Invalid email address")
+              .required("Email is required"),
+            address: Yup.string().required("Address is required"),
+            phone_number: Yup.string().required("phone number is required"),
+            fathers_address: Yup.string().required(
+              "Fathers address is required"
+            ),
+            mothers_address: Yup.string().required(
+              "Mothers address is required"
+            ),
+            company_address: Yup.string().required(
+              "Companys address is required"
+            ),
+            company_name: Yup.string().required("Company's name is required"),
+            company_phone: Yup.string().required(
+              "Company's phone number is required"
+            ),
+            ministry: Yup.string().required("Ministry is required"),
+            employee_number: Yup.string().required(
+              "Employee number is required"
+            ),
+            monthly_income: Yup.string().required("Monthly income is required"),
+            bank_name: Yup.string().required("Bank name is required"),
+            account_holder: Yup.string().required("Account holder is required"),
+            account_number: Yup.string().required("Account number is required"),
+            pay_date: Yup.string().required("Payment due date is required"),
+            nib_number: Yup.string().required("Nib number is required"),
+          })}
           onSubmit={(values) => {
-            let formData = new FormData();
-            // formData.append("client_imgf", values.client_images.client_imgf);
-            // formData.append("client-imgb", values.client_images.client_imgf);
-            const data = {
-              messageID: "0000000000011092093",
-              token: tokenData.data.value,
-              client_name: `${values.first_name} ${values.middle_name} ${values.last_name}`,
-              date_of_birth: values.date_of_birth,
-              gender: values.gender,
-              fathers_name: values.fathers_name,
-              mothers_name: values.mothers_name,
-              identity_type: values.identity_type,
-              identity_number: values.identity_number,
-              email: values.email,
-              address: values.address,
-              client_nuit: values.client_nuit,
-              client_local: values.client_local,
-              client_imgf: imgf,
-              client_imgb: imgb,
-              selfie: values.selfie,
-              user_id: 2,
-              client_number: values.client_number,
-              // formData
-            };
-            formData.append("client_imgf", imgf);
-            formData.append("client-imgb", imgb);
-            formData.append("messageID", "0000000000011092093");
-            formData.append("token", tokenData.data.value);
-            formData.append(
-              "client_name",
-              `${values.first_name} ${values.middle_name} ${values.last_name}`
-            );
-            formData.append("date_of_birth", values.date_of_birth);
-            formData.append("gender", values.gender);
-            formData.append("fathers_name", values.fathers_name);
-            formData.append("mothers_name", values.mothers_name);
-            formData.append("identity_type", values.identity_type);
-            formData.append("identity_number", values.identity_number);
-            formData.append("email", values.email);
-            formData.append("address", values.address);
-            formData.append("client_nuit", values.client_nuit);
-            formData.append("client_local", values.client_local);
-            formData.append("client_imgf", values.client_imgf);
-            formData.append("client_imgb", values.client_imgb);
-            formData.append("selfie", values.selfie);
-            formData.append("user_id", 2);
-            formData.append("client_number", values.client_number);
-
-            dispatch(postGenerateNuit(formData));
-            console.log(values);
+            dispatch(postLoanOnboarding(values));
           }}
         >
-          {({ setFieldValue, handleChange }) => (
+          {({ setFieldValue, handleChange, values }) => (
             <Form onChange={handleChange}>
               <section>
                 <h3 className="pb-3 capitalize text-dark-3 text-base">
@@ -145,23 +137,25 @@ const LoanOnboarding = () => {
                     />
                   </div>
                   <div className="flex items-center gap-x-3.5">
-                    <FormSelect name="gender" required>
-                      <option value="" className="text-sm text-dark-3">
-                        Gender
-                      </option>
-                      <option value="male">Male</option>
-                      <option value="female">Female</option>
-                    </FormSelect>
-                    <FormInput
-                      type="date"
-                      name="date_of_birth"
-                      placeholder="Date of Birth"
-                    />
-                    <FormInput
-                      type="text"
-                      name="employee_number"
-                      placeholder="Employee Number"
-                    />
+                    <div className="w-1/2">
+                      <FormSelect name="gender" required>
+                        <option value="" className="text-sm text-dark-3">
+                          Gender
+                        </option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                      </FormSelect>
+                    </div>
+                    <div className="flex flex-col relative w-1/2">
+                      <span className="absolute pl-4 text-xs text-dark-1">
+                        Date of Birth
+                      </span>
+                      <FormInput
+                        type="date"
+                        name="dob"
+                        placeholder="Date of Birth"
+                      />
+                    </div>
                   </div>
                   <div className="flex items-center gap-x-3.5">
                     <FormInput
@@ -171,7 +165,7 @@ const LoanOnboarding = () => {
                     />
                     <FormInput
                       type="text"
-                      name="means_of_identification"
+                      name="identity_type"
                       placeholder="Means of Identification"
                     />
                     <FormSelect name="marital_status" required>
@@ -182,19 +176,17 @@ const LoanOnboarding = () => {
                   </div>
                   <div className="flex items-center gap-x-3.5">
                     <div className="flex flex-[0.5] items-center gap-x-3.5">
-                      <div className="w-1/4">
-                        <FormSelect name="number" required>
+                      {/* <div className="w-1/4">
+                        <FormSelect name="client_no_code" required>
                           <option value="">+234</option>
                           <option value="+234">+234</option>
                         </FormSelect>
-                      </div>
-                      <div className="w-3/4">
-                        <FormInput
-                          type="text"
-                          name="client_number"
-                          placeholder="Cellphone Number"
-                        />
-                      </div>
+                      </div> */}
+                      <FormInput
+                        type="text"
+                        name="phone_number"
+                        placeholder="Phone Number"
+                      />
                     </div>
                     <div className="flex-[0.5]">
                       <FormInput
@@ -211,27 +203,6 @@ const LoanOnboarding = () => {
                       required
                     />
                   </div>
-                  <div className="flex items-center gap-x-3.5">
-                    <div className="w-1/3">
-                      <FormSelect name="status" required>
-                        <option value="">Residential Status</option>
-                      </FormSelect>
-                    </div>
-                    <div className="w-1/3">
-                      <FormInput
-                        type="text"
-                        name="client_local"
-                        placeholder="Local Code"
-                      />
-                    </div>
-                    <div className="w-1/3">
-                      <FormInput
-                        type="text"
-                        name="client_local"
-                        placeholder="Local Code"
-                      />
-                    </div>
-                  </div>
                 </div>
               </section>
               <section>
@@ -242,29 +213,49 @@ const LoanOnboarding = () => {
                   <div className="flex items-center gap-x-3.5">
                     <FormInput
                       type="text"
-                      name="name"
-                      placeholder="Name"
+                      name="company_name"
+                      placeholder="Company name"
                       employer
                     />
                     <FormInput
                       type="text"
-                      name="phone_number"
+                      name="company_phone"
                       placeholder="Phone Number"
                       employer
                     />
                   </div>
                   <div className="w-full">
-                    <TextArea name="address" placeholder="Address" employer />
+                    <TextArea
+                      name="company_address"
+                      placeholder="Company address"
+                      employer
+                    />
                   </div>
                   <div className="flex items-center gap-x-3.5">
                     <FormSelect name="ministry" employer>
-                      <option value="" className="text-sm text-dark-3">
+                      <option
+                        value=""
+                        className="text-sm text-dark-3"
+                        defaultValue
+                      >
                         Ministry
+                      </option>
+                      <option
+                        value="information"
+                        className="text-sm text-dark-3"
+                      >
+                        Information
+                      </option>
+                      <option
+                        value="marketing value"
+                        className="text-sm text-dark-3"
+                      >
+                        Marketing
                       </option>
                     </FormSelect>
                     <FormInput
                       type="text"
-                      name="eployee_number"
+                      name="employee_number"
                       placeholder="Employee Number"
                       employer
                     />
@@ -278,7 +269,7 @@ const LoanOnboarding = () => {
                 <div className="flex flex-col gap-y-2.5">
                   <FormInput
                     type="text"
-                    name="mothers_name"
+                    name="mother_name"
                     placeholder="Full Name"
                   />
                   <TextArea name="mothers_address" placeholder="Address" />
@@ -291,7 +282,7 @@ const LoanOnboarding = () => {
                 <div className="flex flex-col gap-y-2.5">
                   <FormInput
                     type="text"
-                    name="fathers_name"
+                    name="father_name"
                     placeholder="Full Name"
                   />
                   <TextArea
@@ -315,7 +306,7 @@ const LoanOnboarding = () => {
                     />
                   </div>
                   <div className="flex items-center gap-x-3.5">
-                    <FormSelect name="bank" employer>
+                    <FormSelect name="bank_name" employer>
                       <option value="">Bank</option>
                       <option value="access">Access bank</option>
                       <option value="stanbic">Stanbic Ibtc Bank</option>
@@ -333,49 +324,36 @@ const LoanOnboarding = () => {
                       employer
                     />
                   </div>
-                  <div className="w-full">
-                    <FormInput
-                      type="text"
-                      name="salary-payment_date"
-                      placeholder="Salary Payment Date"
-                      employer
-                    />
+                  <div className="w-full flex items-center gap-x-3.5">
+                    <div className="flex flex-col relative w-1/2">
+                      <span className="absolute pl-4 text-xs text-dark-1">
+                        Salary Payment Due Date
+                      </span>
+                      <FormInput
+                        type="date"
+                        name="pay_date"
+                        placeholder="Salary Payment Date"
+                        employer
+                      />
+                    </div>
+                    <div className="w-1/2">
+                      <FormInput
+                        type="text"
+                        name="nib_number"
+                        placeholder="Nib Number"
+                        employer
+                      />
+                    </div>
                   </div>
                 </div>
-              </section>
-              <section>
-                <h3 className="py-3 capitalize text-dark-3 text-base">
-                  Identification Document
-                </h3>
-                <div className="flex items-center gap-x-2">
-                  <span>
-                    <img src={backArrow} alt="" />
-                  </span>
-                  <p className="text-sm text-dark-1">
-                    Please take a photo of the front and back of your
-                    identification document
-                  </p>
-                </div>
-                  <div className="w-full flex items-center gap-x-3.5 pt-4">
-                    <ImageUpload
-                      label="(BI Front)"
-                      name="client_imgf"
-                      onChange={(event) => {
-                        handleFileChangef(event);
-                      }}
-                    />
-                    <ImageUpload
-                      label="(BI Back)"
-                      name="client_imgb"
-                      onChange={(event) => {
-                        handleFileChangeb(event);
-                      }}
-                    />
-                  </div>
               </section>
               <div className="flex items-center gap-x-4 pt-5">
                 <div className="w-200 h-62">
-                  <Button btnText="Submit" btnType="submit" />
+                  <Button
+                    btnText="Submit"
+                    btnType="submit"
+                    loading={isLoading}
+                  />
                 </div>
                 <div className="w-200 h-62">
                   <Button

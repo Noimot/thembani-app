@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, isAnyOf } from "@reduxjs/toolkit";
-import { getNuibToken } from "../../../services/requests/loan";
+import { getNuibToken } from "../../../services/requests/onboarding";
 import toast from "react-hot-toast";
 
 export const getToken = createAsyncThunk(
@@ -10,7 +10,7 @@ export const getToken = createAsyncThunk(
       toast.success(res.message);
       return res.data;
     } catch (error) {
-      // toast.error(toastError(error));
+      toast.error("An error occur");
       rejectWithValue(error.response.data);
     }
   }

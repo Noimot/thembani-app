@@ -2,6 +2,7 @@ import DashboardNav from "../../../components/shared/dashboard-nav";
 // import rateIcon from '../../../assets/images/rateIcon.svg'
 import LoanData from "../../../components/Loan/LoanData";
 import { loanDetailsSummary } from "../../../utils/helpers/data";
+import { LoanDetailsData } from "../../../utils/helpers/data";
 
 
 export default function Status() {
@@ -22,7 +23,7 @@ export default function Status() {
           </div>
         ))}
         </div>
-        <LoanData/>
+        <LoanData LoanDetailsData={LoanDetailsData} />
       </div>
     </div>
   )

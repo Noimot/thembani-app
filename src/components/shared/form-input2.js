@@ -1,6 +1,6 @@
 import React from "react";
 
-const FormInput2 = ({ type, name, icon, onChange, placeholder, onClick }) => {
+const FormInput2 = ({ type, name, value, icon, onChange, placeholder, onClick }) => {
   
   return (
     <div className="w-full">
@@ -12,6 +12,7 @@ const FormInput2 = ({ type, name, icon, onChange, placeholder, onClick }) => {
         <input
           type={type}
           name={name}
+          value={value}
           placeholder={placeholder}
           onChange={onChange}
           className={`${

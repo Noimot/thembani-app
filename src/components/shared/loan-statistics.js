@@ -23,7 +23,7 @@ const LoanStatistics = ({icon, text, amount, icon2, text2, amount2, icon3, text3
       <p className="text-dark-1">{amount2}</p>
     </div>
     <div className="border-t w-full border-solid border-grey-6" />
-    <div className="flex items-center justify-between">
+    {icon3 ? <div className="flex items-center justify-between">
       <div className="flex items-center gap-x-3">
         <div className="w-10 h-10 rounded-10 shadow-5xl bg-yellow-1 flex items-center justify-center">
           <img src={icon3} alt="" />
@@ -31,7 +31,7 @@ const LoanStatistics = ({icon, text, amount, icon2, text2, amount2, icon3, text3
         <p className="text-dark-4">{text3}</p>
       </div>
       <p className="text-dark-1">{amount3}</p>
-    </div>
+    </div>: null}
   </div>
   )
 }

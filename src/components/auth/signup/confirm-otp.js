@@ -53,6 +53,7 @@ function ConfirmOtp({ userDetails }) {
         style={{ border: "1px" }}
         inputStyles={{ innerHeight: "34px" }}
         inputClassName="mx-auto w-24 rounded border border-gray-300 text-center appearance-none"
+        loading={isOtpLoading}
       />
 
       <div className="w-full flex items-center justify-between px-3 text-[15px]">

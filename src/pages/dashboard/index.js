@@ -4,37 +4,17 @@ import DashboardNav from "../../components/shared/dashboard-nav";
 import { Sidebar } from "../../components/sidebar";
 
 const Dashboard = () => {
-  const [heading, setHeading] = useState();
-  const [profile, setProfile] = useState();
-  const navText = () => {
-    const pathname = window.location.pathname;
-    let text = ""; 
-    if (pathname === "/dashboard") {
-      text = "Client eligibility";
-    }
-    else if (pathname === "/customer-onboarding") {
-      text="Customer onboarding"
-    }
-    return text;
-  };
-  const navSubText = () => {
-    const pathname = window.location.pathname;
-    let text = ""; 
-    if (pathname === "/dashboard") {
-      text = "Client eligibility";
-    }
-    else if (pathname === "/dashboard/customer-onboarding") {
-      text="Customer onboarding"
-    }
-    return text;
-  };
+  const [onboardingData, setOnboardingData] = useState("");
+  const [userProfile, setUserProfile] = useState("");
+
+  
   return (
     <div className="font-poppins w-full">
       <div className="w-full flex ">
-        <Sidebar />
+        <Sidebar onboardingData={onboardingData} setOnboardingData={setOnboardingData} />
         <div className="w-full h-screen overflow-y-auto px-38 py-31">
           <div>
-            <Outlet />
+          <Outlet context={[onboardingData, setOnboardingData, userProfile, setUserProfile]} />
           </div>
         </div>
       </div>
@@ -44,6 +24,6 @@ const Dashboard = () => {
 
 export default Dashboard;
 
-export function useMenu() {
-  return useOutletContext();
-}
+// export function useMenu() {
+//   return useOutletContext();
+// }

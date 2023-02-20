@@ -1,26 +1,24 @@
 import http from "../axios-config";
 
-export const getNuibToken = async () => http.get("token");
-export const requestCacc = async () => http.get("cacc");
-
-export const generateNuit = async (data) =>
-  http.post("onboarding", data, {
+export const kycApi = async (data) =>
+  http.post("kyc", data, {
     Headers: {
       "'Content-Type'": "multipart/form-data",
     },
   });
 
-export const getResponse = async (id) =>
-  http.get(`get-response?messageID=${id}`);
+export const loanOnboardingApi = async (data) =>
+  http.post("loan", data, {
+    Headers: {
+      "'Content-Type'": "multipart/form-data",
+    },
+  });
 
-export const kycApi = async (data) => http.post("kyc", data, {
-  Headers: {
-    "'Content-Type'": "multipart/form-data",
-  },
-});
+export const getEligibilitySalaryApi = (salary) =>
+  http.get(`eligibility?salary=${salary}`);
 
-export const loanOnboardingApi = async (data) => http.post("loan", data, {
-  Headers: {
-    "'Content-Type'": "multipart/form-data",
-  },
-});
+export const updateLoanDetailsApi = (user_id, data) =>
+  http.put(`loan/${user_id}`, data);
+
+export const paymentScheduleApi = (user_id) =>
+  http.get(`${user_id}/payment-schedule`);
