@@ -5,6 +5,8 @@ import { Sidebar } from "../../components/sidebar";
 
 const Dashboard = () => {
   const [onboardingData, setOnboardingData] = useState("");
+  const [userProfile, setUserProfile] = useState("");
+
   
   return (
     <div className="font-poppins w-full">
@@ -12,7 +14,7 @@ const Dashboard = () => {
         <Sidebar onboardingData={onboardingData} setOnboardingData={setOnboardingData} />
         <div className="w-full h-screen overflow-y-auto px-38 py-31">
           <div>
-          <Outlet context={[onboardingData, setOnboardingData]} />
+          <Outlet context={[onboardingData, setOnboardingData, userProfile, setUserProfile]} />
           </div>
         </div>
       </div>

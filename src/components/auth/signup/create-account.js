@@ -1,7 +1,4 @@
 import React, { useState } from "react";
-
-// import { Link } from "react-router-dom";
-
 import SignupForm from "./signup-form";
 import ConfirmOtp from "./confirm-otp";
 import { useSelector } from "react-redux";

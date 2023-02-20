@@ -1,7 +1,7 @@
 import React from "react";
 import { useField } from "formik";
 
-const FormInput = ({ type, name, icon, onChange, placeholder, onClick, ref, onFocus, onBlur,  employer }) => {
+const FormInput = ({ type, name, icon, onChange, placeholder, onClick, ref, onFocus, onBlur,  employer}) => {
   const [field, { error, touched }] = useField({ type: type, name: name });
   
   return (

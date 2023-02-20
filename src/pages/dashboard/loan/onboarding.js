@@ -11,56 +11,40 @@ import * as Yup from "yup";
 import DashboardNav from "../../../components/shared/dashboard-nav";
 import ImageUpload from "../../../components/shared/input-file";
 import Button from "../../../components/shared/button";
-import {
-  getEligibilitySalary,
-  postLoanOnboarding,
-} from "../../../app/features/thunk/loanThunk";
-import { getUserDetails } from "../../../app/features/thunk/authThunk";
+import { postLoanOnboarding } from "../../../app/features/thunk/loanThunk";
 import { useNavigate } from "react-router-dom";
 
 const LoanOnboarding = () => {
   let ref = useRef();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { userDetailsData } = useSelector((state) => state.auth);
-  const { loanOnboardingData, eligibilitySalaryData, isLoading } = useSelector(
-    (state) => state.loan
-  );
+  const { loanOnboardingData, isLoading } = useSelector((state) => state.loan);
   const customerData = JSON.parse(localStorage.getItem("onboardingData"));
   const userProfile = JSON.parse(localStorage.getItem("userProfile"));
-
+console.log(customerData)
   useEffect(() => {
-    dispatch(getUserDetails(userProfile.id));
-  }, [userProfile.id]);
-
-  // console.log(userDetailsData, "user details data", customerData);
-  console.log(loanOnboardingData, "load data", eligibilitySalaryData);
-  useEffect(() => {
-    if (loanOnboardingData.data) {
+    if (loanOnboardingData?.data) {
       navigate(`/loan-application/client-eligibility`);
-      // dispatch(getEligibilitySalary(loanOnboardingData?.data?.monthly_income));
     }
-  }, [loanOnboardingData.data]);
+  }, [loanOnboardingData?.data]);
 
   const initialValues = {
-    first_name: customerData.first_name || "",
-    middle_name: customerData.middle_name || "",
-    last_name: customerData.last_name || "",
-    dob: customerData.date_of_birth || "",
-    gender: customerData.gender || "",
-    father_name: customerData.mothers_name || "",
-    mother_name: customerData.fathers_name || "",
-    fathers_address: customerData.mothers_address || "",
-    mothers_address: customerData.fathers_address || "",
-    identity_type: customerData.identity_type || "",
-    identity_number: customerData.identity_number || "",
-    email: customerData.email || "",
-    address: customerData.address || "",
-    client_local: customerData.client_local || "",
-    id_front: "",
-    id_back: "",
-    phone_number: customerData.client_no || "",
-    user_id: userProfile.id,
+    first_name: customerData?.first_name || "",
+    middle_name: customerData?.middle_name || "",
+    last_name: customerData?.last_name || "",
+    dob: customerData?.date_of_birth || "",
+    gender: customerData?.gender || "",
+    father_name: customerData?.mothers_name || "",
+    mother_name: customerData?.fathers_name || "",
+    fathers_address: customerData?.mothers_address || "",
+    mothers_address: customerData?.fathers_address || "",
+    identity_type: customerData?.identity_type || "",
+    identity_number: customerData?.identity_number || "",
+    email: customerData?.email || "",
+    address: customerData?.address || "",
+    client_local: customerData?.client_local || "",
+    phone_number: customerData?.client_no || "",
+    user_id: userProfile?.id,
     company_name: "",
     company_address: "",
     company_phone: "",
@@ -99,8 +83,6 @@ const LoanOnboarding = () => {
               .email("Invalid email address")
               .required("Email is required"),
             address: Yup.string().required("Address is required"),
-            id_front: Yup.string().required("Image is required"),
-            id_back: Yup.string().required("Image is required"),
             phone_number: Yup.string().required("phone number is required"),
             fathers_address: Yup.string().required(
               "Fathers address is required"
@@ -155,18 +137,25 @@ const LoanOnboarding = () => {
                     />
                   </div>
                   <div className="flex items-center gap-x-3.5">
-                    <FormSelect name="gender" required>
-                      <option value="" className="text-sm text-dark-3">
-                        Gender
-                      </option>
-                      <option value="male">Male</option>
-                      <option value="female">Female</option>
-                    </FormSelect>
-                    <FormInput
-                      type="date"
-                      name="dob"
-                      placeholder="Date of Birth"
-                    />
+                    <div className="w-1/2">
+                      <FormSelect name="gender" required>
+                        <option value="" className="text-sm text-dark-3">
+                          Gender
+                        </option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                      </FormSelect>
+                    </div>
+                    <div className="flex flex-col relative w-1/2">
+                      <span className="absolute pl-4 text-xs text-dark-1">
+                        Date of Birth
+                      </span>
+                      <FormInput
+                        type="date"
+                        name="dob"
+                        placeholder="Date of Birth"
+                      />
+                    </div>
                   </div>
                   <div className="flex items-center gap-x-3.5">
                     <FormInput
@@ -336,37 +325,26 @@ const LoanOnboarding = () => {
                     />
                   </div>
                   <div className="w-full flex items-center gap-x-3.5">
-                    <FormInput
-                      type="date"
-                      name="pay_date"
-                      placeholder="Salary Payment Date"
-                      employer
-                    />
-                    <FormInput
-                      type="text"
-                      name="nib_number"
-                      placeholder="Nib Number"
-                      employer
-                    />
+                    <div className="flex flex-col relative w-1/2">
+                      <span className="absolute pl-4 text-xs text-dark-1">
+                        Salary Payment Due Date
+                      </span>
+                      <FormInput
+                        type="date"
+                        name="pay_date"
+                        placeholder="Salary Payment Date"
+                        employer
+                      />
+                    </div>
+                    <div className="w-1/2">
+                      <FormInput
+                        type="text"
+                        name="nib_number"
+                        placeholder="Nib Number"
+                        employer
+                      />
+                    </div>
                   </div>
-                </div>
-              </section>
-              <section>
-                <h3 className="py-3 capitalize text-dark-3 text-base">
-                  Identification Document
-                </h3>
-                <div className="flex items-center gap-x-2">
-                  <span>
-                    <img src={backArrow} alt="" />
-                  </span>
-                  <p className="text-sm text-dark-1">
-                    Please take a photo of the front and back of your
-                    identification document
-                  </p>
-                </div>
-                <div className="w-full flex items-center gap-x-3.5 pt-4">
-                  <ImageUpload label="(BI Front)" name="id_front" />
-                  <ImageUpload label="(BI Back)" name="id_back" />
                 </div>
               </section>
               <div className="flex items-center gap-x-4 pt-5">

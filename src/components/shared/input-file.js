@@ -4,8 +4,8 @@ import { useFormikContext } from "formik";
 import Dropzone from "react-dropzone";
 import { toast } from "react-hot-toast";
 
-const ImageUpload = ({ label, name, bg}) => {
-  const { values, isValid, setFieldValue } = useFormikContext();
+const ImageUpload = ({ label, name, bg, className}) => {
+  const { values, isValid, setFieldValue, error, touched } = useFormikContext();
   const handleDrop = (acceptedFiles) => {
     setFieldValue(name, acceptedFiles[0]);
     console.log(acceptedFiles[0], "images");
@@ -40,32 +40,15 @@ const ImageUpload = ({ label, name, bg}) => {
                 {...getInputProps()}
                 className="opacity-0 absolute w-0 h-0"
               />
-              <p className="text-dark-1 text-sm pb-4">{label}</p>
+              <p className={`${className} text-dark-1 text-sm pb-4`}>{label}</p>
               <img src={uploadIcon} alt="" />
              <p className="text-sm pt-2 capitalize">{values[name].name}</p> 
             </div>
           </section>
         )}
       </Dropzone>
-    </div>
 
-    // <div className={`w-full ${bg ? bg: "bg-grey-1"} text-center py-6 rounded-5 border-solid border-2 border-bg-grey-1`}>
-    //   <h4>
-    //    {label}
-    //   </h4>
-    //   <label htmlFor={`${name}-file`}>
-    //     <img src={uploadIcon} className="mx-auto mt-2" />
-    //   </label>
-    //   <input
-    //     hidden
-    //     type="file"
-    //     name={name}
-    //     id={`${name}-file`}
-    //     // capture="user"
-    //     accept="**"
-    //     onChange={onChange}
-    //   />
-    // </div>
+    </div>
   );
 };
 

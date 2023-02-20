@@ -18,20 +18,11 @@ export default function LoanData({ LoanDetailsData, principal }) {
           Unpaid balance
         </span>
       </header>
-      <div className={`flex w-full text-dark-1`}>
-        <span className="w-[137px] py-3 text-center border-x-2 border-white">
-          {0}
-        </span>
-        <span className="w-[300px] py-3 text-center border-x-2 border-white"></span>
-        <span className="w-[244px] py-3 text-center border-x-2 border-white"></span>
-        <span className="w-[231px] py-3 text-center border-x-2 border-white"></span>
-        <span className="w-[300px] py-3 text-center border-l-2 border-white">{`MZN ${principal}`}</span>
-      </div>
       {LoanDetailsData &&
         LoanDetailsData.map((data, index) => (
           <div
             className={`${
-              index % 2 !== 0 ? " " : "bg-grey-4"
+              index % 2 === 0 ? " " : "bg-grey-4"
             } flex w-full text-dark-1`}
             key={index}
           >

@@ -18,7 +18,6 @@ import { useNavigate } from "react-router-dom";
 const ClientEligibility = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const [onboardingData, setOnboardingData] = useOutletContext();
   const {
     loanOnboardingData,
     eligibilitySalaryData,
@@ -30,15 +29,6 @@ const ClientEligibility = () => {
   const maxAmount2 = eligibilitySalaryData?.data?.data?.MaxAmount2;
   const maxAmount3 = eligibilitySalaryData?.data?.data?.MaxAmount3;
 
-  console.log(
-    eligibilitySalaryData?.data?.data,
-    "eligibility data",
-    onboardingData,
-    maxAmount1,
-    maxAmount2,
-    maxAmount3
-  );
-
   useEffect(() => {
     if (onboardingData) {
       dispatch(getEligibilitySalary(onboardingData.monthly_income));
@@ -47,21 +37,25 @@ const ClientEligibility = () => {
 
   useEffect(() => {
     setRange(maxAmount3);
-  }, []);
+  }, [maxAmount3]);
 
   const [range, setRange] = useState(maxAmount3);
   const [period, setPeriod] = useState(3);
   const handleChange = (e) => {
-    setRange(e.target.value);
+    if (e.target.value > maxAmount2) {
+      setRange(maxAmount3);
+    } else if (e.target.value > maxAmount1) {
+      setRange(maxAmount2);
+    } else {
+      setRange(maxAmount1);
+    }
   };
   const handleClick = (amount) => {
-    setRange(amount);
+    if (maxAmount1 === maxAmount2 && maxAmount2 === maxAmount3) {
+      setRange(maxAmount3);
+    } else setRange(amount);
   };
 
-  const step = Math.round(
-    (30 / 100) * onboardingData.monthly_income * 0.83 - 3
-  );
-  console.log(step);
   const periodPayload = () => {
     let period = 0;
     if (range === maxAmount1) {
@@ -73,22 +67,23 @@ const ClientEligibility = () => {
     }
     return period;
   };
-  console.log(periodPayload());
-  console.log(updatedLoanDetailsData);
 
   const payload = {
     period: periodPayload(),
     loan_amount: range,
   };
 
-  const user_id = onboardingData.user_id;
+  const user_id = onboardingData?.user_id;
 
   const handleSubmit = () => {
     dispatch(updateLoanDetails(payload));
-    if (updatedLoanDetailsData.data) {
+  };
+
+  useEffect(() => {
+    if (updatedLoanDetailsData?.data) {
       navigate("/loan-application/payment-reschedule");
     }
-  };
+  }, [updatedLoanDetailsData?.data]);
 
   const handleBackButton = () => {
     navigate(-1);
@@ -102,31 +97,10 @@ const ClientEligibility = () => {
       <main className="flex flex-col gap-y-5">
         <CustomerBasicDetails />
         <div className="w-full bg-green pl-29 py-19">
-          {/* <div className="flex flex-col gap-y-5 w-1/3 justify-center">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-x-3">
-                <div className="w-10 h-10 rounded-10 shadow-5xl bg-orange-1 flex items-center justify-center">
-                  <img src={dollarIcon} alt="" />
-                </div>
-                <p className="text-dark-4">Eligible Amount</p>
-              </div>
-              <p className="text-dark-1">MZN 98 888</p>
-            </div>
-            <div className="border-t w-full border-solid border-grey-6" />
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-x-3">
-                <div className="w-10 h-10 rounded-10 shadow-5xl bg-yellow-1 flex items-center justify-center">
-                  <img src={dtiIcon} alt="" />
-                </div>
-                <p className="text-dark-4">DTI</p>
-              </div>
-              <p className="text-dark-1">33.3%</p>
-            </div>
-          </div> */}
           <LoanStatistics
             icon={dollarIcon}
             text="Eligible Amount"
-            amount="MZN 98 888"
+            amount={`MZN ${maxAmount3}`}
             icon2={dtiIcon}
             text2="DTI"
             amount2="33.3%"
@@ -144,68 +118,81 @@ const ClientEligibility = () => {
             <input
               type="range"
               id="range"
-              // step={step}
               value={range}
               onChange={handleChange}
               className="w-full bg-green-1 h-3 appearance-none rounded-md"
-              min={maxAmount1}
+              min={maxAmount1 === maxAmount3 ? maxAmount3 : maxAmount1}
               max={maxAmount3}
             />
           </div>
         </div>
         <div>
           <p className="text-dark-1 text-lg font-semibold">Period</p>
-          <div className="w-full bg-green h-auto p-10 flex items-center justify-between">
-            <div className="flex items-center justify-center flex-col relative">
-              <p>0 Month</p>
-              <button
-                type="button"
-                className={`${
-                  range < maxAmount1 ? "bg-green-1" : null
-                } w-10 h-10 rounded-full border-[3px] border-solid border-green-1`}
-                onClick={() => {
-                  handleClick(0);
-                }}
-              />
-              <div className="w-[270px] h-1 absolute border-b-4 border-grey-4 border-solid left-[52px] top-[42px]" />
+          <div className="w-full flex items-center bg-green h-auto p-10">
+            <div className="w-1/3">
+              <p className="relative right-2.5">0 Month</p>
+              <div className="flex items-center">
+                <button
+                  type="button"
+                  className={`${
+                    range < maxAmount1 ? "bg-green-1" : null
+                  } w-10  h-10 rounded-full border-[3px] border-solid border-green-1 pr-5`}
+                  onClick={() => {
+                    handleClick(0);
+                  }}
+                />
+                <div className="w-[90%] h-1  border-b-4 border-grey-4 border-solid left-[56px] top-[42px]" />
+              </div>
             </div>
-            <div className="flex items-center justify-center flex-col relative">
-              <p>1 Month</p>
-              <button
-                type="button"
-                className={`${
-                  range === maxAmount1 ? "bg-green-1" : null
-                } w-10 h-10 rounded-full border-[3px] border-solid border-green-1`}
-                onClick={() => {
-                  handleClick(maxAmount1);
-                }}
-              />
-              <div className="w-[275px] h-1 absolute border-b-4 border-grey-4 border-solid left-[49.4px] top-[42px]" />
+            <div className="w-1/3">
+              <p className="relative right-2.5">1 Month</p>
+              <div className="flex items-center">
+                <button
+                  type="button"
+                  className={`${
+                    maxAmount1 !== maxAmount3 && range === maxAmount1
+                      ? "bg-green-1"
+                      : null
+                  } w-10 h-10 rounded-full border-[3px] border-solid border-green-1`}
+                  onClick={() => {
+                    handleClick(maxAmount1);
+                  }}
+                  disabled={maxAmount1 === 60000}
+                />
+                <div className="w-[90%] h-1  border-b-4 border-grey-4 border-solid left-[56px] top-[42px]" />
+              </div>
             </div>
-            <div className="flex items-center justify-center flex-col relative">
+            <div className="w-1/3">
               <p>2 Months</p>
-              <button
-                type="button"
-                className={`${
-                  range === maxAmount2 ? "bg-green-1" : null
-                } w-10 h-10 rounded-full border-[3px] border-solid border-green-1`}
-                onClick={() => {
-                  handleClick(maxAmount2);
-                }}
-              />
-              <div className="w-[280px] h-1 absolute border-b-4 border-grey-4 border-solid left-[56px] top-[42px]" />
+              <div className="flex items-center">
+                <button
+                  type="button"
+                  className={`${
+                    maxAmount2 !== maxAmount3 && range === maxAmount2
+                      ? "bg-green-1"
+                      : null
+                  } w-10 h-10 rounded-full border-[3px] border-solid border-green-1`}
+                  onClick={() => {
+                    handleClick(maxAmount2);
+                  }}
+                  disabled={maxAmount2 === 60000}
+                />
+                <div className="w-[90%] h-1  border-b-4 border-grey-4 border-solid left-[56px] top-[42px]" />
+              </div>
             </div>
-            <div className="flex items-center justify-center flex-col relative">
-              <p>3 Months</p>
-              <button
-                type="button"
-                className={`${
-                  range === maxAmount3 ? "bg-green-1" : null
-                } w-10 h-10 rounded-full border-[3px] border-solid border-green-1`}
-                onClick={() => {
-                  handleClick(maxAmount3);
-                }}
-              />
+            <div className="whitespace-nowrap">
+              <p className="relative right-2.5">3 Months</p>
+              <div className="flex items-center">
+                <button
+                  type="button"
+                  className={`${
+                    range === maxAmount3 ? "bg-green-1" : null
+                  } w-10 h-10 rounded-full border-[3px] border-solid border-green-1`}
+                  onClick={() => {
+                    handleClick(maxAmount3);
+                  }}
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -234,13 +221,13 @@ const ClientEligibility = () => {
           </div>
         </div>
       </main>
-      <div className="h-auto py-6 w-full rounded-5 bg-green flex flex-col items-center justify-center text-center gap-y-2">
+      {/* <div className="h-auto py-6 w-full rounded-5 bg-green flex flex-col items-center justify-center text-center gap-y-2">
         <img src={infoIcon} alt="" />
         <p className="text-dark-1 text-4xl">
           Sorry, you don’t qualify for another loan at the moment, please try
           again in a few months.
         </p>
-      </div>
+      </div> */}
     </div>
   );
 };

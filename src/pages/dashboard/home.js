@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import cancelIcon from "../../assets/images/cancel-icon.svg";
 import CustomerBasicDetails from "../../components/shared/customer-basic-details";
 import DashboardNav from "../../components/shared/dashboard-nav";
 import StatusUpdate from "../../components/shared/status-update";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserDetails } from "../../app/features/thunk/authThunk";
 
 const Home = () => {
   return (
@@ -16,7 +17,7 @@ const Home = () => {
       within 24 hours. Thank you."
           className="bg-blue-1 border-2 border-solid border-blue-1"
         />
-        <StatusUpdate
+        {/* <StatusUpdate
           text="Your application was declined due to some errors. View your
             notification poge to fix the error."
           className="bg-red-2"
@@ -25,7 +26,7 @@ const Home = () => {
           text="Hooray! Your loan application has been approved and will be
             effective in the next 24 hours."
           className="bg-green-5"
-        />
+        /> */}
       </div>
     </div>
   );

@@ -5,14 +5,16 @@ import { useSelector } from "react-redux";
 
 export default function Login() {
   const { otpData } = useSelector((state) => state.auth);
-  const userProfile = otpData?.data?.data?.profile;
+  const profile = otpData?.data?.data?.profile;
+
   useEffect(() => {
-    if (userProfile === null) {
+    if (profile === null) {
       window.location.replace(`/customer-onboarding`);
-    } else if (userProfile) {
+    } else if (profile) {
       window.location.replace(`/`);
     }
-  }, [userProfile]);
+  }, [profile]);
+
   return (
     <div className="h-screen w-full">
       <Header />

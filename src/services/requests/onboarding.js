@@ -11,7 +11,10 @@ export const generateNuit = async (data) =>
     },
   });
 
+// export const getMessageIdApi = async (message_id) =>
+//   http.get(`get-response?messageID=${message_id}`);
+
 export const getMessageIdApi = async () =>
-  http.get("get-response?messageID=0000000000011092093");
+  http.get(`get-response?messageID=0000000000011092093`);
 
 export const postUserProfileApi = async (data) => http.post('profile', data);

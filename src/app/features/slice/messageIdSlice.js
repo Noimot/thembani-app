@@ -6,7 +6,7 @@ export const getMessageId = createAsyncThunk(
   "messageId/getMessageIdApi",
   async (data, { rejectWithValue }) => {
     try {
-      const res = await getMessageIdApi(data | "");
+      const res = await getMessageIdApi(data);
       toast.success(res.data.message);
       return res.data;
     } catch (error) {

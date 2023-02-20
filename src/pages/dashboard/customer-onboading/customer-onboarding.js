@@ -26,9 +26,7 @@ const CustomerOnboarding = () => {
   const { messageIdData } = useSelector((state) => state.messageId);
   const { profileData } = useSelector((state) => state.userProfile);
   const { otpData } = useSelector((state) => state.auth);
-  const [onboardingData, setOnboardingData] = useOutletContext();
-
-  console.log(profileData);
+  const [setOnboardingData] = useOutletContext();
   const dispatch = useDispatch();
   const payload = {
     // name: "Thembani",
@@ -48,26 +46,26 @@ const CustomerOnboarding = () => {
   }, [nuitData]);
 
   useEffect(() => {
-    if (messageIdData.success) {
-      const userProfileData = JSON.parse(messageIdData.data);
+    if (messageIdData?.success) {
+      const userProfileData = JSON.parse(messageIdData?.data);
       const profilePayload = {
         user_id: userProfile.id,
-        client_nide: userProfileData.clie_nide,
-        client_nome: userProfileData.clie_nome,
-        client_nuib: userProfileData.clie_nuib,
-        client_nuit: userProfileData.clie_nuit,
-        client_numr: userProfileData.clie_numr,
-        client_tipd: userProfileData.clie_tipd,
+        client_nide: userProfileData?.clie_nide,
+        client_nome: userProfileData?.clie_nome,
+        client_nuib: userProfileData?.clie_nuib,
+        client_nuit: userProfileData?.clie_nuit,
+        client_numr: userProfileData?.clie_numr,
+        client_tipd: userProfileData?.clie_tipd,
       };
       dispatch(postUserProfile(profilePayload));
     }
   }, [messageIdData]);
 
   useEffect(() => {
-    if (profileData.success) {
+    if (profileData?.success) {
       navigate(`/loan-application/customer-onboarding`);
     }
-  }, [profileData.success]);
+  }, [profileData?.success]);
 
   const initialValues = {
     first_name: "",
@@ -87,7 +85,6 @@ const CustomerOnboarding = () => {
     client_imgb: "",
     selfie: "",
     user_id: "",
-    // client_number: "",
     client_no_code: "",
     client_no: "",
   };
@@ -124,7 +121,6 @@ const CustomerOnboarding = () => {
           })}
           onSubmit={(values) => {
             let formData = new FormData();
-            formData.append("messageID", "0000000000011092093");
             formData.append("token", tokenData.data.value);
             formData.append(
               "client_name",
@@ -142,15 +138,13 @@ const CustomerOnboarding = () => {
             formData.append("client_local", values.client_local);
             formData.append("client_imgf", values.client_imgf);
             formData.append("client_imgb", values.client_imgb);
-            formData.append("selfie", "values.selfie");
+            formData.append("selfie", "selfie");
             formData.append("user_id", userProfile.id);
             formData.append(
               "client_number",
               `${values.client_no_code}${values.client_no}`
             );
             dispatch(postGenerateNuit(formData));
-            // dispatch(postGenerateNuit(data));
-            setOnboardingData(values);
             localStorage.setItem("onboardingData", JSON.stringify(values));
           }}
         >
@@ -180,23 +174,32 @@ const CustomerOnboarding = () => {
                       />
                     </div>
                     <div className="flex items-center gap-x-3.5">
-                      <FormInput
-                        type="text"
-                        name="client_nuit"
-                        placeholder="NUIT Number"
-                      />
-                      <FormSelect name="gender" required>
-                        <option value="" className="text-sm text-dark-3">
-                          Gender
-                        </option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                      </FormSelect>
-                      <FormInput
-                        type="date"
-                        name="date_of_birth"
-                        placeholder="Date of Birth"
-                      />
+                      <div className="w-1/3">
+                        <FormInput
+                          type="text"
+                          name="client_nuit"
+                          placeholder="NUIT Number"
+                        />
+                      </div>
+                      <div className="w-1/3">
+                        <FormSelect name="gender" required>
+                          <option value="" className="text-sm text-dark-3">
+                            Gender
+                          </option>
+                          <option value="M">Male</option>
+                          <option value="F">Female</option>
+                        </FormSelect>
+                      </div>
+                      <div className="w-1/3 relative flex flex-col">
+                        <span className="absolute pl-4 text-xs text-dark-1">
+                          Date of Birth
+                        </span>
+                        <FormInput
+                          type="date"
+                          name="date_of_birth"
+                          placeholder="Date of Birth"
+                        />
+                      </div>
                     </div>
                     {/* <div>
                       <FormInput
@@ -213,8 +216,8 @@ const CustomerOnboarding = () => {
                       /> */}
                       <FormSelect name="identity_type" required>
                         <option value="">Select Identification</option>
-                        <option value="bi">BI</option>
-                        <option value="passaporte">Passaporte</option>
+                        <option value="BI">BI</option>
+                        <option value="PAS">Passaporte</option>
                       </FormSelect>
                       <FormInput
                         type="text"
@@ -261,7 +264,7 @@ const CustomerOnboarding = () => {
                     <div className="flex items-center gap-x-3.5">
                       <div className="w-1/3">
                         <FormSelect name="status" required>
-                          <option value="resident">Residential Status</option>
+                          <option value="1">Residential Status</option>
                         </FormSelect>
                       </div>
                       <div className="w-1/3">
@@ -305,40 +308,6 @@ const CustomerOnboarding = () => {
                     />
                   </div>
                 </section>
-                {/* <section>
-                  <h3 className="py-3 capitalize text-dark-3 text-base">
-                    Account Information
-                  </h3>
-                  <div className="flex flex-col gap-y-2.5">
-                    <div className="flex items-center gap-x-3.5">
-                      <FormSelect name="bank" required>
-                        <option value="">Bank</option>
-                        <option value="access">Access bank</option>
-                        <option value="stanbic">Stanbic Ibtc Bank</option>
-                      </FormSelect>
-                      <FormInput
-                        type="text"
-                        name="account_holder"
-                        placeholder="Account Holder"
-                      />
-                      <FormInput
-                        type="text"
-                        name="account_number"
-                        placeholder="Account Number"
-                      />
-                    </div>
-                    <div className="flex">
-                      <div className="w-1/2">
-                        <FormSelect name="identity_type" required>
-                          <option value="">Select Identification</option>
-                          <option value="passport">Passport</option>
-                          <option value="voters_card">Voters Card </option>
-                        </FormSelect>
-                      </div>
-                      <div className="w-1/2" />
-                    </div>
-                  </div>
-                </section> */}
                 <section>
                   <h3 className="py-3 capitalize text-dark-3 text-base">
                     Identification Document
@@ -355,11 +324,19 @@ const CustomerOnboarding = () => {
                   <div className="pt-4">
                     <div className="w-full flex items-center gap-x-3.5">
                       <ImageUpload
-                        label="National ID (BI Front)"
+                        label={`${
+                          values.identity_type
+                            ? values.identity_type
+                            : "National ID"
+                        } (Front)`}
                         name="client_imgf"
                       />
                       <ImageUpload
-                        label="National ID (BI Back)"
+                        label={`${
+                          values.identity_type
+                            ? values.identity_type
+                            : "National ID"
+                        } (Back)`}
                         name="client_imgb"
                       />
                     </div>

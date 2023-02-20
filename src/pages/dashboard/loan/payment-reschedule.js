@@ -16,6 +16,10 @@ const PaymentReschedule = () => {
   const { updatedLoanDetailsData, paymentScheduleData } = useSelector(
     (state) => state.loan
   );
+
+  const handleSubmit = () => {
+    navigate("/loan-application/kyc-upload")
+  }
   const handleBackButton = () => {
     navigate(-1);
   };
@@ -23,12 +27,10 @@ const PaymentReschedule = () => {
   useEffect(() => {
     dispatch(getPaymentSchedule());
   }, []);
-  console.log(paymentScheduleData, "payment data");
-  console.log(updatedLoanDetailsData, "updated loan details");
+
   const schedule =
-    paymentScheduleData.data &&
-    JSON.parse(paymentScheduleData.data.data.schedule);
-  console.log(schedule.Stat, "schedule");
+    paymentScheduleData?.data &&
+    JSON.parse(paymentScheduleData?.data?.data?.schedule);
   return (
     <div className="w-full flex flex-col bg-white gap-y-8">
       <DashboardNav
@@ -41,8 +43,8 @@ const PaymentReschedule = () => {
             icon={dollarIcon}
             text="Borrowed Principal"
             amount={`MZN ${
-              paymentScheduleData.data &&
-              paymentScheduleData.data.data.principal
+              paymentScheduleData?.data &&
+              paymentScheduleData?.data?.data?.principal
             }`}
             icon2={rateIcon}
             text2="Annual Rate"
@@ -50,16 +52,16 @@ const PaymentReschedule = () => {
             icon3={calenderIcon}
             text3="Period"
             amount3={`${
-              paymentScheduleData.data && paymentScheduleData.data.data.tenor
+              paymentScheduleData?.data && paymentScheduleData?.data?.data?.tenor
             }M`}
           />
         </div>
         <div>
           <LoanData
-            LoanDetailsData={schedule.Stat}
+            LoanDetailsData={schedule?.Stat}
             principal={
-              paymentScheduleData.data &&
-              paymentScheduleData.data.data.principal
+              paymentScheduleData?.data &&
+              paymentScheduleData?.data?.data?.principal
             }
           />
         </div>
@@ -67,7 +69,7 @@ const PaymentReschedule = () => {
           <div className="flex items-center gap-x-4">
             <div className="w-200 h-62">
               {" "}
-              <Button btnText="Proceed" btnType="submit" />
+              <Button btnText="Proceed" btnType="submit"  handleClick={handleSubmit}/>
             </div>
             <div className="w-200 h-62">
               <Button
