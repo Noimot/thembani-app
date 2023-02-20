@@ -7,6 +7,7 @@ const FormSelect = ({
   required,
   onChange,
   employer,
+  value,
   ...rest
 }) => {
   const [field, { error, touched }] = useField({
@@ -18,6 +19,7 @@ const FormSelect = ({
       <div className={`${employer && !error && !touched ? 'border-2 border-solid border-red-4': null} h-51 bg-grey-1 rounded-lg px-4`}>
         <select
           className="w-full h-full bg-inherit capitalize border-0 outline-0 text-sm text-dark-3"
+          value={value}
           {...field}
           {...rest}
         />

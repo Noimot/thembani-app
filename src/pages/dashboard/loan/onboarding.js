@@ -21,7 +21,7 @@ const LoanOnboarding = () => {
   const { loanOnboardingData, isLoading } = useSelector((state) => state.loan);
   const customerData = JSON.parse(localStorage.getItem("onboardingData"));
   const userProfile = JSON.parse(localStorage.getItem("userProfile"));
-console.log(customerData)
+  console.log(customerData);
   useEffect(() => {
     if (loanOnboardingData?.data) {
       navigate(`/loan-application/client-eligibility`);
@@ -56,6 +56,7 @@ console.log(customerData)
     account_number: "",
     pay_date: "",
     nib_number: "",
+    marital_status: customerData?.marital_status || "",
   };
 
   return (
@@ -107,6 +108,7 @@ console.log(customerData)
             account_number: Yup.string().required("Account number is required"),
             pay_date: Yup.string().required("Payment due date is required"),
             nib_number: Yup.string().required("Nib number is required"),
+            marital_status: Yup.string().required("Marital status is required"),
           })}
           onSubmit={(values) => {
             dispatch(postLoanOnboarding(values));
@@ -138,12 +140,12 @@ console.log(customerData)
                   </div>
                   <div className="flex items-center gap-x-3.5">
                     <div className="w-1/2">
-                      <FormSelect name="gender" required>
+                      <FormSelect name="gender" required value={values.gender}>
                         <option value="" className="text-sm text-dark-3">
                           Gender
                         </option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
+                        <option value="M">Male</option>
+                        <option value="F">Female</option>
                       </FormSelect>
                     </div>
                     <div className="flex flex-col relative w-1/2">
@@ -168,7 +170,7 @@ console.log(customerData)
                       name="identity_type"
                       placeholder="Means of Identification"
                     />
-                    <FormSelect name="marital_status" required>
+                    <FormSelect name="marital_status" required value={values.marital_status}>
                       <option value="">Marital Status</option>
                       <option value="married">Married</option>
                       <option value="Single">Single</option>
@@ -233,24 +235,72 @@ console.log(customerData)
                   </div>
                   <div className="flex items-center gap-x-3.5">
                     <FormSelect name="ministry" employer>
-                      <option
-                        value=""
-                        className="text-sm text-dark-3"
-                        defaultValue
-                      >
-                        Ministry
+                      <option value="No">Select your Ministry</option>
+                      <option value="Ministério dos Negócios Estrangeiros e Cooperação">
+                        Ministério dos Negócios Estrangeiros e Cooperação
                       </option>
-                      <option
-                        value="information"
-                        className="text-sm text-dark-3"
-                      >
-                        Information
+                      <option value="Ministério da Defesa Nacional">
+                        Ministério da Defesa Nacional
                       </option>
-                      <option
-                        value="marketing value"
-                        className="text-sm text-dark-3"
-                      >
-                        Marketing
+                      <option value="Ministério do Interior">
+                        Ministério do Interior
+                      </option>
+                      <option value="Ministério da Economia e Finanças">
+                        Ministério da Economia e Finanças
+                      </option>
+                      <option value="Ministério dos Transportes e Comunicação">
+                        Ministério dos Transportes e Comunicação
+                      </option>
+                      <option value="Ministério da Educação e Desenvolvimento Humano">
+                        Ministério da Educação e Desenvolvimento Humano
+                      </option>
+                      <option value="Ministério da Cultura e Turismo">
+                        Ministério da Cultura e Turismo
+                      </option>
+                      <option value="Ministério da Agricultura e Segurança Alimentar">
+                        Ministério da Agricultura e Segurança Alimentar
+                      </option>
+                      <option value="Ministério do Trabalho, Emprego e Segurança Social">
+                        Ministério do Trabalho, Emprego e Segurança Social
+                      </option>
+                      <option value="Ministério da Juventude e Desportos">
+                        Ministério da Juventude e Desportos
+                      </option>
+                      <option value="Ministério da Saúde">
+                        Ministério da Saúde
+                      </option>
+                      <option value="Ministério do Género, Criança e Acção Social">
+                        Ministério do Género, Criança e Acção Social
+                      </option>
+                      <option value="Ministério da Terra, Ambiente e Desenvolvimento Rural">
+                        Ministério da Terra, Ambiente e Desenvolvimento Rural
+                      </option>
+                      <option value="Ministério da Administração Estatal e Função Pública">
+                        Ministério da Administração Estatal e Função Pública
+                      </option>
+                      <option value="Ministério do Mar, Águas Interiores e Pescas">
+                        Ministério do Mar, Águas Interiores e Pescas
+                      </option>
+                      <option value="Ministério dos Recursos Minerais e Energia">
+                        Ministério dos Recursos Minerais e Energia
+                      </option>
+                      <option value="Ministério das Obras Públicas, Habitação e Recursos Hídricos">
+                        Ministério das Obras Públicas, Habitação e Recursos
+                        Hídricos
+                      </option>
+                      <option value="Ministério da Indústria e Comércio">
+                        Ministério da Indústria e Comércio
+                      </option>
+                      <option value="Ministério da Justiça e Assuntos Constitucionais e Religioso">
+                        Ministério da Justiça e Assuntos Constitucionais e
+                        Religioso
+                      </option>
+                      <option value="Ministério da Ciência e Tecnologia, Ensino Superior e Técnico-Profissional">
+                        Ministério da Ciência e Tecnologia, Ensino Superior e
+                        Técnico-Profissional
+                      </option>
+                      <option value="Ministério dos Combatentes">
+                        Ministério dos Combatentes
                       </option>
                     </FormSelect>
                     <FormInput
@@ -307,9 +357,67 @@ console.log(customerData)
                   </div>
                   <div className="flex items-center gap-x-3.5">
                     <FormSelect name="bank_name" employer>
-                      <option value="">Bank</option>
-                      <option value="access">Access bank</option>
-                      <option value="stanbic">Stanbic Ibtc Bank</option>
+                      <option value="No">Bank</option>
+                      <option value="Access bank Mozambique, S.A">
+                        {" "}
+                        Access bank Mozambique, S.A
+                      </option>
+                      <option value="Absa Bank Mozambique">
+                        Absa Bank Mozambique
+                      </option>
+                      <option value="Banco Comercial e de Investimentos (BCI)">
+                        Banco Comercial e de Investimentos (BCI)
+                      </option>
+                      <option value="Banco de Investimentos Global (BIG)">
+                        {" "}
+                        Banco de Investimentos Global (BIG)
+                      </option>
+                      <option value="Banco Mercantil e de Investimentos (BMI)">
+                        Banco Mercantil e de Investimentos (BMI)
+                      </option>
+                      <option value="Banco MAIS">Banco MAIS</option>
+                      <option value="Banco Moza">Banco Moza</option>
+                      <option value="Banco Nacional de Investimentos (BNI)">
+                        Banco Nacional de Investimentos (BNI)
+                      </option>
+                      <option value="Banco Société Générale Moçambique (SGM)">
+                        Banco Société Générale Moçambique (SGM)
+                      </option>
+                      <option value="Banco Terra (BTM)">
+                        Banco Terra (BTM)
+                      </option>
+                      <option value="Ecobank Mozambique">
+                        Ecobank Mozambique
+                      </option>
+                      <option value="First National Bank (FNB)">
+                        First National Bank (FNB)
+                      </option>
+                      <option value="First Capital Bank Mozambique (FCBM)">
+                        {" "}
+                        First Capital Bank Mozambique (FCBM)
+                      </option>
+                      <option value="Letshego Holdings Limited">
+                        Letshego Holdings Limited
+                      </option>
+                      <option value="Millennium BIM (BIM)">
+                        Millennium BIM (BIM)
+                      </option>
+                      <option value="Nedbank Mozambique (NBM)">
+                        Nedbank Mozambique (NBM)
+                      </option>
+                      <option value="Opportunity Bank Mozambique (OBM)">
+                        Opportunity Bank Mozambique (OBM)
+                      </option>
+                      <option value=" Socremo Microfinance Bank">
+                        {" "}
+                        Socremo Microfinance Bank
+                      </option>
+                      <option value="United Bank for Africa (UBA)">
+                        United Bank for Africa (UBA)
+                      </option>
+                      <option value="Standard Bank Mozambique">
+                        Standard Bank Mozambique
+                      </option>
                     </FormSelect>
                     <FormInput
                       type="text"
