@@ -5,6 +5,7 @@ import {
   loanOnboardingApi,
   paymentScheduleApi,
   updateLoanDetailsApi,
+  getStatusApi
 } from "../../../services/requests/loan";
 import toast from "react-hot-toast";
 
@@ -16,7 +17,6 @@ export const postKyc = createAsyncThunk(
       toast.success(res.data.message);
       return res.data;
     } catch (error) {
-      console.log(error, "error");
         toast.error(error.message);
       rejectWithValue(error.response.data);
     }
@@ -81,3 +81,18 @@ export const getPaymentSchedule = createAsyncThunk(
       }
     }
   );
+
+  export const getStatus = createAsyncThunk(
+    "loan/getStatusApi",
+    async (data, { rejectWithValue }) => {
+      try {
+        const res = await getStatusApi(data);
+        return res.data.data;
+      } catch (error) {
+        toast.error(error.message);
+        rejectWithValue(error.response.data);
+      }
+    }
+  );
+
+  

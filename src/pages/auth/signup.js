@@ -2,9 +2,10 @@ import React, { useEffect } from "react";
 import CreateAccount from "../../components/auth/signup/create-account";
 import Header from "../../components/header";
 import { useSelector } from "react-redux";
+import { useLocation } from "react-router";
 
 export default function Signup() {
-  const pathname = window.location.pathname;
+  const {pathname} = useLocation();
   const { otpData } = useSelector((state) => state.auth);
   const data = otpData?.data?.data;
   useEffect(() => {

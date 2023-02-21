@@ -8,7 +8,6 @@ const ImageUpload = ({ label, name, bg, className}) => {
   const { values, isValid, setFieldValue, error, touched } = useFormikContext();
   const handleDrop = (acceptedFiles) => {
     setFieldValue(name, acceptedFiles[0]);
-    console.log(acceptedFiles[0], "images");
   };
   const handleDropRejected = () => {
     return toast.error("Maximum file upload size is 5MB");

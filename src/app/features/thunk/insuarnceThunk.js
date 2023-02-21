@@ -11,7 +11,6 @@ export const postInsuarnce = createAsyncThunk(
       // toast.success(res.message);
       // return res.data;
     } catch (error) {
-        console.log(error, 'error')
     //   toast.error(error);
       rejectWithValue(error.response.data);
     }

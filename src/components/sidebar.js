@@ -2,41 +2,36 @@ import React, { useState, useEffect } from "react";
 import { Logo } from "./icons/logo";
 import { Link, useLocation } from "react-router-dom";
 import CustomLink from "./shared/custom-link";
-import arrowIcon from "../assets/images/arrow.svg";
-import houseIcon from "../assets/images/house-icon.svg";
-import loanIcon from "../assets/images/loan-icon.svg";
-import loanDetails from "../assets/images/loan-details-icon.svg";
-import setting from "../assets/images/setting.svg";
 import logout from "../assets/images/logout-icon.svg";
-import insuranceIcon from "../assets/images/insurance.svg";
-import LoanPopup from "./loan-popup";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserDetails } from "../app/features/thunk/authThunk";
 import "../styles/style.css";
+import { getStatus } from "../app/features/thunk/loanThunk";
 
 export const Sidebar = () => {
   const dispatch = useDispatch();
   const userProfile = JSON.parse(localStorage.getItem("userProfile"));
   const { userDetailsData } = useSelector((state) => state.auth);
+  const { statusData } = useSelector((state) => state.loan);
+  const status = statusData?.data?.Desc;
+  const loanStatus = statusData?.data["Loan Status"];
+
   useEffect(() => {
     dispatch(getUserDetails(userProfile.id));
+  }, []);
+
+  useEffect(() => {
+    dispatch(getStatus(userProfile.id));
   }, []);
   const handleNavigateToTop = () => {
     window.scrollTo(0, 0);
   };
-  console.log(userDetailsData, "user details");
 
   const handleLogout = () => {
     localStorage.removeItem("Thembani-TKN-auth");
     localStorage.removeItem("userProfile");
     window.location.replace("/login");
   };
-  // const path =
-  //   pathname === "/loan-application/client-eligibility" ||
-  //   pathname === "/loan-application/payment-reschedule" ||
-  //   pathname === "/loan-application/kyc-upload" ||
-  //   pathname === "/loan-application/loan-acceptance";
-
   const evaluateActivelink = (to, pathname) => {
     return to === "/" ? pathname === to : pathname.startsWith(to);
   };
@@ -96,7 +91,7 @@ export const Sidebar = () => {
               </span>
             </CustomLink>
           </li>
-          <li className="flex flex-col disable">
+          <li className={`${loanStatus !== "Rejected" ? "disable" : null} flex flex-col`}>
             <CustomLink
               onClick={handleNavigateToTop}
               to="/loan-application/customer-onboarding"
@@ -149,7 +144,9 @@ export const Sidebar = () => {
                   <path
                     d="M1 1L5.5 5.5L1 10"
                     stroke={`${
-                      evaluateActivelink("/loan-application", pathname) ? "#ffffff" : "#009B72"
+                      evaluateActivelink("/loan-application", pathname)
+                        ? "#ffffff"
+                        : "#009B72"
                     }`}
                     stroke-width="2"
                     stroke-linecap="round"
@@ -209,7 +206,9 @@ export const Sidebar = () => {
                   <path
                     d="M1 1L5.5 5.5L1 10"
                     stroke={`${
-                      evaluateActivelink("/loan-details", pathname) ? "#ffffff" : "#009B72"
+                      evaluateActivelink("/loan-details", pathname)
+                        ? "#ffffff"
+                        : "#009B72"
                     }`}
                     stroke-width="2"
                     stroke-linecap="round"
@@ -273,7 +272,9 @@ export const Sidebar = () => {
                   <path
                     d="M1 1L5.5 5.5L1 10"
                     stroke={`${
-                      evaluateActivelink("/insurance", pathname) ? "#ffffff" : "#009B72"
+                      evaluateActivelink("/insurance", pathname)
+                        ? "#ffffff"
+                        : "#009B72"
                     }`}
                     stroke-width="2"
                     stroke-linecap="round"
@@ -334,7 +335,9 @@ export const Sidebar = () => {
                   <path
                     d="M1 1L5.5 5.5L1 10"
                     stroke={`${
-                      evaluateActivelink("/settings", pathname) ? "#ffffff" : "#009B72"
+                      evaluateActivelink("/settings", pathname)
+                        ? "#ffffff"
+                        : "#009B72"
                     }`}
                     stroke-width="2"
                     stroke-linecap="round"

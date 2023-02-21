@@ -21,7 +21,6 @@ const LoanOnboarding = () => {
   const { loanOnboardingData, isLoading } = useSelector((state) => state.loan);
   const customerData = JSON.parse(localStorage.getItem("onboardingData"));
   const userProfile = JSON.parse(localStorage.getItem("userProfile"));
-  console.log(customerData);
   useEffect(() => {
     if (loanOnboardingData?.data) {
       navigate(`/loan-application/client-eligibility`);

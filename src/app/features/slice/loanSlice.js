@@ -5,7 +5,8 @@ import {
   postLoanOnboarding,
   getEligibilitySalary,
   updateLoanDetails,
-  getPaymentSchedule
+  getPaymentSchedule,
+  getStatus
 } from "../thunk/loanThunk";
 import toast from "react-hot-toast";
 
@@ -17,6 +18,7 @@ const loanSlice = createSlice({
     eligibilitySalaryData: [],
     updatedLoanDetailsData: [],
     paymentScheduleData: [],
+    statusData:[],
     isUpdateLoanLoading: false,
     isUpdateLoanError: false,
     isUpdateLoanSuccess: false,
@@ -41,6 +43,9 @@ const loanSlice = createSlice({
       })
       .addCase(getPaymentSchedule.fulfilled, (state, { payload }) => {
         state.paymentScheduleData = payload;
+      })
+      .addCase(getStatus.fulfilled, (state, { payload }) => {
+        state.statusData = payload;
       })
       .addMatcher(
         isAnyOf(

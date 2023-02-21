@@ -7,7 +7,6 @@ export const postGenerateNuit = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const res = await generateNuit(data);
-      console.log(res, 'generate nuit response')
       toast.success("Nuit generated successfully");
       return res.data;
     } catch (error) {

@@ -71,7 +71,6 @@ export const getUserDetails = createAsyncThunk(
       toast.success(res.data.message);
       return res.data;
     } catch (error) {
-      console.log(error);
       toast.error(error.response.data.message);
       rejectWithValue(error.response.data);
     }

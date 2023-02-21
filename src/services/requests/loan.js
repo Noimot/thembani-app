@@ -22,3 +22,5 @@ export const updateLoanDetailsApi = (user_id, data) =>
 
 export const paymentScheduleApi = (user_id) =>
   http.get(`${user_id}/payment-schedule`);
+
+export const getStatusApi = (user_id) => http.get(`status/${user_id}`);

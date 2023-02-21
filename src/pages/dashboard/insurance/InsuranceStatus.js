@@ -23,19 +23,15 @@ export default function InsuranceStatus() {
   }
   const handleDropID = (acceptedFiles) => {
     setImageID(acceptedFiles[0]);
-    console.log(acceptedFiles[0], 'images')
   };
   const handleDropCert = (acceptedFiles) => {
     setImageCert(acceptedFiles[0]);
-    console.log(acceptedFiles[0], 'images')
   };
   // const handleChangeID = e => {
   //   setImageID(e.target.files[0])
-  //   console.log(e.target.files[0]);
   // }
   // const handleChangeCert = e => {
   //   setImageCert(e.target.files[0])
-  //   console.log(e.target.files[0]);
   // }
   const handleSubmit = e => {
     e.preventDefault()
@@ -49,7 +45,6 @@ export default function InsuranceStatus() {
   }
   const handleConfirmation = () =>{
     // This is where the submission happens
-    console.log(radioOption, imageID, imageCert);
     setShowModal(false)
   }
   const handleCancel = () =>{

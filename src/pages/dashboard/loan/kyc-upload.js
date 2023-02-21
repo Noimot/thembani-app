@@ -15,7 +15,6 @@ const KycUpload = () => {
   const dispatch = useDispatch();
   const { kycData, isLoading } = useSelector((state) => state.loan);
   const userProfile = JSON.parse(localStorage.getItem("userProfile"));
-  console.log(kycData, "kyc data");
   const handleBackButton = () => {
     navigate(-1);
   };
@@ -48,7 +47,6 @@ const KycUpload = () => {
             nuit: Yup.mixed().required("Nuit is required"),
           })}
           onSubmit={(values) => {
-            console.log(values);
             let formData = new FormData();
             formData.append("identity", values.identity);
             formData.append("statement", values.statement);

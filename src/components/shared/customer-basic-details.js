@@ -4,11 +4,9 @@ import { useSelector, useDispatch } from "react-redux";
 const CustomerBasicDetails = () => {
   const userProfile = JSON.parse(localStorage.getItem("userProfile"));
   const onboardingData = JSON.parse(localStorage.getItem("onboardingData"));
-
   const { userDetailsData } = useSelector((state) => state.auth);
   const cbn = userDetailsData?.data?.data?.cbn;
   const profile = userDetailsData?.data?.data?.profile;
-  console.log(userDetailsData, onboardingData)
   return (
     <div className="h-auto py-6 w-full bg-green rounded-11 flex items-center pl-16 gap-x-189">
       <div className="w-149 h-149 rounded-full bg-red-50">

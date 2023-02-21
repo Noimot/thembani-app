@@ -5,14 +5,16 @@ import clockIcon from '../../assets/images/clockIcon.svg'
 import DoughnutChart from "../../components/charts/DoughnutChart";
 import CustomerBasicDetails from "../../components/shared/customer-basic-details";
 import RadialChart from "../../components/charts/RadialChart";
+import { useSelector } from "react-redux";
 
 
 export default function LoanStats() {
+  const { statusData } = useSelector((state) => state.loan);
+  const status = statusData?.data?.Desc;
+  const loanStatus = statusData?.data["Loan Status"];
   return (
-    <div className="w-full flex flex-col bg-white gap-y-8">
-      <DashboardNav heading="Dashboard" subHeading="Loan Stats"/>
+    <div className="w-full flex flex-col bg-white gap-y-8 pt-5">
       <div className="flex flex-col gap-[18px]">
-        <CustomerBasicDetails />
         <div className="flex gap-[2%]">
           <div className="w-[45%] bg-green rounded-5 flex flex-col gap-[18px] items-center justify-center">
             {/* <DoughnutChart/> */}

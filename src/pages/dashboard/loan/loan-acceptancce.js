@@ -23,7 +23,6 @@ const LoanAcceptancce = () => {
   const loan = paymentScheduleData?.data?.data?.principal;
   const tenor = paymentScheduleData?.data?.data?.tenor;
   const repayment = schedule.Stat[0].MonthlyRepayment;
-  console.log(onboardingData, paymentScheduleData, schedule)
 
 
   const handleBackButton = () => {
@@ -39,7 +38,6 @@ const LoanAcceptancce = () => {
     setShowModal(false);
     navigate("/");
   };
-  console.log(termsAndConditions);
   return (
     <>
       {showModal && (
