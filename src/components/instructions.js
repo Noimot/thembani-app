@@ -24,10 +24,6 @@ const Instruction = () => {
             will then move to the onboarding page.
           </li>
           <li className="text-lg text-white">
-            After entering your NUIB number, you will move to the onboarding
-            page.
-          </li>
-          <li className="text-lg text-white">
             You will be required to complete all{" "}
             <span className="font-semibold">Customer Onboarding</span> fields.
           </li>
@@ -40,6 +36,7 @@ const Instruction = () => {
             <a
               href="https://res.cloudinary.com/noimot/raw/upload/v1676891636/Acordo_Aceita%C3%A7%C3%A3o_de_Dedu%C3%A7%C3%A3o_na_Fonte_via_CEDSIF_V1_1_hrkpzv.docx"
               className="text-green-1"
+              target="_blank"
             >
               here
             </a>{" "}

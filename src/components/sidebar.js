@@ -14,7 +14,7 @@ export const Sidebar = () => {
   const { userDetailsData } = useSelector((state) => state.auth);
   const { statusData } = useSelector((state) => state.loan);
   const status = statusData?.data?.Desc;
-  const loanStatus = statusData?.data["Loan Status"];
+  const loanStatus = statusData?.data && statusData?.data["Loan Status"];
 
   useEffect(() => {
     dispatch(getUserDetails(userProfile.id));
@@ -28,8 +28,7 @@ export const Sidebar = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("Thembani-TKN-auth");
-    localStorage.removeItem("userProfile");
+    localStorage.clear();
     window.location.replace("/login");
   };
   const evaluateActivelink = (to, pathname) => {

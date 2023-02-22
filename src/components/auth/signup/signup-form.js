@@ -70,7 +70,7 @@ export default function SignupForm({ handleConfirmOtp, getUserDetails }) {
             icon={<PasswordIcon />}
           />
           <div className="flex justify-end capitalize text-sm">
-            <Link className="text-grey-2" to="/forgot-password">
+            <Link className="text-grey-2" to="/reset-password">
               forgot password?
             </Link>
           </div>

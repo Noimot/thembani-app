@@ -5,6 +5,7 @@ import {
   postLogin,
 } from "../../../app/features/thunk/authThunk";
 import { useDispatch } from "react-redux";
+import { resendOtp } from "../../../services/requests/auth";
 
 function ConfirmLoginOtp({ userDetails }) {
   const dispatch = useDispatch();
@@ -27,8 +28,16 @@ function ConfirmLoginOtp({ userDetails }) {
       }, 1000);
     return () => clearInterval(timer);
   }, [counter]);
-  const handleResendOtp = () => {
-    dispatch(postLogin(userDetails));
+  // const handleResendOtp = () => {
+  //   dispatch(postLogin(userDetails));
+  // };
+
+  const handleResendOtp = async () => {
+    try {
+      await resendOtp({ email: userDetails.email });
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <>

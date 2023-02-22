@@ -61,10 +61,10 @@ const Selfie = () => {
     startCamera();
   };
   return (
-    <div className="relative selfie mt-6 w-1/2 h-[350px] bg-grey-1 flex items-center justify-center flex-col">
+    <div className="relative selfie mt-6 w-1/2 h-[350px] 2xl:h-[550px] bg-grey-1 flex items-center justify-center flex-col">
       {camera ? (
         imageUrl === "" && (
-          <div className="cam">
+          <div>
             <video
               width="100%"
               height="100%"
@@ -92,7 +92,6 @@ const Selfie = () => {
       {imageUrl !== "" && (
         <div className="absolute top-0 w-4/5 h-20">
           <img className="preview-img" src={imageUrl} ref={imageEle} />
-
           <div className="btn-container flex items-center justify-center pt-6">
             <button
               className="text-dark-1 text-base font-medium text-center bg-white rounded-lg px-2 py-1"

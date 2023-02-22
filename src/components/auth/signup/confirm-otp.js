@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 // import { useHistory } from "react-router-dom";
 import OTPInput, { ResendOTP } from "otp-input-react";
-import { confirmOtpsign } from "../../../services/requests/auth";
+import { confirmOtpsign, resendOtp } from "../../../services/requests/auth";
 import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { postConfirmOtp, postRegister } from "../../../app/features/thunk/authThunk";
-
+import {
+  postConfirmOtp,
+  postRegister,
+} from "../../../app/features/thunk/authThunk";
 
 function ConfirmOtp({ userDetails }) {
   const dispatch = useDispatch();
@@ -22,9 +24,9 @@ function ConfirmOtp({ userDetails }) {
   const handleConfirmOtp = () => {
     dispatch(postConfirmOtp(otpData));
   };
-  const handleResendOtp = () => {
-    dispatch(postRegister(userDetails))
-  }
+  // const handleResendOtp = () => {
+  //   dispatch(postRegister(userDetails))
+  // }
   const [counter, setcounter] = useState(59);
   useEffect(() => {
     const timer =
@@ -34,6 +36,14 @@ function ConfirmOtp({ userDetails }) {
       }, 1000);
     return () => clearInterval(timer);
   }, [counter]);
+
+  const handleResendOtp = async () => {
+    try {
+      await resendOtp({ email: userDetails.email });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       <h3 className="pt-8 pb-3 text-center font-semibold text-xl text-dark-1 ">
@@ -57,7 +67,9 @@ function ConfirmOtp({ userDetails }) {
       />
 
       <div className="w-full flex items-center justify-between px-3 text-[15px]">
-        <button className="font-medium text-dark-1" onClick={handleResendOtp}>Resend OTP</button>
+        <button className="font-medium text-dark-1" onClick={handleResendOtp}>
+          Resend OTP
+        </button>
         <p className="font-light text-red-1">00:{counter}</p>
       </div>
       <div className="flex items-center justify-between gap-x-2">

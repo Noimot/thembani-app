@@ -49,7 +49,7 @@ export default function LoginForm({ handleConfirmOtp, getUserDetails }) {
               icon={<PasswordIcon />}
             />
             <div className="flex justify-end capitalize text-sm">
-              <Link to="/forgot-password" className="text-grey-2">
+              <Link to="/reset-password" className="text-grey-2">
                 forgot password?
               </Link>
             </div>
