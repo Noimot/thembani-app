@@ -5,9 +5,21 @@ import {
   loanOnboardingApi,
   paymentScheduleApi,
   updateLoanDetailsApi,
-  getStatusApi
+  getStatusApi,
 } from "../../../services/requests/loan";
 import toast from "react-hot-toast";
+
+const toastError = (error) => {
+  if (error.response.data.data.email) {
+    return error.response.data.data.email[0];
+  } else if (error.response.data.data.phone_number) {
+    return error.response.data.data.phone_number[0];
+  }
+  else if (error.response.data.data.middle_name) {
+    return error.response.data.data.middle_name[0];
+  }
+};
+
 
 export const postKyc = createAsyncThunk(
   "loan/kycApi",
@@ -17,7 +29,7 @@ export const postKyc = createAsyncThunk(
       toast.success(res.data.message);
       return res.data;
     } catch (error) {
-        toast.error(error.message);
+      toast.error(error.message);
       rejectWithValue(error.response.data);
     }
   }
@@ -32,7 +44,8 @@ export const postLoanOnboarding = createAsyncThunk(
       localStorage.setItem("loanOnboardingData", JSON.stringify(res.data.data));
       return res.data;
     } catch (error) {
-      toast.error(error.message);
+      console.log(error.response)
+      toast.error(toastError(error));
       rejectWithValue(error.response.data);
     }
   }
@@ -51,13 +64,13 @@ export const getEligibilitySalary = createAsyncThunk(
     }
   }
 );
-const onboardingData = JSON.parse(localStorage.getItem("loanOnboardingData"));
+const userProfile = JSON.parse(localStorage.getItem("userProfile"));
 
 export const updateLoanDetails = createAsyncThunk(
   "loan/updateLoanDetailsApi",
   async (data, { rejectWithValue }) => {
     try {
-      const res = await updateLoanDetailsApi(onboardingData.user_id, data);
+      const res = await updateLoanDetailsApi(userProfile.id, data);
       toast.success(res.data.message);
       return res.data;
     } catch (error) {
@@ -67,32 +80,29 @@ export const updateLoanDetails = createAsyncThunk(
   }
 );
 
-
 export const getPaymentSchedule = createAsyncThunk(
-    "loan/paymentScheduleApi",
-    async (data, { rejectWithValue }) => {
-      try {
-        const res = await paymentScheduleApi(onboardingData.user_id, data);
-        toast.success(res.data.message);
-        return res.data;
-      } catch (error) {
-        toast.error(error.message);
-        rejectWithValue(error.response.data);
-      }
+  "loan/paymentScheduleApi",
+  async (data, { rejectWithValue }) => {
+    try {
+      const res = await paymentScheduleApi(userProfile.id, data);
+      toast.success(res.data.message);
+      return res.data;
+    } catch (error) {
+      toast.error(error.message);
+      rejectWithValue(error.response.data);
     }
-  );
+  }
+);
 
-  export const getStatus = createAsyncThunk(
-    "loan/getStatusApi",
-    async (data, { rejectWithValue }) => {
-      try {
-        const res = await getStatusApi(data);
-        return res.data.data;
-      } catch (error) {
-        toast.error(error.message);
-        rejectWithValue(error.response.data);
-      }
+export const getStatus = createAsyncThunk(
+  "loan/getStatusApi",
+  async (data, { rejectWithValue }) => {
+    try {
+      const res = await getStatusApi(data);
+      return res.data.data;
+    } catch (error) {
+      toast.error(error.message);
+      rejectWithValue(error.response.data);
     }
-  );
-
-  
+  }
+);

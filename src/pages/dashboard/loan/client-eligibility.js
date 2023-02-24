@@ -86,7 +86,7 @@ const ClientEligibility = () => {
   }, [updatedLoanDetailsData?.data]);
 
   const handleBackButton = () => {
-    navigate(-1);
+    navigate("/loan-application/customer-onboarding");
   };
   return (
     <div className="w-full flex flex-col bg-white gap-y-8">

@@ -41,7 +41,7 @@ function ConfirmOtp({ userDetails }) {
     try {
       await resendOtp({ email: userDetails.email });
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   };
   return (

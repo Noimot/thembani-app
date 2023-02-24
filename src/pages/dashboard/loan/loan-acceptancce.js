@@ -19,14 +19,15 @@ const LoanAcceptancce = () => {
     (state) => state.loan
   );
   const onboardingData = JSON.parse(localStorage.getItem("loanOnboardingData"));
-  const schedule = JSON.parse(paymentScheduleData.data.data.schedule);
+  const schedule =
+    paymentScheduleData.data &&
+    JSON.parse(paymentScheduleData.data.data.schedule);
   const loan = paymentScheduleData?.data?.data?.principal;
   const tenor = paymentScheduleData?.data?.data?.tenor;
-  const repayment = schedule.Stat[0].MonthlyRepayment;
-
+  const repayment = schedule?.Stat[0]?.MonthlyRepayment;
 
   const handleBackButton = () => {
-    navigate(-1);
+    navigate("/loan-application/kyc-upload");
   };
 
   const handleSubmit = () => {
@@ -54,9 +55,9 @@ const LoanAcceptancce = () => {
         <main className="py-7 px-8 bg-green flex flex-col gap-y-4">
           <div className="h-auto py-[34px] px-[19px] w-full bg-white border-2 border-blue-3 border-solid rounded-5 flex flex-col gap-y-8 text-dark-1">
             <p>
-              You are requesting for a loan of MZN{loan} for {tenor}months. Monthly
-              repayment will be MZN{repayment} and will be deducted from source
-              commencing from your next salary.
+              You are requesting for a loan of MZN{loan} for {tenor}months.
+              Monthly repayment will be MZN{repayment} and will be deducted from
+              source commencing from your next salary.
             </p>
             <p>
               An insurance will also be taken on the loan against loss of Job,

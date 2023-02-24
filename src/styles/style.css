@@ -107,3 +107,18 @@ input[type=range]::-webkit-slider-runnable-track  {
   border: none;
   background: transparent;
 }
+
+#google_translate_element {
+  position: absolute;
+  top: 17px;
+  z-index:9999;
+  right: 23px;
+}
+
+.goog-te-gadget-simple {
+display: flex;
+}
+
+.goog-te-gadget-simple span a  {
+  display: flex;
+}

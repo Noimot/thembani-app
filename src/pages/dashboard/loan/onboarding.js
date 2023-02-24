@@ -467,6 +467,7 @@ const LoanOnboarding = () => {
                     btnText="Cancel"
                     btnType="button"
                     className="bg-red-3"
+                    disabled
                   />
                 </div>
               </div>

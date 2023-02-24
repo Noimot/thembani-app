@@ -18,7 +18,7 @@ export const Sidebar = () => {
 
   useEffect(() => {
     dispatch(getUserDetails(userProfile.id));
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(getStatus(userProfile.id));

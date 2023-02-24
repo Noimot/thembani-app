@@ -16,7 +16,7 @@ const KycUpload = () => {
   const { kycData, isLoading } = useSelector((state) => state.loan);
   const userProfile = JSON.parse(localStorage.getItem("userProfile"));
   const handleBackButton = () => {
-    navigate(-1);
+    navigate("/loan-application/payment-reschedule");
   };
   const initialValue = {
     identity: "",

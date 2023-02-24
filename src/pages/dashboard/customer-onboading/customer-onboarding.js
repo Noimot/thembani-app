@@ -38,10 +38,11 @@ const CustomerOnboarding = () => {
   useEffect(() => {
     dispatch(getToken(payload));
   }, []);
-
+// console.log(nuitData, 'nuit data')
+// console.log(messageIdData, 'message id data')
   useEffect(() => {
     if (nuitData && nuitData.length !== 0) {
-      dispatch(getMessageId());
+      dispatch(getMessageId(nuitData));
     }
   }, [nuitData]);
 
@@ -96,7 +97,6 @@ const CustomerOnboarding = () => {
           initialValues={initialValues}
           validationSchema={Yup.object({
             first_name: Yup.string().required("First name is required"),
-            middle_name: Yup.string().required("Middle name is required"),
             last_name: Yup.string().required("Last name is required"),
             date_of_birth: Yup.string().required("Date of birth is required"),
             gender: Yup.string().required("Gender is required"),
@@ -117,7 +117,6 @@ const CustomerOnboarding = () => {
             client_imgb: Yup.string().required("Image is required"),
             client_imgf: Yup.string().required("Image is required"),
             selfie: Yup.string().required("Selfie is required"),
-            client_no: Yup.string().required("phone number is required"),
           })}
           onSubmit={(values) => {
             let formData = new FormData();
@@ -234,8 +233,7 @@ const CustomerOnboarding = () => {
                       <div className="flex flex-[0.5] items-center gap-x-3.5">
                         <div className="w-1/4">
                           <FormSelect name="client_no_code" required>
-                            <option value="+234">+234</option>
-                            <option value="+234">+234</option>
+                            <option value="258">258</option>
                           </FormSelect>
                         </div>
                         <div className="w-3/4">

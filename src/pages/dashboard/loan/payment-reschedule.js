@@ -21,13 +21,12 @@ const PaymentReschedule = () => {
     navigate("/loan-application/kyc-upload")
   }
   const handleBackButton = () => {
-    navigate(-1);
+    navigate(`/loan-application/client-eligibility`);
   };
 
   useEffect(() => {
     dispatch(getPaymentSchedule());
   }, []);
-
   const schedule =
     paymentScheduleData?.data &&
     JSON.parse(paymentScheduleData?.data?.data?.schedule);
@@ -47,7 +46,7 @@ const PaymentReschedule = () => {
               paymentScheduleData?.data?.data?.principal
             }`}
             icon2={rateIcon}
-            text2="Annual Rate"
+            text2="Monthly Rate"
             amount2="33.3%"
             icon3={calenderIcon}
             text3="Period"

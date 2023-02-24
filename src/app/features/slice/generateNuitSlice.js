@@ -10,7 +10,7 @@ export const postGenerateNuit = createAsyncThunk(
       toast.success("Nuit generated successfully");
       return res.data;
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response.data.data.email[0]);
       rejectWithValue(error.response.data);
     }
   }

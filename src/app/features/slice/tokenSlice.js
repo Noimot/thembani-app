@@ -7,7 +7,7 @@ export const getToken = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const res = await getNuibToken(data);
-      toast.success(res.message);
+      toast.success(res.data.message);
       return res.data;
     } catch (error) {
       toast.error("An error occur");

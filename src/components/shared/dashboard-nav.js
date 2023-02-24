@@ -1,5 +1,6 @@
 import React from "react";
 import bellIcon from "../../assets/images/bell-icon.svg";
+import avatar from "../../assets/images/avatar.svg";
 
 
 const DashboardNav = ({heading, subHeading}) => {
@@ -20,8 +21,8 @@ const DashboardNav = ({heading, subHeading}) => {
             <h1 className="text-sm font-semibold text-dark-1 whitespace-nowrap capitalize">{userProfile.username}</h1>
             <span className="text-sm font-medium text-grey-5">Admin</span>
           </div>
-          <div className="w-11 h-11 rounded-full bg-grey-1">
-            <img src="" alt="" />
+          <div className="w-11 h-11 rounded-full bg-grey-1 flex items-center justify-center">
+            <img src={avatar} alt="" />
           </div>
         </div>
       </div>
